@@ -1,0 +1,170 @@
+<!-- <style>
+  .table-responsive {
+    max-height: 260px;
+    overflow: auto;
+    z-index: -1;
+  }
+
+  .table-responsive thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+
+  /* Just common table stuff. Really. */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    padding: 8px 16px;
+  }
+
+  th {
+    background: #eee;
+  }
+
+  .table-responsive::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+    background-color: #CCCCCC;
+  }
+
+  .table-responsive::-webkit-scrollbar {
+    width: 12px;
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+  .table-responsive::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #bbd2fd;
+    background-image: -webkit-linear-gradient(90deg,
+        transparent,
+        rgba(0, 0, 0, 0.4) 50%,
+        transparent,
+        transparent)
+  }
+
+
+  .Search-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  tr {
+    user-select: none;
+  }
+
+  ::ng-deep .mat-form-field {
+    transition: font-size 0.2s;
+  }
+
+
+  /**
+    Replace exist css card in p-cart.component.html
+  */
+  ::ng-deep .mat-card {
+    padding: 0 !important;
+
+    z-index: 10;
+  }
+
+  ::ng-deep .mat-form-field-flex {
+    padding: 16px;
+  }
+
+  ::ng-deep .mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: none !important;
+  }
+
+  ::ng-deep .mat-card-header {
+    padding: 8px;
+  }
+
+  ::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: rgb(255, 255, 255) !important;
+    font-size: 17px;
+  }
+
+  ::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: rgb(128, 166, 238) !important;
+  }
+
+  ::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: rgb(128, 166, 238) !important;
+    ;
+  }
+
+  ::ng-deep.mat-checkbox-checked.mat-accent.mat-checkbox-disabled .mat-checkbox-background,
+  .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: rgb(128, 166, 238) !important;
+  }
+
+</style>
+
+<mat-card>
+  <mat-card-content>
+    <form class="Search-form">
+      <mat-form-field class="full-width" color="#fff">
+        <mat-label>Tìm kiếm</mat-label>
+        <input matInput placeholder="" value="Yamate iku">
+      </mat-form-field>
+    </form>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Tổng</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of orderItems">
+          <tr style="cursor: pointer">
+            <td>{{item.productItem.name}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{getCalculatedValue(item.productPrice)}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card> -->
+
+
+<h1 mat-dialog-title>Sản phẩm đã đặt</h1>
+<div mat-dialog-content>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Tên sản phẩm</th>
+        <th scope="col">Số lượng</th>
+        <th scope="col">Tổng</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let item of orderItems">
+      <tr style="cursor: pointer">
+        <td>{{item.productItem.name}}</td>
+        <td>{{item.quantity}}</td>
+        <td>{{getCalculatedValue(item.productPrice)}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Thóat</button>
+  <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
+</div>

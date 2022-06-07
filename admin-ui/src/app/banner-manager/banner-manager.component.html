@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Upload image</label>
+        <input class="form-control" type="file" multiple (change)="selectFiles($event)">
+      </div>
+      <div class="mb-3 d-flex justify-content-evenly">
+        <button mat-raised-button color="primary" [disabled]="!selectedFiles" (click)="uploadFiles()">
+          Upload
+        </button>
+        <!-- <button mat-raised-button color="primary" [disabled]="!selectedFiles" (click)="clearFile()">
+          Clear
+        </button> -->
+      </div>
+      <div *ngFor="let progressInfo of progressInfos" class="mb-2">
+        <span>{{ progressInfo.fileName }}</span>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ progressInfo.value }}"
+            aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: progressInfo.value + '%' }">
+            {{ progressInfo.value }}%
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="message.length" class="alert alert-secondary my-3" role="alert">
+        <ul *ngFor="let msg of message; let i = index">
+          <li>{{ msg }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">List of Files</div>
+        <div class="container" id="main-container">
+          <div class="row">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Tên</th>
+                  <th>Địa chỉ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let file of fileInfos | async">
+                  <td>{{ file.imageName }}</td>
+                  <td>{{ file.link }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div *ngIf="imageDataUrl">
+        <img [src]="imageDataUrl" height="327" style="object-fit: cover;"  width="100%">
+      </div>
+    </div>
+  </div>
+</div>

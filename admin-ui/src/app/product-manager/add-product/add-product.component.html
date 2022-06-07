@@ -1,0 +1,75 @@
+<style>
+  ::ng-deep .mat-form-field {
+    width: 100%;
+  }
+
+</style>
+<div mat-dialog-content>
+  <mat-card style="max-width: 100%;margin:auto" [class.mat-elevation-z8]="true">
+    <div class="row">
+      <div class="col">
+        <!-- <form style="display: flex;flex-direction: column;" [formGroup]="createProductForm" (ngSubmit)="onSubmit()"> -->
+        <form (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="fill">
+            <mat-label>Tên sản phẩm</mat-label>
+            <input matInput id="name" required placeholder="name" name="name" [(ngModel)]="productContent.name" />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Mô tả sản phẩm</mat-label>
+            <textarea matInput id="description" required placeholder="description" name="description"
+              [(ngModel)]="productContent.description"></textarea>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Giá sản phẩm</mat-label>
+            <input matInput type="number" required placeholder="price" id="price" name="price"
+              [(ngModel)]="productContent.price" />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Select Categorys (required)</mat-label>
+            <select matNativeControl required class="form-control" placeholder="category" name="category"
+              [(ngModel)]="productContent.catagory.id">
+              <option label="--select category --"></option>
+              <option *ngFor="let category of categorys" [value]="category.id">
+                {{category.name}}</option>
+            </select>
+
+          </mat-form-field>
+
+          <div style="display:flex" class="spacing-bottom">
+            <button mat-mini-fab type="button" color="primary" (click)="onUploadImageButtonClick()">
+              <mat-icon>attach_file</mat-icon>
+            </button>
+            <span style="display: flex;align-items: center;margin-left: 15px;">
+              <!-- {{
+             (createProductForm.value.image &&
+               createProductForm.value.image.name) ||
+               "upload an image"
+           }} -->
+            </span>
+            <input name="image" type="file" (change)="onFileChange()" hidden #inputImage />
+          </div>
+          <br>
+          <button class="spacing-top" mat-raised-button color="primary" type="submit">
+            submit
+          </button>
+        </form>
+      </div>
+      <div class="col">
+        <div *ngIf="!imageDataUrl">
+          <ngx-skeleton-loader appearance="circle" [theme]="style"></ngx-skeleton-loader>
+        </div>
+        <div *ngIf="imageDataUrl">
+          <img
+            style="display: block;max-width: 100%; text-align: center; border-radius: 10px; margin:10px auto;height: 327px;object-fit: cover;"
+            [src]="imageDataUrl" />
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+
+<div mat-dialog-actions align="end">
+  <!-- <button mat-raised-button (click)="onNoClick()">Thóat</button> -->
+  <!-- <button mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
+</div>

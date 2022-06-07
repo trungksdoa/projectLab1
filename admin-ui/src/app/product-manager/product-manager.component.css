@@ -1,0 +1,12 @@
+table {
+  /* border: 1px solid black; */
+  table-layout: fixed;
+  width: 100%;
+}
+
+td #description{
+  /* border: 1px solid black; */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
