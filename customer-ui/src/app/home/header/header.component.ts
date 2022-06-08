@@ -10,6 +10,7 @@ import { Product } from 'src/app/api/product/product'
 import { HttpErrorResponse } from '@angular/common/http'
 import { ProductService } from 'src/app/api/product/product.service'
 import { FormControl } from '@angular/forms'
+import { Input } from '@angular/core'
 
 @Component({
   selector: 'app-header',
@@ -17,57 +18,45 @@ import { FormControl } from '@angular/forms'
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  @Input() products: Product[]
   myControl = new FormControl('')
   filteredOptions: Observable<Product[]>
-  products: Product[]
   searchMode: boolean
   isLogin: Boolean = false
-
-  constructor (
+  constructor(
     private sharedService: SharedService,
     private router: Router,
     private dialogService: DialogService,
-    private productService: ProductService
   ) {
     this.sharedService.isLoggedIn().subscribe(data => {
       this.isLogin = data
     })
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.getAllProduct()
   }
 
-  public getAllProduct (): void {
-    this.productService.getAllProduct().subscribe(
-      (response: Product[]) => {
-        this.products = response
-        this.filteredOptions = this.myControl.valueChanges.pipe(
-          startWith(''),
-          debounceTime(1000),
-          map(value => this._filter(value || ''))
-        )
-        console.log(this.products)
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message)
-      }
+  public getAllProduct(): void {
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(1000),
+      map(value => this._filter(value || ''))
     )
   }
 
-  private _filter (value: string): Product[] {
+  private _filter(value: string): Product[] {
     const filterValue = value.toLowerCase()
     return this.products.filter(
       option => option.name.toLowerCase().indexOf(filterValue) === 0
     )
   }
 
-  doSearch (value: String): void {
+  doSearch(value: String): void {
     debounceTime(1000)
-    console.log(`value=${value}`)
-    this.router.navigateByUrl(`/search/${value}`)
+    this.router.navigateByUrl(`/product/search/${value}`)
   }
-  openCart (): void {
+  openCart(): void {
     this.dialogService
       .openDialog(
         {
@@ -87,7 +76,7 @@ export class HeaderComponent implements OnInit {
       })
   }
 
-  logOut () {
+  logOut() {
     this.sharedService.deleteLocal('user')
     this.router.navigate(['login'])
     this.sharedService.isLoggin(false)

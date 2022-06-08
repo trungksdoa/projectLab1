@@ -53,9 +53,9 @@ import { ProfileOrderComponent } from './profile-order/profile-order.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { ProfileOrderDetailComponent } from './profile-order-detail/profile-order-detail.component';
 import { ProductBestSellerComponent } from './product-best-seller/product-best-seller.component';
-import { ProductCateidComponent } from './product-cateid/product-cateid.component';
+
 import { RegisterComponent } from './register/register.component';
-import { SearchComponent } from './search/search.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,9 +77,7 @@ import { SearchComponent } from './search/search.component';
     InvoiceComponent,
     ProfileOrderDetailComponent,
     ProductBestSellerComponent,
-    ProductCateidComponent,
     RegisterComponent,
-    SearchComponent,
   ],
   imports: [
     BrowserModule,

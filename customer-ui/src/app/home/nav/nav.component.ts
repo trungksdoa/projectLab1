@@ -14,10 +14,9 @@ import { SharedService } from 'src/app/shared.service';
 export class NavComponent implements OnInit {
 
   public categorys: Category[]
-  public products: Product[]
+  
   constructor (
     private categoryService: CategoryService,
-    private active: ActivatedRoute,
     private service: SharedService
   ) {}
 

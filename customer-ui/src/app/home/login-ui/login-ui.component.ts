@@ -32,12 +32,12 @@ export class LoginUiComponent implements OnInit {
     // alert(JSON.stringify(param))
     const user: Users = {
       id: 0,
-      name: param.name,
+      name: undefined,
       password: param.password,
       address: undefined,
       phone: undefined,
       isAdmin: false,
-      username: undefined
+      username: param.username
     }
 
     return user

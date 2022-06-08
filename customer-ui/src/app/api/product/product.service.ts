@@ -12,8 +12,6 @@ export class ProductService {
 
   public getAllProduct (): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiServerUrl}/product/all`)
-  }public getAllProduct2 (theKeyword:String): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiServerUrl}/product/all`)
   }
   public getProductByCateId (catid:any): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiServerUrl}/product/category/${catid}`)

@@ -10,9 +10,10 @@ import { LoginUiComponent } from './home/login-ui/login-ui.component'
 import { RoleGuardService as RoleGuard } from './Auth/role-guard.service'
 import { AuthGuardService as AuthGuard } from 'src/app/Auth/auth-guard.service'
 import { InvoiceComponent } from './invoice/invoice.component'
-import { ProductCateidComponent } from './product-cateid/product-cateid.component';
+
 import { RegisterComponent } from './register/register.component';
-import { SearchComponent } from './search/search.component';
+
+import { ProductComponent } from './home/product/product.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,8 +26,9 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginUiComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'product/:id', component: ProductCateidComponent },
-  { path: 'search/:keyword', component: SearchComponent }
+  { path: 'product/category/:id', component: ProductComponent },
+  { path: 'product/search/:keyword', component: ProductComponent },
+ 
 ]
 
 @NgModule({

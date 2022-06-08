@@ -5,12 +5,12 @@
   <mat-card-content>
     <form class="example-form" #addForm="ngForm" (ngSubmit)="formSubmit(addForm)">
       <div class="mb-3">
-        <label for="name" class="form-label">Tên đăng nhập</label>
-        <input type="text" ngModel name="name" class="form-control" id="name">
+        <label for="username" class="form-label">Tên đăng nhập</label>
+        <input type="text" ngModel name="username" class="form-control" id="username">
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Mật khẩu</label>
-        <input type="password" ngModel name="password" class="form-control" id="password0">
+        <input type="password" ngModel name="password" class="form-control" id="password">
       </div>
       <mat-card-actions>
         <button mat-button style="background-color:beige" type="submit">Đăng nhập</button>

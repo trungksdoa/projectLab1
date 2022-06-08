@@ -1,4 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http'
+import { Input } from '@angular/core'
 import { Component, OnInit } from '@angular/core'
 import { Product } from 'src/app/api/product/product'
 import { ProductService } from 'src/app/api/product/product.service'
@@ -9,11 +10,10 @@ import { ProductService } from 'src/app/api/product/product.service'
   styleUrls: ['./product-best-seller.component.css']
 })
 export class ProductBestSellerComponent implements OnInit {
-  public products: Product[]
-  constructor (private productService: ProductService) {}
-
+  @Input() products: Product[]
+  constructor () {}
   ngOnInit () {
-    this.getAllProduct()
+   
   }
   slideConfig = { slidesToShow: 4, slidesToScroll: 4 }
 
@@ -31,17 +31,5 @@ export class ProductBestSellerComponent implements OnInit {
 
   beforeChange (e) {
     console.log('beforeChange')
-  }
-  public getAllProduct (): void {
-    this.productService.getAllProduct().subscribe(
-      (response: Product[]) => {
-        this.products = response
-
-        console.log(this.products)
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message)
-      }
-    )
   }
 }
