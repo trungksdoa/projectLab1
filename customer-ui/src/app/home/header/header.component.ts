@@ -1,16 +1,12 @@
-import { PCartComponent } from 'src/app/home/p-cart/p-cart.component'
-import { Component, OnInit } from '@angular/core'
-import { MatBottomSheet } from '@angular/material/bottom-sheet'
-import { SharedService } from 'src/app/shared.service'
-import { Router } from '@angular/router'
 import { async, debounceTime, map, Observable, startWith } from 'rxjs'
-import { MatDialog } from '@angular/material/dialog'
+import { Input, Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { FormControl } from '@angular/forms'
+
+import { SharedService } from 'src/app/shared.service'
 import { DialogService } from 'src/app/dialog.service'
 import { Product } from 'src/app/api/product/product'
-import { HttpErrorResponse } from '@angular/common/http'
-import { ProductService } from 'src/app/api/product/product.service'
-import { FormControl } from '@angular/forms'
-import { Input } from '@angular/core'
+import { PCartComponent } from 'src/app/feature/p-cart/p-cart.component'
 
 @Component({
   selector: 'app-header',
@@ -23,21 +19,26 @@ export class HeaderComponent implements OnInit {
   filteredOptions: Observable<Product[]>
   searchMode: boolean
   isLogin: Boolean = false
-  constructor(
+  itemCount: number = 0
+  constructor (
     private sharedService: SharedService,
     private router: Router,
-    private dialogService: DialogService,
+    private dialogService: DialogService
   ) {
+
+  }
+
+  ngOnInit (): void {
     this.sharedService.isLoggedIn().subscribe(data => {
       this.isLogin = data
     })
-  }
-
-  ngOnInit(): void {
+    this.sharedService.getUniqueItemInCart().subscribe(uniqueItemInCart => {
+      this.itemCount = uniqueItemInCart
+    })
     this.getAllProduct()
   }
 
-  public getAllProduct(): void {
+  public getAllProduct (): void {
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       debounceTime(1000),
@@ -45,40 +46,44 @@ export class HeaderComponent implements OnInit {
     )
   }
 
-  private _filter(value: string): Product[] {
+  private _filter (value: string): Product[] {
     const filterValue = value.toLowerCase()
     return this.products.filter(
       option => option.name.toLowerCase().indexOf(filterValue) === 0
     )
   }
 
-  doSearch(value: String): void {
+  doSearch (value: String): void {
     debounceTime(1000)
     this.router.navigateByUrl(`/product/search/${value}`)
   }
-  openCart(): void {
-    this.dialogService
-      .openDialog(
-        {
-          width: '90vw', //sets width of dialog
-          height: '100%', //sets width of dialog
-          maxWidth: '100vw', //overrides default width of dialog
-          maxHeight: '100vh', //overrides default height of dialog
-          // disableClose:true,
-          data: { name: 'trung' }
-        },
-        PCartComponent
-      )
-      .subscribe(type => {
-        if (type === 'goInvoice') {
-          this.router.navigate(['/invoice'])
-        }
-      })
+  openCart (): void {
+    this.sharedService.getLocal('user')
+      ? this.dialogService
+          .openDialog(
+            {
+              width: '90vw', //sets width of dialog
+              height: '100%', //sets width of dialog
+              maxWidth: '100vw', //overrides default width of dialog
+              maxHeight: '100vh', //overrides default height of dialog
+              // disableClose:true,
+              data: { name: 'trung' }
+            },
+            PCartComponent
+          )
+          .subscribe(type => {
+            if (type === 'goInvoice') {
+              this.router.navigate(['/invoice'])
+            }
+          })
+      : ''
   }
 
-  logOut() {
+  logOut () {
     this.sharedService.deleteLocal('user')
     this.router.navigate(['login'])
     this.sharedService.isLoggin(false)
+    this.sharedService.deleteLocal('uniqueItemInCart')
+    this.sharedService.setUniqueItemNumber(0)
   }
 }

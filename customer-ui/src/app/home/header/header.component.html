@@ -1,61 +1,45 @@
 <header>
   <div class="row">
     <mat-toolbar class="navbar" id="header">
-      <button
-        mat-raised-button
-        style="background-color: #232f3e"
-        [routerLink]="['/home']"
-      >
+      <button mat-raised-button style="background-color: #232f3e" [routerLink]="['/home']">
         <mat-icon class="example-spacer" style="color: white">home</mat-icon>
       </button>
 
       <span class="example-spacer"></span>
 
       <form class="form-inline">
-        <input
-          matInput
-          class="form-control"
-          #myInput
-          type="search"
-          placeholder="Tìm Kiếm"
-          (keyup.enter)="doSearch(myInput.value)"
-          [formControl]="myControl"
-          [matAutocomplete]="auto"
-          style="width: 750px"
-        />
+        <input matInput class="form-control" #myInput type="search" placeholder="Tìm Kiếm"
+          (keyup.enter)="doSearch(myInput.value)" [formControl]="myControl" [matAutocomplete]="auto"
+          style="width: 750px" />
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option
-            *ngFor="let option of filteredOptions | async"
-            [value]="option.name"
-          >
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
             <span>{{ option.name }} </span>
-            <small style="position: absolute; right: 30px; color: gray"
-              >in {{ option.catagory.name }}</small
-            >
+            <small style="position: absolute; right: 30px; color: gray">in {{ option.catagory.name }}</small>
           </mat-option>
         </mat-autocomplete>
-        <button
-          mat-button
-          (click)="doSearch(myInput.value)"
-          style="background-color: #232f3e"
-        >
+        <button mat-button (click)="doSearch(myInput.value)" style="background-color: #232f3e">
           <mat-icon>search</mat-icon>
         </button>
       </form>
 
       <span class="example-spacer"></span>
-      <div class="sign-in" *ngIf="!isLogin">
-        <a mat-raised-button [routerLink]="['/login']">Đăng Nhập</a>
+      <button mat-raised-button color="primary" *ngIf="!isLogin" [routerLink]="['/login']">Đăng Nhập</button>
+      <div class="sign-in" *ngIf="isLogin">
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">Tài khoản</button>
+        <mat-menu #menu="matMenu">
+          <a mat-menu-item [routerLink]="['profile']">Thông tin</a>
+          <a mat-menu-item (click)="logOut()" [routerLink]="['/']"> Đăng Xuất</a>
+        </mat-menu>
       </div>
-        <div class="sign-in" *ngIf="isLogin" (click)="logOut()">
-          <a mat-raised-button [routerLink]="['/']">Đăng Xuất</a>
-        </div>
-        <div class="cart" (click)="openCart()">
-          <a mat-raised-button color="warn">
-            <mat-icon>add_shopping_cart</mat-icon> Giỏ Hàng
-          </a>
-        </div>
-
+      <div class="cart" (click)="openCart()">
+        <button mat-raised-button color="warn" *ngIf="isLogin" matBadge="{{itemCount}}" matBadgePosition="after"
+          matBadgeColor="warn">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+        <button mat-raised-button color="warn" *ngIf="!isLogin">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+      </div>
     </mat-toolbar>
   </div>
 </header>

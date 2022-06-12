@@ -1,17 +1,20 @@
-#header{
-    background-color: #131921;
-    color: white;
-    
+#header {
+  background-color: #131921;
+  color: white;
+
 }
-button{
-    border: 0;
-    background-color: yellow; 
+
+button {
+  border: 0;
+  background-color: yellow;
 }
-mat-form-field{
-    position: absolute;
-    right:500   px;
-    width:1000px;
+
+mat-form-field {
+  position: absolute;
+  right: 500 px;
+  width: 1000px;
 }
+
 .example-spacer {
-    flex: 1 1 auto;
-  }
+  width: 10%;
+}

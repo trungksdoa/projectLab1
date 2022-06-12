@@ -1,4 +1,4 @@
-import { Users } from './user'
+import { Users } from '../../model/user'
 import { Product } from 'src/app/api/product/product'
 export interface Cart {
   id: number
@@ -6,6 +6,7 @@ export interface Cart {
   createAt: String
   cartItem: Array<cartItemsWithSelect>
   userId: Users
+  TotalPrice:number
 }
 export interface cartItem {
   id: number

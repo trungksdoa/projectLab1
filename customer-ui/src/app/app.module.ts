@@ -1,14 +1,10 @@
 
-import { RoleGuardService } from './Auth/role-guard.service';
 import { AuthGuardService } from './Auth/auth-guard.service'
-import { UserService } from './api/cart/user.service'
-import { checklogin } from 'src/app/Auth/auth-guard.service'
-
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 
-import { CartService } from './api/cart/cart.service'
+
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -20,8 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 //Material
 
 
-import { PDetailComponent } from './home/p-detail/p-detail.component'
-import { PCartComponent } from './home/p-cart/p-cart.component'
+
 import { MaterialExampleModule } from './module/material.module'
 import { HomeComponent } from './home/home.component'
 import { CategoryService } from './api/category/category.service'
@@ -34,27 +29,36 @@ import { FooterComponent } from './home/footer/footer.component'
 // import { AdminProductComponent } from './admin/admin-product/admin-product.component'
 // import { AdminItemsComponent } from './admin/admin-items/admin-items.component'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
-import { PPaymentComponent } from './home/p-payment/p-payment.component'
+
 import { SharedService } from './shared.service'
-import { OrderService } from './api/cart/order.service'
 
 import { LoginUiComponent } from './home/login-ui/login-ui.component'
-import { CityService } from './api/cart/citys.service';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { httpInterceptProviders } from './http';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { NgxPayPalModule } from 'ngx-paypal';
-import { TestPaypalComponent } from './test-paypal/test-paypal.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ProfileChartComponent } from './profile-chart/profile-chart.component';
 import { NgChartsModule } from 'ng2-charts';
-import { ProfileOrderComponent } from './profile-order/profile-order.component';
 import { InvoiceComponent } from './invoice/invoice.component';
-import { ProfileOrderDetailComponent } from './profile-order-detail/profile-order-detail.component';
 import { ProductBestSellerComponent } from './product-best-seller/product-best-seller.component';
 
-import { RegisterComponent } from './register/register.component';
+// import { RegisterComponent } from './register/register.component';
+import { PCartComponent } from './feature/p-cart/p-cart.component';
+import { PDetailComponent } from './feature/p-detail/p-detail.component';
+import { PPaymentComponent } from './feature/p-payment/p-payment.component';
+import { CartService } from './feature/p-cart/cart.service';
+import { CityService } from './feature/p-payment/citys.service';
+import { OrderService } from './feature/p-payment/order.service';
+import { UserService } from './feature/profile/user.service';
+import { RegisterComponent } from './feature/register/register.component';
+import { SearchComponent } from './feature/search/search.component';
+import { ProfileChartComponent } from './feature/profile/profile-chart/profile-chart.component';
+import { ProfileOrderDetailComponent } from './feature/profile/profile-order-detail/profile-order-detail.component';
+import { ProfileOrderComponent } from './feature/profile/profile-order/profile-order.component';
+import { ProfileComponent } from './feature/profile/profile.component';
+import { PaymentPaypal } from './feature/p-payment/Payment-paypal/test-paypal.component';
+import { ConfirmDeactivateGuardService } from './Auth/confirm-deactivate-guard.service';
+import { LoginGuardService } from './Auth/login-guard.service';
 
 @NgModule({
   declarations: [
@@ -70,7 +74,7 @@ import { RegisterComponent } from './register/register.component';
     PPaymentComponent,
     LoginUiComponent,
     SpinnerComponent,
-    TestPaypalComponent,
+    PaymentPaypal,
     ProfileComponent,
     ProfileChartComponent,
     ProfileOrderComponent,
@@ -78,6 +82,7 @@ import { RegisterComponent } from './register/register.component';
     ProfileOrderDetailComponent,
     ProductBestSellerComponent,
     RegisterComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,9 +109,9 @@ import { RegisterComponent } from './register/register.component';
     OrderService,
     UserService,
     AuthGuardService,
-    RoleGuardService,
     CityService,
-    checklogin
+    ConfirmDeactivateGuardService,
+    LoginGuardService
   ],
   bootstrap: [AppComponent]
 })

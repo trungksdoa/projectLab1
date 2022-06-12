@@ -1,18 +1,20 @@
-// src/app/auth/auth-guard.service.ts
 import { Injectable } from '@angular/core'
 import {
-  Router,
   CanActivate,
+  Router,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   UrlTree
 } from '@angular/router'
 import { Observable } from 'rxjs'
 import { SharedService } from '../shared.service'
-@Injectable()
-export class AuthGuardService implements CanActivate {
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LoginGuardService implements CanActivate {
   constructor (public sharedService: SharedService, public router: Router) {}
-  isloggin  = false;
+  isloggin = false
   canActivate (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -22,14 +24,13 @@ export class AuthGuardService implements CanActivate {
     | boolean
     | UrlTree {
     this.sharedService.isLoggedIn().subscribe(isLoggedIn => {
-      this.isloggin = isLoggedIn;
+      this.isloggin = isLoggedIn
     })
     if (this.isloggin) {
-      return true
+      this.router.navigate(['/home'])
+      return false;
     } else {
-      console.log('Could not authenticate')
-      this.router.navigate(['/login'], { queryParams: { redirectURL: state.url } })
-      return false
+      return true;
     }
   }
 }

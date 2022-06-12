@@ -10,19 +10,19 @@ import { BannerService } from '../api/cart/banner_service'
   styleUrls: ['./banner-manager.component.css']
 })
 export class BannerManagerComponent implements OnInit {
-
   @ViewChild('inputImage', { static: false }) inputImage
 
   selectedFiles?: FileList
   progressInfos: any[] = []
   message: string[] = []
-  imageDataUrl: any = "https://previews.123rf.com/images/bonumopus/bonumopus1603/bonumopus160300089/53156323-empty-transparent-background-with-gradient-opacity-.jpg"
+  imageDataUrl: any =
+    'https://previews.123rf.com/images/bonumopus/bonumopus1603/bonumopus160300089/53156323-empty-transparent-background-with-gradient-opacity-.jpg'
   fileInfos?: Observable<any>
 
   constructor (private uploadService: BannerService) {}
 
   ngOnInit (): void {
-    this.fileInfos = this.uploadService.getFiles();
+    this.fileInfos = this.uploadService.getFiles()
   }
 
   selectFiles (event: any): void {
@@ -31,16 +31,12 @@ export class BannerManagerComponent implements OnInit {
     this.selectedFiles = event.target.files
   }
 
-
-
   upload (idx: number, file: File): void {
     this.progressInfos[idx] = { value: 0, fileName: file.name }
 
-
     if (file) {
       const form = new FormData()
-      form.append("file",file)
-
+      form.append('file', file)
 
       this.uploadService.uploadBanner(form).subscribe({
         next: (event: any) => {
@@ -68,19 +64,17 @@ export class BannerManagerComponent implements OnInit {
   uploadFiles (): void {
     this.message = []
 
-
     if (this.selectedFiles) {
-
-      console.log(this.selectedFiles);
+      console.log(this.selectedFiles)
       for (let i = 0; i < this.selectedFiles.length; i++) {
-
         this.upload(i, this.selectedFiles[i])
       }
     }
   }
 
-  clearFile(){
+  clearFile () {
     // this.selectedFiles = null;
-    this.imageDataUrl = "https://previews.123rf.com/images/bonumopus/bonumopus1603/bonumopus160300089/53156323-empty-transparent-background-with-gradient-opacity-.jpg";
+    this.imageDataUrl =
+      'https://previews.123rf.com/images/bonumopus/bonumopus1603/bonumopus160300089/53156323-empty-transparent-background-with-gradient-opacity-.jpg'
   }
 }

@@ -1,35 +1,37 @@
 // import { UserService } from './../../../admin-ui/src/app/api/user.service'
-import { cartItem } from 'src/app/model/cart'
-import { UserService } from 'src/app/api/cart/user.service'
+import { Cart } from 'src/app/feature/p-cart/cart'
 // import { cartItem } from 'src/app/mo'
 import { EventEmitter, Injectable } from '@angular/core'
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs'
+import { BehaviorSubject, Subscription } from 'rxjs'
+import { CartService } from './feature/p-cart/cart.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
-  invokeGetitemToPaymentFunction = new EventEmitter()
-  invokeChecKIsPaymentOnline = new EventEmitter()
-
+  afterClick = new EventEmitter()
   shareProduct = new EventEmitter()
-
   subsVar: Subscription
 
   private _isLoggedIn = new BehaviorSubject<boolean>(false)
-  private _isAdmin = new BehaviorSubject<boolean>(false)
+  private _uniqueItemInCart = new BehaviorSubject<number>(0)
 
-  openSidePayment (cartItem: cartItem[]) {
-    this.invokeGetitemToPaymentFunction.emit(cartItem)
+  constructor () {}
+  callFunctionByClick () {
+    this.afterClick.emit()
   }
 
-  checkIsPaymentOnline () {
-    this.invokeChecKIsPaymentOnline.emit()
-  }
   openSidePayment2 () {
     this.shareProduct.emit()
   }
 
+  /*
+   *
+   *
+   * other used
+   *
+   *
+   */
   getFormatCurrency (value: number) {
     const formatter = new Intl.NumberFormat('vi-VN', {
       style: 'currency',
@@ -39,19 +41,13 @@ export class SharedService {
     return formatter.format(value)
   }
 
-  setLocal (name: string, value: any) {
-    localStorage.setItem(name, JSON.stringify(value))
-  }
-  getLocal (name: string) {
-    return localStorage.getItem(name)
-      ? JSON.parse(localStorage.getItem(name))
-      : ''
-  }
-
-  deleteLocal (name: string) {
-    localStorage.removeItem(name)
-  }
-
+  /*
+   *
+   *
+   * check observationTargets
+   *
+   *
+   */
   isLoggin (status: boolean) {
     this._isLoggedIn.next(status)
   }
@@ -65,21 +61,43 @@ export class SharedService {
     return this._isLoggedIn.asObservable()
   }
 
-  isAdmin (): Observable<boolean> {
-    var subject = new Subject<boolean>()
-    this.isLoggedIn().subscribe(isloggin => {
-      if (isloggin) {
-        this.userservice
-          .triggerCheckIsAdmin(JSON.parse(this.getLocal('user')).name)
-          .subscribe(isAdmin => {
-            subject.next(isAdmin)
-          })
-      }
-    })
-    return subject.asObservable()
+  /*
+   *
+   *
+   * LocalStorage
+   *
+   *
+   */
+
+  setLocal (name: string, value: any) {
+    localStorage.setItem(name, JSON.stringify(value))
+  }
+  getLocal (name: string) {
+    return localStorage.getItem(name)
+      ? JSON.parse(localStorage.getItem(name))
+      : ''
+  }
+  deleteLocal (name: string) {
+    localStorage.removeItem(name)
   }
 
-  constructor (private userservice: UserService) {
-    // this.isAdmin().subscribe((r)=>console.log(r))
+  /*
+   *
+   *
+   * used LocalStorage
+   *
+   *
+   */
+
+  setUniqueItemNumber (value: number) {
+    this._uniqueItemInCart.next(value)
+  }
+  getUniqueItemInCart () {
+    if (this.getLocal('uniqueItemInCart') !== '') {
+      this._uniqueItemInCart.next(this.getLocal('uniqueItemInCart'))
+    } else {
+      this._uniqueItemInCart.next(0)
+    }
+    return this._uniqueItemInCart.asObservable()
   }
 }

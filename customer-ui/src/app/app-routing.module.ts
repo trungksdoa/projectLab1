@@ -1,34 +1,47 @@
-import { ProfileComponent } from './profile/profile.component';
 import { NgModule } from '@angular/core'
-import { Routes, CanActivate } from '@angular/router'
-import { RouterModule } from '@angular/router'
+import { Routes, RouterModule } from '@angular/router'
 import { HomeComponent } from './home/home.component'
-import { PPaymentComponent } from './home/p-payment/p-payment.component'
-import { PDetailComponent } from './home/p-detail/p-detail.component'
+import { RegisterComponent } from './feature/register/register.component'
+import { PDetailComponent } from './feature/p-detail/p-detail.component'
+import { ProfileComponent } from './feature/profile/profile.component'
 import { LoginUiComponent } from './home/login-ui/login-ui.component'
-
-import { RoleGuardService as RoleGuard } from './Auth/role-guard.service'
-import { AuthGuardService as AuthGuard } from 'src/app/Auth/auth-guard.service'
+import { ProductComponent } from './home/product/product.component'
 import { InvoiceComponent } from './invoice/invoice.component'
-
-import { RegisterComponent } from './register/register.component';
-
-import { ProductComponent } from './home/product/product.component';
+import { AuthGuardService } from './Auth/auth-guard.service'
+import { ConfirmDeactivateGuardService } from './Auth/confirm-deactivate-guard.service'
+import { LoginGuardService } from './Auth/login-guard.service'
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'invoice', component: InvoiceComponent },
-  { path: 'profile', component: ProfileComponent },
+  {
+    path: 'invoice',
+    component: InvoiceComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuardService]
+  },
   {
     path: 'detail/:id', // child route path
-    component: PDetailComponent, // child route component that the router renders
+    component: PDetailComponent
+    // child route component that the router renders
   },
-  { path: 'login', component: LoginUiComponent },
-  { path: 'register', component: RegisterComponent },
+  {
+    path: 'login',
+    component: LoginUiComponent,
+    canDeactivate: [ConfirmDeactivateGuardService],
+    canActivate: [LoginGuardService]
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canDeactivate: [ConfirmDeactivateGuardService]
+  },
   { path: 'product/category/:id', component: ProductComponent },
-  { path: 'product/search/:keyword', component: ProductComponent },
- 
+  { path: 'product/search/:keyword', component: ProductComponent }
 ]
 
 @NgModule({
