@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { Input } from '@angular/core'
 import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 import { Product } from 'src/app/api/product/product'
 import { ProductService } from 'src/app/api/product/product.service'
 
@@ -11,10 +12,13 @@ import { ProductService } from 'src/app/api/product/product.service'
 })
 export class ProductBestSellerComponent implements OnInit {
   @Input() products: Product[]
-  constructor () {}
-  ngOnInit () {
-   
+  constructor (private router: Router) {}
+  ngOnInit () {}
+
+  goToDetail (id: any) {
+    this.router.navigate([`detail/${id}`])
   }
+
   slideConfig = { slidesToShow: 4, slidesToScroll: 4 }
 
   slickInit (e) {

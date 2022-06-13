@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit, IDeactivateOptions {
       this.UserService.Save(requestUser).subscribe(data => {
         if (data) {
           this.isSubmit = true
-          this.sharedService.setLocal('user', JSON.stringify(data))
+          this.sharedService.setLocal('user', data)
           this.router.navigate([''])
           this.sharedService.isLoggin(true)
           form.reset()

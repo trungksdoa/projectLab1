@@ -36,7 +36,7 @@
             <tr *ngFor="let order of orders">
               <td> <button mat-button style="padding:5px">{{order.id}} </button></td>
               <td> <button mat-button style="padding:5px">{{order.createAt}}</button></td>
-              <td> <button mat-button style="padding:5px">{{order.totalAmount}} </button></td>
+              <td> <button mat-button style="padding:5px">{{formatCurrency(order.totalAmount)}} </button></td>
               <td>
                 <div *ngIf="order.status == 1;">
                   <button mat-button color="warn"  style="padding:5px">Chưa xác nhận</button>
@@ -59,7 +59,7 @@
         <app-profile-order></app-profile-order>
       </mat-card>
       <mat-card *ngIf="pages === 'setting'">
-        phim 2 người đóng
+
       </mat-card>
     </div>
   </div>

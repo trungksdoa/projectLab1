@@ -4,6 +4,8 @@ import { Cart } from 'src/app/feature/p-cart/cart'
 import { EventEmitter, Injectable } from '@angular/core'
 import { BehaviorSubject, Subscription } from 'rxjs'
 import { CartService } from './feature/p-cart/cart.service'
+import { Users } from './model/user'
+import { CookieService } from 'ngx-cookie-service'
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +18,9 @@ export class SharedService {
   private _isLoggedIn = new BehaviorSubject<boolean>(false)
   private _uniqueItemInCart = new BehaviorSubject<number>(0)
 
-  constructor () {}
-  callFunctionByClick () {
-    this.afterClick.emit()
+  constructor (private cookieService: CookieService) {}
+  callFunctionByClick (value?: any) {
+    this.afterClick.emit(value)
   }
 
   openSidePayment2 () {
@@ -53,7 +55,7 @@ export class SharedService {
   }
 
   isLoggedIn () {
-    if (this.getLocal('user') !== '') {
+    if (this.getUserFromCookie()) {
       this._isLoggedIn.next(true)
     } else {
       this._isLoggedIn.next(false)
@@ -80,6 +82,40 @@ export class SharedService {
   deleteLocal (name: string) {
     localStorage.removeItem(name)
   }
+  /*
+   *
+   *
+   * cookies
+   *
+   *
+   */
+
+  setCookie (name: string, value: any) {
+    if (name === 'user') {
+      var now = new Date()
+      var time = now.getTime()
+      var expireTime = time + 1000 * 36000
+      now.setTime(expireTime)
+      this.cookieService.set(name, JSON.stringify(value),expireTime)
+    }else{
+      this.cookieService.set(name, JSON.stringify(value))
+    }
+
+  }
+  getCookie (name: string) {
+    return this.cookieService.get(name)
+      ? JSON.parse(this.cookieService.get(name))
+      : ''
+  }
+  deleteCookie (name: string) {
+    this.cookieService.delete(name)
+  }
+
+  getUserFromCookie (): Users {
+    return this.cookieService.get('user')
+      ? JSON.parse(this.cookieService.get('user'))
+      : null
+  }
 
   /*
    *
@@ -93,11 +129,16 @@ export class SharedService {
     this._uniqueItemInCart.next(value)
   }
   getUniqueItemInCart () {
-    if (this.getLocal('uniqueItemInCart') !== '') {
-      this._uniqueItemInCart.next(this.getLocal('uniqueItemInCart'))
+    if (this.getLocal('localCart') !== '') {
+      this._uniqueItemInCart.next(this.getLocal('localCart').totalUniqueItems)
     } else {
       this._uniqueItemInCart.next(0)
     }
     return this._uniqueItemInCart.asObservable()
   }
+
+  //
+  // getUser (): Users {
+  //   return this.getLocal('user')
+  // }
 }

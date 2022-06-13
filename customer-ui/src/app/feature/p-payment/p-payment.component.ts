@@ -184,7 +184,7 @@ export class PPaymentComponent implements OnInit {
     let user = new Users(1, '', '', '', '', '')
     this.sharedService.isLoggedIn().subscribe(isLoggin => {
       if (isLoggin) {
-        user.id = JSON.parse(this.sharedService.getLocal('user')).id
+        user = this.sharedService.getUserFromCookie()
       } else {
         user = null
       }

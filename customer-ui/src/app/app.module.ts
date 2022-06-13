@@ -29,7 +29,7 @@ import { FooterComponent } from './home/footer/footer.component'
 // import { AdminProductComponent } from './admin/admin-product/admin-product.component'
 // import { AdminItemsComponent } from './admin/admin-items/admin-items.component'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
-
+import { CookieService } from 'ngx-cookie-service';
 import { SharedService } from './shared.service'
 
 import { LoginUiComponent } from './home/login-ui/login-ui.component'
@@ -52,7 +52,6 @@ import { OrderService } from './feature/p-payment/order.service';
 import { UserService } from './feature/profile/user.service';
 import { RegisterComponent } from './feature/register/register.component';
 import { SearchComponent } from './feature/search/search.component';
-import { ProfileChartComponent } from './feature/profile/profile-chart/profile-chart.component';
 import { ProfileOrderDetailComponent } from './feature/profile/profile-order-detail/profile-order-detail.component';
 import { ProfileOrderComponent } from './feature/profile/profile-order/profile-order.component';
 import { ProfileComponent } from './feature/profile/profile.component';
@@ -76,7 +75,6 @@ import { LoginGuardService } from './Auth/login-guard.service';
     SpinnerComponent,
     PaymentPaypal,
     ProfileComponent,
-    ProfileChartComponent,
     ProfileOrderComponent,
     InvoiceComponent,
     ProfileOrderDetailComponent,
@@ -111,7 +109,8 @@ import { LoginGuardService } from './Auth/login-guard.service';
     AuthGuardService,
     CityService,
     ConfirmDeactivateGuardService,
-    LoginGuardService
+    LoginGuardService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

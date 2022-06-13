@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { UserService } from 'src/app/feature/profile/user.service'
 import { IDeactivateOptions } from 'src/app/Auth/confirm-deactivate-guard.service'
 import { Observable } from 'rxjs'
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-login-ui',
   templateUrl: './login-ui.component.html',
@@ -20,7 +21,7 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
     private sharedService: SharedService,
     private cartService: CartService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit (): void {
@@ -60,8 +61,8 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
       this.UserService.loginRequest(requestUser).subscribe(data => {
         if (data) {
           this.isSubmit = true
-          this.sharedService.setLocal('user', JSON.stringify(data))
-          this.cartService.bindingCartToDBAfterLogin();
+          this.cartService.getCartFromDB(data);
+          this.sharedService.setCookie('user', data);
           this.sharedService.isLoggin(true)
           this.checkPreviousPage();
           form.reset()

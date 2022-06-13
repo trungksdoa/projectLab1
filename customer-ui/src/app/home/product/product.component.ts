@@ -28,7 +28,7 @@ export class ProductComponent implements OnInit {
   ) {}
 
   ngOnInit () {
-    this.sharedService.getLocal('user') ? (this.isLogin = true) : ''
+    this.sharedService.getUserFromCookie() ? (this.isLogin = true) : ''
     this.route.paramMap.subscribe(() => {
       this.getAllProduct()
     })

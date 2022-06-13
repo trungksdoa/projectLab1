@@ -8,8 +8,9 @@ import { SharedService } from 'src/app/shared.service'
 import { Product } from 'src/app/api/product/product'
 import { Router } from '@angular/router'
 import { Users } from 'src/app/model/user'
+import { SpinnerService } from 'src/app/spinner.service'
 
-interface CartIndentify extends Cart {
+export interface CartIndentify extends Cart {
   isEmpty: boolean
   totalUniqueItems: number
 }
@@ -21,7 +22,8 @@ export class CartService {
   constructor (
     private http: HttpClient,
     private sharedService: SharedService,
-    private router: Router
+    private router: Router,
+    private spinnerServer: SpinnerService
   ) {}
   /*
    *
@@ -39,7 +41,7 @@ export class CartService {
   }
 
   public addCartItem (cartItem: Cart): Observable<any> {
-    return this.http.post<any>(`${this.apiServerUrl}/cart`, cartItem)
+    return this.http.put<any>(`${this.apiServerUrl}/cart`, cartItem)
   }
 
   public deleteCartItem (cartId: String, ItemId: number[]): Observable<any> {
@@ -73,29 +75,6 @@ export class CartService {
     )
   }
 
-  setCartItem (product: Product, user: Users) {
-    const cartItem: Cart = {
-      id: 0,
-      lastUpdated: undefined,
-      createAt: undefined,
-      cartItem: [],
-      userId: user,
-      TotalPrice: product.price
-    }
-    let autoIncrease = cartItem.cartItem.length
-
-    autoIncrease++
-    cartItem.cartItem.push({
-      id: product.id,
-      productItem: product,
-      quantity: 1,
-      productPrice: product.price,
-      active: false,
-      selected: false
-    })
-    return cartItem
-  }
-
   /*
    *
    *
@@ -121,7 +100,7 @@ export class CartService {
     isEmpty: false,
     totalUniqueItems: 0
   }
-  public updateCart (action: { id: number; payload: any }) {
+  updateCart (action: { id: number; payload: any }) {
     const cart: Cart = this.sharedService.getLocal('localCart')
     const items = cart.cartItem.map((item: cartItem) => {
       if (item.id !== action.id) return item
@@ -131,81 +110,137 @@ export class CartService {
         ...action.payload
       }
     })
-
-    return this.calculateItemTotals(items)
+    this.sharedService.callFunctionByClick('refreshCart')
+    return items
   }
-  public addToCart (item: Product, quantity = 1) {
+  addToCart (item: Product, quantity = 1) {
     // this.saveCartToLocalStorage(this.setCartItem(item,null))
-    if (!item.id) throw new Error('You must provide an `id` for items')
-    if (quantity <= 0) return
-    const cart: CartIndentify = this.sharedService.getLocal('localCart')
-      ? this.sharedService.getLocal('localCart')
-      : this.CartIndentify
-    const currentItem = cart.cartItem.find((i: cartItem) => i.id === item.id)
+    if (this.sharedService.getUserFromCookie()) {
+      if (!item.id) throw new Error('You must provide an `id` for items')
+      if (quantity <= 0) return
+      const cart: CartIndentify = this.sharedService.getLocal('localCart')
+        ? this.sharedService.getLocal('localCart')
+        : this.CartIndentify
+      const currentItem = cart.cartItem.find(
+        (i: cartItem) => i.productItem.id === item.id
+      )
 
-    if (!currentItem && !item.hasOwnProperty('price'))
-      throw new Error('You must pass a `price` for new items')
+      if (!currentItem && !item.hasOwnProperty('price'))
+        throw new Error('You must pass a `price` for new items')
 
-    // ...this.itemInitvalue,
+      // ...this.itemInitvalue,
+      this.spinnerServer.requestStarted()
 
-    if (!currentItem) {
-      const currItem: CartIndentify = {
-        ...cart,
-        cartItem: [
-          ...cart.cartItem,
-          {
-            ...this.itemInitvalue,
-            quantity: quantity,
-            productItem: item,
-            id: item.id
-          }
-        ]
+      if (!currentItem) {
+        const currItem: CartIndentify = {
+          ...cart,
+          cartItem: [
+            ...cart.cartItem,
+            {
+              ...this.itemInitvalue,
+              quantity: quantity,
+              productItem: item,
+              id: item.id,
+              productPrice: quantity * item.price
+            }
+          ]
+        }
+
+        if (this.sharedService.getUserFromCookie()) {
+          currItem.userId = this.sharedService.getUserFromCookie()
+          this.saveCartToDB(currItem)
+        }
+        this.sharedService.callFunctionByClick('refreshCart')
+        return
+
+        //End if item is not existing
       }
 
-      currItem.cartItem = this.calculateItemTotals(currItem.cartItem)
+      const payload = {
+        ...currentItem,
+        quantity: currentItem.quantity + quantity,
+        productItem: item
+      }
 
-      currItem.totalUniqueItems = this.calculateUniqueItems(currItem.cartItem)
-      currItem.isEmpty = currItem.totalUniqueItems === 0
-      this.saveCartToLocalStorage(currItem)
-      return
+      cart.cartItem = this.updateCart({
+        id: item.id,
+        payload: payload
+      })
+
+      if (this.sharedService.getUserFromCookie()) {
+        const cartDB: CartIndentify = this.generatorCart(cart, cart.cartItem)
+        cartDB.cartItem = []
+        cartDB.cartItem.push(payload)
+        cart.userId = this.sharedService.getUserFromCookie()
+
+        setTimeout(() => {
+          this.saveCartToDB(cart)
+          this.spinnerServer.requestEnded()
+        }, 1000)
+      }
+      this.sharedService.callFunctionByClick('refreshCart')
+    } else {
+      alert('Please fucking login')
     }
-
-    const payload = {
-      ...currentItem,
-      quantity: currentItem.quantity + quantity,
-      productItem: item
-    }
-
-    cart.cartItem = this.updateCart({
-      id: item.id,
-      payload: payload
-    })
-
-    cart.totalUniqueItems = this.calculateUniqueItems(cart.cartItem)
-    cart.isEmpty = cart.totalUniqueItems === 0
-
-    this.saveCartToLocalStorage(cart)
-
-    this.sharedService.getLocal('user') ? this.saveCartToDB(cart) : console.log("Hello")
   }
 
-  saveCartToLocalStorage (cart: Cart) {
-    this.sharedService.setLocal('localCart', cart)
-    this.sharedService.callFunctionByClick()
+  generatorCart = (cart: CartIndentify, items: cartItemsWithSelect[]) => {
+    const totalUniqueItems = this.calculateUniqueItems(items)
+    const isEmpty = totalUniqueItems === 0
+
+    return {
+      ...this.CartIndentify,
+      ...cart,
+      cartItem: this.calculateItemTotals(items),
+      totalUniqueItems,
+      TotalPrice: this.calculateTotal(items),
+      isEmpty
+    }
+  }
+
+  removeAllItem (itemId: number[]) {
+    this.spinnerServer.requestStarted()
+    const cart: CartIndentify = this.sharedService.getLocal('localCart')
+    setTimeout(() => {
+      if (this.sharedService.getUserFromCookie()) {
+        this.deleteCartItem(cart.id + '', itemId).subscribe(() => {
+          //
+        })
+      }
+      this.saveCartToLocalStorage(
+        this.generatorCart(
+          cart,
+          cart.cartItem.filter(item => !itemId.includes(item.productItem.id))
+        )
+      )
+      this.spinnerServer.requestEnded()
+      this.sharedService.callFunctionByClick('refreshCart')
+    }, 300)
+  }
+
+  saveCartToLocalStorage (cart: CartIndentify) {
+    this.sharedService.setLocal(
+      'localCart',
+      this.generatorCart(cart, cart.cartItem)
+    )
+    this.sharedService.callFunctionByClick('refreshCart')
+    this.sharedService.setUniqueItemNumber(
+      this.generatorCart(cart, cart.cartItem).totalUniqueItems
+    )
   }
 
   saveCartToDB (cart: Cart) {
-    this.addCartItem(cart).subscribe((respone: any) => {
-      this.sharedService.callFunctionByClick()
+    this.addCartItem(cart).subscribe((respone: CartIndentify) => {
+      for (let index = 0; index < respone.cartItem.length; index++) {
+        const element = respone.cartItem[index]
+        element.id = element.productItem.id
+      }
+      this.sharedService.callFunctionByClick('refreshCart')
+      this.saveCartToLocalStorage(this.generatorCart(respone, respone.cartItem))
+      this.sharedService.setUniqueItemNumber(
+        this.generatorCart(respone, respone.cartItem).totalUniqueItems
+      )
     })
-  }
-
-  bindingCartToDBAfterLogin () {
-    if(this.sharedService.getLocal('localCart')){
-      const cartData: Cart = JSON.parse(this.sharedService.getLocal('localCart'))
-      this.saveCartToDB(cartData)
-      this.sharedService.callFunctionByClick()
-    }
   }
 
   calculateItemTotals = (items: cartItemsWithSelect[]) =>
@@ -214,5 +249,28 @@ export class CartService {
       productPrice: item.productItem.price * item.quantity!
     }))
 
+  calculateTotal = (items: cartItemsWithSelect[]) =>
+    items.reduce(
+      (total, item) => total + item.quantity! * item.productItem.price,
+      0
+    )
+
   calculateUniqueItems = (items: cartItemsWithSelect[]) => items.length
+
+  getCartFromLocalStorage = (): CartIndentify =>
+    this.sharedService.getLocal('localCart')
+
+  getCartFromDB (userId: Users) {
+    this.getCartItemByUserId(userId.id + '').subscribe((respone: any) => {
+      for (let index = 0; index < respone.cartItem.length; index++) {
+        const element = respone.cartItem[index]
+        element.id = element.productItem.id
+      }
+      this.sharedService.callFunctionByClick('refreshCart')
+      this.saveCartToLocalStorage(this.generatorCart(respone, respone.cartItem))
+      this.sharedService.setUniqueItemNumber(
+        this.generatorCart(respone, respone.cartItem).totalUniqueItems
+      )
+    })
+  }
 }

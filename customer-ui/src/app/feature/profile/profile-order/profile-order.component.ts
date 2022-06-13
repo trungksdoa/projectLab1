@@ -21,7 +21,7 @@ export class ProfileOrderComponent implements OnInit {
 
   ngOnInit (): void {
     this._OrderService
-      .getOrder(JSON.parse(this._sharedService.getLocal('user')).id)
+      .getOrder(this._sharedService.getUserFromCookie().id)
       .subscribe(items => {
         items.forEach(item => {
           item.createAt = new Date(item.createAt).toUTCString()
@@ -42,5 +42,7 @@ export class ProfileOrderComponent implements OnInit {
     },ProfileOrderDetailComponent).subscribe();
   }
 
-
+  formatCurrency(value:number){
+    return this._sharedService.getFormatCurrency(value)
+  }
 }
