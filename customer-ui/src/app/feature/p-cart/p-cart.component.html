@@ -13,9 +13,9 @@
           <div class="title">
             <div class="row">
               <div class="col">
-                <h1 mat-dialog-title>Shopping Cart</h1>
+                <h1 mat-dialog-title>Giỏ Hàng</h1>
               </div>
-              <div class="col align-self-center text-right text-muted"> items {{cart.totalUniqueItems}}</div>
+              <div class="col align-self-center text-right text-muted"> Số lượng sản phẩm: {{cart.totalUniqueItems}}</div>
             </div>
           </div>
           <!-- <div *ngIf="cart?.cartItem; else #getList">Content to render when condition is true.</div> -->
@@ -25,7 +25,7 @@
               <div class="row main align-items-center">
                 <div class="col-md-2"><img class="img-fluid" src="{{'http://localhost:8081/image/'+item.productItem.imageurl}}"></div>
                 <div class="col-md-3">
-                  <div class="row text-muted">Shirt</div>
+                  <div class="row text-muted">{{item.productItem.catagory.name}}</div>
                   <div class="row">{{item.productItem.name}}</div>
                 </div>
                 <div class="col-md-4">
@@ -65,7 +65,7 @@
         </div>
         <div class="col-md-4 summary">
           <div>
-            <h5><b>Summary</b></h5>
+            <h2><b>Hóa Đơn</b></h2>
           </div>
           <hr>
           <!-- <form> -->
@@ -77,10 +77,10 @@
             <input id="code" placeholder="Enter your code">
           </form> -->
           <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-            <div class="col">TOTAL PRICE</div>
+            <div class="col">Tổng giá trị đơn hàng</div>
             <div class="col text-right">{{formatCurrentPrice(cart.TotalPrice)}}</div>
           </div>
-          <button (click)="goCheckout()" mat-raised-button>Thanh toán</button>
+          <button (click)="goCheckout()" mat-raised-button >Thanh toán</button>
         </div>
       </div>
 

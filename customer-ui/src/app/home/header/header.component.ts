@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   searchMode: boolean
   isLogin: Boolean = false
   itemCount: number = 0
+  name: String=''
   constructor (
     private sharedService: SharedService,
     private cartService: CartService,
@@ -31,8 +32,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit (): void {
     this.sharedService.isLoggedIn().subscribe(data => {
       this.isLogin = data
+      this.name=this.sharedService.getUserFromCookie().name
     })
-
+    
+   
     if(this.sharedService.getUserFromCookie()){
       this.sharedService.getUniqueItemInCart().subscribe(uniqueItemInCart => {
         this.itemCount = uniqueItemInCart
@@ -60,8 +63,10 @@ export class HeaderComponent implements OnInit {
   }
 
   doSearch (value: String): void {
+   
     debounceTime(1000)
     this.router.navigateByUrl(`/product/search/${value}`)
+   
   }
   openCart (): void {
     if(this.sharedService.getUserFromCookie()){
@@ -83,7 +88,7 @@ export class HeaderComponent implements OnInit {
         }
       })
     }else{
-      alert("Please fucking login")
+      alert("Please login")
     }
   }
   CartIndentify: CartIndentify = {
@@ -97,7 +102,6 @@ export class HeaderComponent implements OnInit {
     totalUniqueItems: 0
   }
   logOut () {
-
     this.sharedService.deleteCookie('user')
     this.sharedService.deleteLocal('localCart')
     this.router.navigate(['login'])

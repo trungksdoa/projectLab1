@@ -116,7 +116,8 @@ export class CartService {
   addToCart (item: Product, quantity = 1) {
     // this.saveCartToLocalStorage(this.setCartItem(item,null))
     if (this.sharedService.getUserFromCookie()) {
-      if (!item.id) throw new Error('You must provide an `id` for items')
+
+      // if (!item.id) throw new Error('You must provide an `id` for items')
       if (quantity <= 0) return
       const cart: CartIndentify = this.sharedService.getLocal('localCart')
         ? this.sharedService.getLocal('localCart')
@@ -145,6 +146,7 @@ export class CartService {
             }
           ]
         }
+        console.log(item)
 
         if (this.sharedService.getUserFromCookie()) {
           currItem.userId = this.sharedService.getUserFromCookie()
@@ -179,8 +181,9 @@ export class CartService {
         }, 1000)
       }
       this.sharedService.callFunctionByClick('refreshCart')
-    } else {
-      alert('Please fucking login')
+    }
+   else {
+      alert('Please login')
     }
   }
 

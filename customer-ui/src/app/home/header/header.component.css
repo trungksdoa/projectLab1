@@ -1,7 +1,7 @@
 #header {
   background-color: #131921;
   color: white;
-
+  text-transform: capitalize
 }
 
 button {
@@ -11,10 +11,9 @@ button {
 
 mat-form-field {
   position: absolute;
-  right: 500 px;
-  width: 1000px;
+ 
 }
 
 .example-spacer {
-  width: 10%;
+  flex: 1 1 auto;
 }
