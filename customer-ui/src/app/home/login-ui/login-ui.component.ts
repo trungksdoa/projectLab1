@@ -8,6 +8,8 @@ import { UserService } from 'src/app/feature/profile/user.service'
 import { IDeactivateOptions } from 'src/app/Auth/confirm-deactivate-guard.service'
 import { Observable } from 'rxjs'
 import { CookieService } from 'ngx-cookie-service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-login-ui',
   templateUrl: './login-ui.component.html',
@@ -15,13 +17,15 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class LoginUiComponent implements OnInit, IDeactivateOptions {
   isSubmit = false
-
+  hide = true
+  durationInSeconds = 5
   constructor (
     private UserService: UserService,
     private sharedService: SharedService,
     private cartService: CartService,
     private router: Router,
     private route: ActivatedRoute,
+    private _snackBar: MatSnackBar,
   ) {}
 
   ngOnInit (): void {
@@ -36,6 +40,7 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
       }
       return false
     }
+    
   }
 
   createUser (param: Users) {
@@ -59,15 +64,21 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
     const requestUser = this.createUser(form.value)
     if (form.value) {
       this.UserService.loginRequest(requestUser).subscribe(data => {
-        if (data) {
           this.isSubmit = true
           this.cartService.getCartFromDB(data);
           this.sharedService.setCookie('user', data);
           this.sharedService.isLoggin(true)
           this.checkPreviousPage();
           form.reset()
-        }
-      })
+      },(error: HttpErrorResponse) => {
+        this._snackBar.open('Đăng nhập Thất bại!', 'Tiếp tục', {
+          duration: 1000
+        });
+      }
+      )
+      this._snackBar.open('Đăng nhập thành công!', 'Tiếp tục', {
+        duration: 3000
+      });
     }
   }
 
