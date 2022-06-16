@@ -64,12 +64,13 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
     const requestUser = this.createUser(form.value)
     if (form.value) {
       this.UserService.loginRequest(requestUser).subscribe(
-        data => {
+        ({user,message}: { user: Users; message: string }) => {
           this.isSubmit = true
-          this.cartService.getCartFromDB(data)
-          this.sharedService.setCookie('user', data)
+          this.cartService.getCartFromDB(user)
+          this.sharedService.setCookie('user', user)
           this.sharedService.isLoggin(true)
-          this.checkPreviousPage();
+          this.checkPreviousPage()
+          this.toast.showSuccess(message)
           form.reset()
         },
         error => {

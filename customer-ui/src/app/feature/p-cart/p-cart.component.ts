@@ -26,11 +26,8 @@ export class PCartComponent implements OnInit {
 
   constructor (
     private cartservice: NgCartService,
-    private cartProcess: NgCartCaculatorService,
-    private callAPI: NgCartApiService,
     private _sharedService: SharedService,
     private dialogService: DialogService,
-    private spinnerService: SpinnerService,
     private dialogRef: MatDialogRef<PCartComponent>,
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -79,8 +76,6 @@ export class PCartComponent implements OnInit {
   goCheckout () {
     if (this.itemObjectSelected.length > 0) {
       this.cart.cartItem.forEach(x => (x.active = false))
-      this.itemSelected = []
-      this.itemObjectSelected = []
       this.dialogService
         .openDialog(
           {
@@ -96,6 +91,8 @@ export class PCartComponent implements OnInit {
             // this.dialogRef.close('goInvoice')
           }
         })
+      this.itemSelected = []
+      this.itemObjectSelected = []
     } else {
       console.log('Ok')
     }
@@ -117,30 +114,6 @@ export class PCartComponent implements OnInit {
         active: active
       }
     })
-
-    // // alert(cart.cartItem)
-    // const userId: Users = this._sharedService.getUserFromCookie()
-
-    // this.spinnerService.requestStarted()
-    // setTimeout(() => {
-    //   const cartGenerator = this.cartProcess.generatorCart(cart, cart.cartItem)
-    //   const field = {
-    //     quantityItemNumber: currentQuantity,
-    //     productPrice: parseFloat(
-    //       cartGenerator.cartItem
-    //         .find((i: cartItem) => i.id === itemId)
-    //         .productPrice.toString()
-    //     )
-    //   }
-    //   this.cart = cartGenerator
-    //   this.cartProcess.saveCartToLocalStorage(cartGenerator)
-    //   this.spinnerService.requestEnded()
-    //   this.callAPI
-    //     .updateItemsByAnyFields(userId.id, itemId, field)
-    //     .subscribe((data: any) => {
-    //       this.spinnerService.requestEnded()
-    //     })
-    // }, 300)
   }
 
   changeQuantity (currentQuantity: number, itemId: number, active: boolean) {

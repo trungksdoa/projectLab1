@@ -13,8 +13,8 @@ export class UserService {
 
   constructor (private http: HttpClient) {}
 
-  public loginRequest (user: Users): Observable<Users> {
-    return this.http.post<Users>(`${this.apiServerUrl}/user/login`, user)
+  public loginRequest (user: Users): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/user/login`, user)
   }
   public Save (user: Users): Observable<Users> {
     return this.http.post<Users>(`${this.apiServerUrl}/user/save`, user)

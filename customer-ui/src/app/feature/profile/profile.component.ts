@@ -14,14 +14,17 @@ export class ProfileComponent implements OnInit {
   menus: any[] = [
     {
       icon: 'home',
-      name: 'Đơn Hàng'
+      type:"home",
+      name: 'Thông tin chung'
     },
     {
       icon: 'settings',
+      type:"setting",
       name: 'Tài Khoản Của Tôi'
     },
     {
       icon: 'shopping_cart',
+      type:"shopping_cart",
       name: 'Tổng Đơn Hàng'
     }
   ]
@@ -51,7 +54,7 @@ export class ProfileComponent implements OnInit {
     alert(shoe)
   }
 
-  pages: string = 'overview'
+  pages: string = 'setting'
 
   onClick (item: any) {
     this.pages = item
