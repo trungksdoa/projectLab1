@@ -15,13 +15,13 @@
       </mat-card>
     </div>
     <div class="col-md-9" >
-      <mat-card *ngIf="pages === 'overview'">
+      <mat-card *ngIf="pages === 'Đơn Hàng'">
         <!-- <h4 class="text-muted">Báo cảo chi tiêu của bạn trong tháng</h4>
         <p class="text-muted h6">Bảng thống kê</p>
         <app-profile-chart></app-profile-chart> -->
         <mat-divider [inset]="true"></mat-divider>
-        <h4 class="text-muted">Hoạt động gần nhất</h4>
-        <p class="text-muted h6">Các đơn đặt hàng đây nhất</p>
+      
+        <p class="text-muted h6">Các đơn đặt hàng gần đây nhất</p>
         <table class="table border bg-white">
           <thead>
             <tr>
@@ -55,10 +55,10 @@
             </tr>
         </table>
       </mat-card>
-      <mat-card *ngIf="pages === 'order'">
+      <mat-card *ngIf="pages === 'Tổng Đơn Hàng'">
         <app-profile-order></app-profile-order>
       </mat-card>
-      <mat-card *ngIf="pages === 'setting'">
+      <mat-card *ngIf="pages === 'Tài Khoản Của Tôi'">
 
       </mat-card>
     </div>

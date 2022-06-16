@@ -1,4 +1,4 @@
-import { NgCartService } from 'src/app/feature/p-cart/service/NgCartService';
+import { NgCartService } from 'src/app/feature/p-cart/service/NgCartService'
 import { SharedService } from 'src/app/shared.service'
 import { Component, OnInit } from '@angular/core'
 import { Users } from 'src/app/model/user'
@@ -7,8 +7,10 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { UserService } from 'src/app/feature/profile/user.service'
 import { IDeactivateOptions } from 'src/app/Auth/confirm-deactivate-guard.service'
 import { Observable } from 'rxjs'
-import { CookieService } from 'ngx-cookie-service';
-import { ToastServiceService } from 'src/app/toast-service.service';
+import { CookieService } from 'ngx-cookie-service'
+import { ToastServiceService } from 'src/app/toast-service.service'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { HttpErrorResponse } from '@angular/common/http'
 @Component({
   selector: 'app-login-ui',
   templateUrl: './login-ui.component.html',
@@ -16,7 +18,8 @@ import { ToastServiceService } from 'src/app/toast-service.service';
 })
 export class LoginUiComponent implements OnInit, IDeactivateOptions {
   isSubmit = false
-
+  hide = true
+  durationInSeconds = 5
   constructor (
     private UserService: UserService,
     private sharedService: SharedService,
@@ -24,10 +27,10 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
     private router: Router,
     private route: ActivatedRoute,
     private toast: ToastServiceService,
+    private _snackBar: MatSnackBar
   ) {}
 
-  ngOnInit (): void {
-  }
+  ngOnInit (): void {}
 
   canExit (): boolean | Promise<boolean> | Observable<boolean> {
     if (this.isSubmit) {
@@ -60,27 +63,27 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
   formSubmit (form: NgForm) {
     const requestUser = this.createUser(form.value)
     if (form.value) {
-      this.UserService.loginRequest(requestUser).subscribe(data => {
-        if (data) {
+      this.UserService.loginRequest(requestUser).subscribe(
+        data => {
           this.isSubmit = true
-          this.cartService.getCartFromDB(data);
-          this.sharedService.setCookie('user', data);
+          this.cartService.getCartFromDB(data)
+          this.sharedService.setCookie('user', data)
           this.sharedService.isLoggin(true)
           this.checkPreviousPage();
           form.reset()
+        },
+        error => {
+          this.toast.showError(error.error.message)
         }
-      },(error)=>{
-        this.toast.showError(error.error.message)
-      })
+      )
     }
   }
-
   checkPreviousPage () {
     const params = this.route.snapshot.queryParams
 
     if (params['redirectURL']) {
       this.router.navigateByUrl(params['redirectURL'])
-    }else{
+    } else {
       this.router.navigate([''])
     }
   }

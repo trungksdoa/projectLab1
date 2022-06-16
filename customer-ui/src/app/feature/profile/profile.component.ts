@@ -14,15 +14,15 @@ export class ProfileComponent implements OnInit {
   menus: any[] = [
     {
       icon: 'home',
-      name: 'overview'
+      name: 'Đơn Hàng'
     },
     {
       icon: 'settings',
-      name: 'setting'
+      name: 'Tài Khoản Của Tôi'
     },
     {
       icon: 'shopping_cart',
-      name: 'order'
+      name: 'Tổng Đơn Hàng'
     }
   ]
   sharedService: SharedService
