@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Product } from 'src/app/api/product/product'
 import { ProductService } from 'src/app/api/product/product.service'
-import { CartService } from 'src/app/feature/p-cart/cart.service'
+import { NgCartService } from 'src/app/feature/p-cart/service/NgCartService'
 import { SharedService } from 'src/app/shared.service'
 
 @Component({
@@ -23,7 +23,7 @@ export class ProductComponent implements OnInit {
     private productService: ProductService,
     private sharedService: SharedService,
     private route: ActivatedRoute,
-    private cartService: CartService,
+    private cartService: NgCartService,
     private router: Router
   ) {}
 

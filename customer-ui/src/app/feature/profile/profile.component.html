@@ -35,8 +35,8 @@
           <tbody>
             <tr *ngFor="let order of orders">
               <td> <button mat-button style="padding:5px">{{order.id}} </button></td>
-              <td> <button mat-button style="padding:5px">{{order.createAt}}</button></td>
-              <td> <button mat-button style="padding:5px">{{formatCurrency(order.totalAmount)}} </button></td>
+              <td> <button mat-button style="padding:5px">{{sharedService.getFormatDateGTMToLocalDate(order.createAt)}}</button></td>
+              <td> <button mat-button style="padding:5px">{{sharedService.getFormatCurrency(order.totalAmount)}} </button></td>
               <td>
                 <div *ngIf="order.status == 1;">
                   <button mat-button color="warn"  style="padding:5px">Chưa xác nhận</button>

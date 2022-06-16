@@ -1,9 +1,5 @@
-// import { UserService } from './../../../admin-ui/src/app/api/user.service'
-import { Cart } from 'src/app/feature/p-cart/cart'
-// import { cartItem } from 'src/app/mo'
 import { EventEmitter, Injectable } from '@angular/core'
 import { BehaviorSubject, Subscription } from 'rxjs'
-import { CartService } from './feature/p-cart/cart.service'
 import { Users } from './model/user'
 import { CookieService } from 'ngx-cookie-service'
 
@@ -42,7 +38,10 @@ export class SharedService {
     })
     return formatter.format(value)
   }
-
+  getFormatDateGTMToLocalDate (date: string) {
+    var myDate = new Date(date)
+    return myDate.toLocaleString()
+  }
   /*
    *
    *

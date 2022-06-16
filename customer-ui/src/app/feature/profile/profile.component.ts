@@ -25,14 +25,15 @@ export class ProfileComponent implements OnInit {
       name: 'order'
     }
   ]
-
+  sharedService: SharedService
   orders: orderManagement[] = []
   constructor (
     private orderService: OrderService,
     private _sharedService: SharedService,
-    private _OrderService: OrderService,
     private _dialogService: DialogService
-  ) {}
+  ) {
+    this.sharedService = _sharedService
+  }
 
   ngOnInit (): void {
     this.orderService
@@ -69,9 +70,5 @@ export class ProfileComponent implements OnInit {
         ProfileOrderDetailComponent
       )
       .subscribe()
-  }
-
-  formatCurrency(value:number){
-    return this._sharedService.getFormatCurrency(value)
   }
 }

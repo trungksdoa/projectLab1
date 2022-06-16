@@ -1,61 +1,70 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="mb-3">
-        <label for="formFile" class="form-label">Upload image</label>
-        <input class="form-control" type="file" multiple (change)="selectFiles($event)">
+  <div style="margin:auto">
+    <div class="row">
+      <div class="col-md-12">
+        <div *ngIf="message.length" class="alert alert-secondary my-3" role="alert">
+          <ul *ngFor="let msg of message; let i = index">
+            <li>{{ msg }}</li>
+          </ul>
+        </div>
       </div>
-      <div class="mb-3 d-flex justify-content-evenly">
-        <button mat-raised-button color="primary" [disabled]="!selectedFiles" (click)="uploadFiles()">
-          Upload
-        </button>
-        <!-- <button mat-raised-button color="primary" [disabled]="!selectedFiles" (click)="clearFile()">
-          Clear
-        </button> -->
-      </div>
-      <div *ngFor="let progressInfo of progressInfos" class="mb-2">
-        <span>{{ progressInfo.fileName }}</span>
-        <div class="progress">
-          <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ progressInfo.value }}"
-            aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: progressInfo.value + '%' }">
-            {{ progressInfo.value }}%
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">List of Files</div>
+          <div class="container" id="main-container">
+            <div class="row">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Ảnh</th>
+                    <th>Tên</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let file of fileInfos | async">
+                    <td><img width="100" height="100" [src]="setImage(file.imageName)"/></td>
+                    <td>{{ file.imageName }}</td>
+                    <td><button mat-raised-button (click)="updateFile(file.imageName)">Update image</button></td>
+                    <td><button mat-raised-button (click)="deleteFile(file.imageName)">Delete</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-
-      <div *ngIf="message.length" class="alert alert-secondary my-3" role="alert">
-        <ul *ngFor="let msg of message; let i = index">
-          <li>{{ msg }}</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-header">List of Files</div>
-        <div class="container" id="main-container">
-          <div class="row">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Tên</th>
-                  <th>Địa chỉ</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let file of fileInfos | async">
-                  <td>{{ file.imageName }}</td>
-                  <td>{{ file.link }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      <mat-divider></mat-divider>
+      <br>
+      <div class="col-md-12">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Upload image</label>
+          <input class="form-control" type="file" multiple (change)="selectFiles($event)">
         </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div *ngIf="imageDataUrl">
-        <img [src]="imageDataUrl" height="327" style="object-fit: cover;"  width="100%">
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+          <div class="col mt-3" *ngFor="let fileUrl of dataurlList">
+            <img [src]="fileUrl" class="img-fluid" alt="image">
+          </div>
+
+        </div>
+        <mat-divider></mat-divider>
+        <br>
+        <button style="width:100%" mat-button color="accent" mat-raised-button color="primary"
+          [disabled]="!selectedFiles" (click)="uploadFiles()">Accent</button>
+        <mat-divider></mat-divider>
+        <br>
+        <!-- <div *ngFor="let progressInfo of progressInfos" class="mb-2">
+          <span>{{ progressInfo.fileName }}</span>
+          <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ progressInfo.value }}"
+              aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: progressInfo.value + '%' }">
+              {{ progressInfo.value }}%
+            </div>
+          </div>
+        </div> -->
+
+
       </div>
     </div>
   </div>

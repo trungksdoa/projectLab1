@@ -4,8 +4,11 @@ export interface Cart {
   id: number
   lastUpdated: String
   createAt: String
-  cartItem: Array<cartItemsWithSelect>
+  cartItem: Array<cartItem>
   userId: Users
+  TotalPrice: number
+  isEmpty: boolean
+  totalUniqueItems: number
 }
 export interface cartItem {
   id: number
@@ -13,9 +16,5 @@ export interface cartItem {
   quantity: any
   productPrice: any
   active: boolean
-}
-
-
-export interface cartItemsWithSelect  extends cartItem{
   selected: boolean
 }

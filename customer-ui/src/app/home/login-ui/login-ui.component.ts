@@ -1,4 +1,4 @@
-import { CartService } from 'src/app/feature/p-cart/cart.service';
+import { NgCartService } from 'src/app/feature/p-cart/service/NgCartService';
 import { SharedService } from 'src/app/shared.service'
 import { Component, OnInit } from '@angular/core'
 import { Users } from 'src/app/model/user'
@@ -8,6 +8,7 @@ import { UserService } from 'src/app/feature/profile/user.service'
 import { IDeactivateOptions } from 'src/app/Auth/confirm-deactivate-guard.service'
 import { Observable } from 'rxjs'
 import { CookieService } from 'ngx-cookie-service';
+import { ToastServiceService } from 'src/app/toast-service.service';
 @Component({
   selector: 'app-login-ui',
   templateUrl: './login-ui.component.html',
@@ -19,9 +20,10 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
   constructor (
     private UserService: UserService,
     private sharedService: SharedService,
-    private cartService: CartService,
+    private cartService: NgCartService,
     private router: Router,
     private route: ActivatedRoute,
+    private toast: ToastServiceService,
   ) {}
 
   ngOnInit (): void {
@@ -67,6 +69,8 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
           this.checkPreviousPage();
           form.reset()
         }
+      },(error)=>{
+        this.toast.showError(error.error.message)
       })
     }
   }

@@ -1,9 +1,5 @@
-import { cartItemsWithSelect } from 'src/app/feature/p-cart/cart'
-import { HttpErrorResponse } from '@angular/common/http'
+import { NgCartCaculatorService } from './service/NgCartCaculatorService'
 import { Component, Inject, OnInit } from '@angular/core'
-import { CartService } from 'src/app/feature/p-cart/cart.service'
-import { Cart, cartItem } from 'src/app/feature/p-cart/cart'
-// import { LocalStorageService } from 'ngx-localstorage'
 import { SharedService } from 'src/app/shared.service'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { PPaymentComponent } from 'src/app/feature/p-payment/p-payment.component'
@@ -11,11 +7,7 @@ import { DialogService } from 'src/app/dialog.service'
 import { Users } from 'src/app/model/user'
 import { Router } from '@angular/router'
 import { SpinnerService } from 'src/app/spinner.service'
-
-interface CartIndentify extends Cart {
-  isEmpty: boolean
-  totalUniqueItems: number
-}
+import { Cart, cartItem, NgCartApiService, NgCartService } from './service'
 @Component({
   selector: 'app-p-cart',
   templateUrl: './p-cart.component.html',
@@ -23,43 +15,43 @@ interface CartIndentify extends Cart {
 })
 export class PCartComponent implements OnInit {
   isTimeout = true
-  cart: CartIndentify
+  cart: Cart
   isEmpty: boolean = false
   totalitemIncart: number
   itemSelected: number[] = []
   itemObjectSelected: cartItem[] = []
   displayedColumns: string[] = ['productItem.name', 'quantity', 'productPrice']
   checked: boolean = false
+  sharedService: SharedService
+
   constructor (
-    // private _bottomSheetRef: MatBottomSheetRef<PCartComponent>,
-    private cartservice: CartService,
-    // private _storageService: LocalStorageService,
-    private sharedService: SharedService,
-
+    private cartservice: NgCartService,
+    private cartProcess: NgCartCaculatorService,
+    private callAPI: NgCartApiService,
+    private _sharedService: SharedService,
     private dialogService: DialogService,
-
-    private router: Router,
-
-    private spinnerServer: SpinnerService,
-
+    private spinnerService: SpinnerService,
     private dialogRef: MatDialogRef<PCartComponent>,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) {
+    this.sharedService = _sharedService
+  }
 
   ngOnInit (): void {
-    this.sharedService.afterClick.subscribe((value?) => {
+    this._sharedService.afterClick.subscribe((value?) => {
       if (value === 'refreshCart') {
         this.getCart()
       }
     })
 
-    this.cartservice.getCartFromDB(this.sharedService.getUserFromCookie())
+    this.cartservice.getCartFromDB(this._sharedService.getUserFromCookie())
 
     this.cart = this.cartservice.getCartFromLocalStorage()
   }
 
   getCart (): void {
-    this.sharedService.setUniqueItemNumber(
+    this._sharedService.setUniqueItemNumber(
       this.cartservice.getCartFromLocalStorage().totalUniqueItems
     )
     this.cart = this.cartservice.getCartFromLocalStorage()
@@ -70,10 +62,10 @@ export class PCartComponent implements OnInit {
     this.dialogRef.close()
   }
 
-  selectedItem (cartitem: cartItemsWithSelect) {
+  selectedItem (cartitem: cartItem) {
     const data = this.cart.cartItem.find(x => x.id == cartitem.id)
-    data.selected = !data.selected
-    if (data.selected) {
+    data.active = !data.active
+    if (data.active) {
       this.itemSelected.push(data.id)
       this.itemObjectSelected.push(data)
     } else {
@@ -86,6 +78,9 @@ export class PCartComponent implements OnInit {
 
   goCheckout () {
     if (this.itemObjectSelected.length > 0) {
+      this.cart.cartItem.forEach(x => (x.active = false))
+      this.itemSelected = []
+      this.itemObjectSelected = []
       this.dialogService
         .openDialog(
           {
@@ -97,62 +92,63 @@ export class PCartComponent implements OnInit {
           PPaymentComponent
         )
         .subscribe(type => {
-          if (type === 'closeCart') {
-            this.dialogRef.close('goInvoice')
+          if (type === 'closePayment') {
+            // this.dialogRef.close('goInvoice')
           }
         })
+    } else {
+      console.log('Ok')
     }
   }
 
   getCalculatedValue (cart: cartItem) {
-    return this.sharedService.getFormatCurrency(cart.productPrice)
+    return this._sharedService.getFormatCurrency(cart.productPrice)
   }
 
-  formatCurrentPrice (value: number) {
-    return this.sharedService.getFormatCurrency(value)
-  }
-
-  callAPIChangeData (currentQuantity: number, itemId: number) {
-    const cart: CartIndentify = this.sharedService.getLocal('localCart')
+  callAPIChangeData (currentQuantity: number, itemId: number, active: boolean) {
+    const cart: Cart = this.cartservice.getCartFromLocalStorage()
     const currentItem = cart.cartItem.find((i: cartItem) => i.id === itemId)
-    cart.cartItem = this.cartservice.updateCart({
+
+    this.cart = this.cartservice.updateCartQuantity({
       ...currentItem,
       id: itemId,
       payload: {
-        quantity: currentQuantity
+        quantity: currentQuantity,
+        active: active
       }
     })
-    this.cart = this.cartservice.generatorCart(cart, cart.cartItem)
-    this.cartservice.saveCartToLocalStorage(this.cart)
 
-    if (this.sharedService.getUserFromCookie()) {
-      const userId: Users = this.sharedService.getUserFromCookie()
-      // console.log(currentQuantity)
+    // // alert(cart.cartItem)
+    // const userId: Users = this._sharedService.getUserFromCookie()
 
-      setTimeout(() => {
-        const field = {
-          quantityItemNumber: currentQuantity,
-          productPrice: parseFloat(
-            this.cart.cartItem.find((i: cartItem) => i.id === itemId)
-              .productPrice
-          )
-        }
-
-        this.cartservice
-          .updateItemsByAnyFields(userId.id, itemId, field)
-          .subscribe(data => {
-            console.log(data)
-          })
-      }, 300)
-    }
+    // this.spinnerService.requestStarted()
+    // setTimeout(() => {
+    //   const cartGenerator = this.cartProcess.generatorCart(cart, cart.cartItem)
+    //   const field = {
+    //     quantityItemNumber: currentQuantity,
+    //     productPrice: parseFloat(
+    //       cartGenerator.cartItem
+    //         .find((i: cartItem) => i.id === itemId)
+    //         .productPrice.toString()
+    //     )
+    //   }
+    //   this.cart = cartGenerator
+    //   this.cartProcess.saveCartToLocalStorage(cartGenerator)
+    //   this.spinnerService.requestEnded()
+    //   this.callAPI
+    //     .updateItemsByAnyFields(userId.id, itemId, field)
+    //     .subscribe((data: any) => {
+    //       this.spinnerService.requestEnded()
+    //     })
+    // }, 300)
   }
 
-  changeQuantity (currentQuantity: number, itemId: number) {
-    this.callAPIChangeData(currentQuantity, itemId)
+  changeQuantity (currentQuantity: number, itemId: number, active: boolean) {
+    this.callAPIChangeData(currentQuantity, itemId, active)
   }
 
-  updateQuantity ($event: any, itemId: number) {
-    this.callAPIChangeData(parseInt($event.target.value), itemId)
+  updateQuantity ($event: any, itemId: number, active: boolean) {
+    this.callAPIChangeData(parseInt($event.target.value), itemId, active)
   }
 
   deleteItemInCart () {

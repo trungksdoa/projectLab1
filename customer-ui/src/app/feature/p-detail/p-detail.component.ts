@@ -1,13 +1,8 @@
-// import { cartSeleted } from 'src/app/core/store/cartState'
-import { cartItem } from 'src/app/feature/p-cart/cart'
 import { ProductService } from 'src/app/api/product/product.service'
 import { Component, OnInit } from '@angular/core'
-
-import { ActivatedRoute, Router } from '@angular/router'
-
+import { ActivatedRoute } from '@angular/router'
 import { Product } from 'src/app/api/product/product'
-import { CartService } from 'src/app/feature/p-cart/cart.service'
-import { SharedService } from 'src/app/shared.service'
+import { NgCartService } from 'src/app/feature/p-cart/service/NgCartService'
 
 @Component({
   selector: 'app-p-detail',
@@ -19,9 +14,8 @@ export class PDetailComponent implements OnInit {
 
   constructor (
     private productService: ProductService,
-    private cartService: CartService,
-    // private store: Store<AppState>,
-    private route: ActivatedRoute,
+    private cartService: NgCartService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit (): void {
@@ -29,7 +23,7 @@ export class PDetailComponent implements OnInit {
   }
 
   public addCartItem (product: Product) {
-    this.cartService.addToCart(product);
+    this.cartService.addToCart(product)
   }
   public findProductById (productId: number) {
     this.productService

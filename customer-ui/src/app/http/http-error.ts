@@ -1,3 +1,4 @@
+
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -9,25 +10,19 @@ import {
 } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, tap } from 'rxjs'
-import { CartIndentify, CartService } from '../feature/p-cart/cart.service'
-import { SharedService } from '../shared.service'
+import { Cart } from '../model/cart'
 import { SpinnerService } from '../spinner.service'
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-  cart: CartIndentify
-  constructor (
-    private spinnerServer: SpinnerService,
-    private shared: SharedService,
-    private cartService: CartService
-  ) {}
+  constructor (private spinnerServer: SpinnerService) {}
   intercept (
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return this.handler(next, req)
   }
-  initialValue: CartIndentify = {
+  initialValue: Cart = {
     isEmpty: true,
     totalUniqueItems: 0,
     id: 0,
