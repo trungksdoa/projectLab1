@@ -21,6 +21,10 @@ export class ProfileComponent implements OnInit {
       name: 'Tài Khoản Của Tôi'
     },
     {
+      icon: 'settings',
+      name: 'Cập Nhật Mật Khẩu'
+    },
+    {
       icon: 'shopping_cart',
       name: 'Tổng Đơn Hàng'
     }
@@ -50,7 +54,7 @@ export class ProfileComponent implements OnInit {
     alert(shoe)
   }
 
-  pages: string = 'overview'
+  pages: string = 'Đơn Hàng'
 
   onClick (item: any) {
     this.pages = item

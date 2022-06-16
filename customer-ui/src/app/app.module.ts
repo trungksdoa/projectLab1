@@ -58,6 +58,8 @@ import { ProfileComponent } from './feature/profile/profile.component';
 import { PaymentPaypal } from './feature/p-payment/Payment-paypal/test-paypal.component';
 import { ConfirmDeactivateGuardService } from './Auth/confirm-deactivate-guard.service';
 import { LoginGuardService } from './Auth/login-guard.service';
+import { ProfileAccountComponent } from './feature/profile/profile-account/profile-account.component';
+import { ProfileUpdatePasswordComponent } from './feature/profile/profile-update-password/profile-update-password.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +83,8 @@ import { LoginGuardService } from './Auth/login-guard.service';
     ProductBestSellerComponent,
     RegisterComponent,
     SearchComponent,
+    ProfileAccountComponent,
+    ProfileUpdatePasswordComponent,
   ],
   imports: [
     BrowserModule,

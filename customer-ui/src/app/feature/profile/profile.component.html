@@ -59,7 +59,12 @@
         <app-profile-order></app-profile-order>
       </mat-card>
       <mat-card *ngIf="pages === 'Tài Khoản Của Tôi'">
-
+        <app-profile-account></app-profile-account>
+        
+      </mat-card>
+      <mat-card *ngIf="pages === 'Cập Nhật Mật Khẩu'">
+        <app-profile-update-password></app-profile-update-password>
+        
       </mat-card>
     </div>
   </div>
