@@ -15,10 +15,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 // import { AdminOrderComponent } from 'src/app/admin/admin-order/admin-order.component';
 // import { AdminItemsComponent } from 'src/app/admin/admin-items/admin-items.component';
 // import { AdminProductComponent } from 'src/app/admin/admin-product/admin-product.component';
-import { CartService } from './api/cart/cart.service';
-import { CityService } from './api/cart/citys.service';
-import { OrderService } from './api/cart/order.service';
-import { UserService } from './api/cart/user.service';
+import { CartService } from './api/service/cart.service';
+import { CityService } from './api/service/citys.service';
+import { OrderService } from './api/service/order.service';
+import { UserService } from './api/service/user.service';
 import { CategoryService } from './api/category/category.service';
 import { ProductService } from './api/product/product.service';
 import { SharedService } from './shared.service';
@@ -28,10 +28,11 @@ import { ProductManagerComponent } from './product-manager/product-manager.compo
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BannerManagerComponent } from './banner-manager/banner-manager.component';
-import { BannerService } from './api/cart/banner_service';
+import { BannerService } from './api/service/banner_service';
 import { AddProductComponent } from 'src/app/product-manager/add-product/add-product.component';
 import { DialogService } from './dialog.service';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { UpdateBannerFormComponent } from './update-banner-form/update-banner-form.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     SidebarComponent,
     DashboardComponent,
     BannerManagerComponent,
-    AddProductComponent
+    AddProductComponent,
+    UpdateBannerFormComponent
   ],
   imports: [
     BrowserModule,

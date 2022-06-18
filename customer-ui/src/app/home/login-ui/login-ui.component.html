@@ -14,7 +14,8 @@
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Mật khẩu</label>
-        <input type="password" ngModel name="password" class="form-control" id="password" required>
+        <input [type]="show_button ? 'text' : 'password'" ngModel name="password" class="form-control" id="password" required>
+        <span class="field-icon"><i [class]="show_eye ? 'fa fa-eye' : 'fa fa-eye-slash'" (click)="showPassword()"></i></span>
         <div *ngIf="addForm.controls['password'].invalid && (addForm.controls['password'].dirty || addForm.controls['password'].touched)">
           <p  *ngIf="addForm.controls['password'].errors" style="color:red">* Hãy nhập password</p>
          </div>

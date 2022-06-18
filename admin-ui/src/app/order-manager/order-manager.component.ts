@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
-import { OrderService } from '../api/cart/order.service';
+import { OrderService } from '../api/service/order.service';
 import { orderManagement } from '../model/Order';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
 import { SharedService } from '../shared.service';

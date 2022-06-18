@@ -1,4 +1,4 @@
-import { CartService } from 'src/app/feature/p-cart/cart.service';
+import { NgCartService } from 'src/app/feature/p-cart/service/NgCartService'
 import { SharedService } from 'src/app/shared.service'
 import { Component, OnInit } from '@angular/core'
 import { Users } from 'src/app/model/user'
@@ -7,9 +7,10 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { UserService } from 'src/app/feature/profile/user.service'
 import { IDeactivateOptions } from 'src/app/Auth/confirm-deactivate-guard.service'
 import { Observable } from 'rxjs'
-import { CookieService } from 'ngx-cookie-service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpErrorResponse } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service'
+import { ToastServiceService } from 'src/app/toast-service.service'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { HttpErrorResponse } from '@angular/common/http'
 @Component({
   selector: 'app-login-ui',
   templateUrl: './login-ui.component.html',
@@ -19,18 +20,23 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
   isSubmit = false
   hide = true
   durationInSeconds = 5
+  show_button: Boolean = false;
+  show_eye: Boolean = false
   constructor (
     private UserService: UserService,
     private sharedService: SharedService,
-    private cartService: CartService,
+    private cartService: NgCartService,
     private router: Router,
     private route: ActivatedRoute,
-    private _snackBar: MatSnackBar,
+    private toast: ToastServiceService,
+    private _snackBar: MatSnackBar
   ) {}
 
-  ngOnInit (): void {
+  ngOnInit (): void {}
+  showPassword() {
+    this.show_button = !this.show_button;
+    this.show_eye = !this.show_eye;
   }
-
   canExit (): boolean | Promise<boolean> | Observable<boolean> {
     if (this.isSubmit) {
       return true
@@ -40,7 +46,6 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
       }
       return false
     }
-    
   }
 
   createUser (param: Users) {
@@ -63,31 +68,28 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
   formSubmit (form: NgForm) {
     const requestUser = this.createUser(form.value)
     if (form.value) {
-      this.UserService.loginRequest(requestUser).subscribe(data => {
+      this.UserService.loginRequest(requestUser).subscribe(
+        ({user,message}: { user: Users; message: string }) => {
           this.isSubmit = true
-          this.cartService.getCartFromDB(data);
-          this.sharedService.setCookie('user', data);
+          this.cartService.getCartFromDB(user)
+          this.sharedService.setCookie('user', user)
           this.sharedService.isLoggin(true)
-          this.checkPreviousPage();
+          this.checkPreviousPage()
+          this.toast.showSuccess(message)
           form.reset()
-      },(error: HttpErrorResponse) => {
-        this._snackBar.open('Đăng nhập Thất bại!', 'Tiếp tục', {
-          duration: 1000
-        });
-      }
+        },
+        error => {
+          this.toast.showError(error.error.message)
+        }
       )
-      this._snackBar.open('Đăng nhập thành công!', 'Tiếp tục', {
-        duration: 3000
-      });
     }
   }
-
   checkPreviousPage () {
     const params = this.route.snapshot.queryParams
 
     if (params['redirectURL']) {
       this.router.navigateByUrl(params['redirectURL'])
-    }else{
+    } else {
       this.router.navigate([''])
     }
   }

@@ -32,6 +32,7 @@
     "chartjs-plugin-datalabels": "^2.0.0",
     "jquery": "^3.6.0",
     "material-design-icons": "^3.0.1",
+    "ng-angular-popup": "^0.1.2",
     "ng2-charts": "^3.0.11",
     "ngx-cookie-service": "^13.2.1",
     "ngx-localstorage": "^3.4.0",

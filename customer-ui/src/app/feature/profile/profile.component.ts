@@ -14,29 +14,29 @@ export class ProfileComponent implements OnInit {
   menus: any[] = [
     {
       icon: 'home',
-      name: 'Đơn Hàng'
+      type:"home",
+      name: 'Thông tin chung'
     },
     {
       icon: 'settings',
+      type:"setting",
       name: 'Tài Khoản Của Tôi'
     },
     {
-      icon: 'settings',
-      name: 'Cập Nhật Mật Khẩu'
-    },
-    {
       icon: 'shopping_cart',
+      type:"shopping_cart",
       name: 'Tổng Đơn Hàng'
     }
   ]
-
+  sharedService: SharedService
   orders: orderManagement[] = []
   constructor (
     private orderService: OrderService,
     private _sharedService: SharedService,
-    private _OrderService: OrderService,
     private _dialogService: DialogService
-  ) {}
+  ) {
+    this.sharedService = _sharedService
+  }
 
   ngOnInit (): void {
     this.orderService
@@ -54,7 +54,11 @@ export class ProfileComponent implements OnInit {
     alert(shoe)
   }
 
-  pages: string = 'Đơn Hàng'
+
+
+
+  pages: string = 'Thông tin chung'
+
 
   onClick (item: any) {
     this.pages = item
@@ -73,9 +77,5 @@ export class ProfileComponent implements OnInit {
         ProfileOrderDetailComponent
       )
       .subscribe()
-  }
-
-  formatCurrency(value:number){
-    return this._sharedService.getFormatCurrency(value)
   }
 }

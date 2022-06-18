@@ -5,7 +5,7 @@
         <mat-card-content>
           <mat-selection-list>
             <!-- <div mat-subheader>Folders</div> -->
-            <mat-list-item [ngClass]="{active: pages === item.name}" *ngFor="let item of menus"
+            <mat-list-item [ngClass]="{active: pages === item.type}" *ngFor="let item of menus"
               (click)="onClick(item.name)">
               <mat-icon mat-list-icon>{{item.icon}}</mat-icon>
               <div mat-line>{{item.name}}</div>
@@ -15,12 +15,12 @@
       </mat-card>
     </div>
     <div class="col-md-9" >
-      <mat-card *ngIf="pages === 'Đơn Hàng'">
+      <mat-card *ngIf="pages === 'Thông tin chung'">
         <!-- <h4 class="text-muted">Báo cảo chi tiêu của bạn trong tháng</h4>
         <p class="text-muted h6">Bảng thống kê</p>
         <app-profile-chart></app-profile-chart> -->
         <mat-divider [inset]="true"></mat-divider>
-      
+
         <p class="text-muted h6">Các đơn đặt hàng gần đây nhất</p>
         <table class="table border bg-white">
           <thead>
@@ -35,8 +35,8 @@
           <tbody>
             <tr *ngFor="let order of orders">
               <td> <button mat-button style="padding:5px">{{order.id}} </button></td>
-              <td> <button mat-button style="padding:5px">{{order.createAt}}</button></td>
-              <td> <button mat-button style="padding:5px">{{formatCurrency(order.totalAmount)}} </button></td>
+              <td> <button mat-button style="padding:5px">{{sharedService.getFormatDateGTMToLocalDate(order.createAt)}}</button></td>
+              <td> <button mat-button style="padding:5px">{{sharedService.getFormatCurrency(order.totalAmount)}} </button></td>
               <td>
                 <div *ngIf="order.status == 1;">
                   <button mat-button color="warn"  style="padding:5px">Chưa xác nhận</button>
@@ -58,14 +58,14 @@
       <mat-card *ngIf="pages === 'Tổng Đơn Hàng'">
         <app-profile-order></app-profile-order>
       </mat-card>
+
       <mat-card *ngIf="pages === 'Tài Khoản Của Tôi'">
         <app-profile-account></app-profile-account>
         
       </mat-card>
-      <mat-card *ngIf="pages === 'Cập Nhật Mật Khẩu'">
-        <app-profile-update-password></app-profile-update-password>
-        
-      </mat-card>
+     
+  
     </div>
   </div>
-</div>
+  </div>
+

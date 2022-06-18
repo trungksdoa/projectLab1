@@ -1,0 +1,11 @@
+<div class="mb-3">
+  <label for="formFile" class="form-label">Upload image</label>
+  <input class="form-control" type="file" (change)="selectFiles()" #inputImage>
+</div>
+<button style="width:100%" mat-button color="accent" mat-raised-button color="primary" [disabled]="!selectedFiles"
+  (click)="uploadFiles()">Accent</button>
+
+<br>
+<mat-divider></mat-divider>
+<br>
+<img [src]="imageDataUrl" class="img-fluid" alt="image">

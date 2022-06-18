@@ -7,7 +7,8 @@ import { SharedService } from 'src/app/shared.service'
 import { DialogService } from 'src/app/dialog.service'
 import { Product } from 'src/app/api/product/product'
 import { PCartComponent } from 'src/app/feature/p-cart/p-cart.component'
-import { CartIndentify, CartService } from 'src/app/feature/p-cart/cart.service'
+import { ToastServiceService } from 'src/app/toast-service.service'
+import { Cart } from 'src/app/model/cart'
 
 @Component({
   selector: 'app-header',
@@ -24,7 +25,7 @@ export class HeaderComponent implements OnInit {
   name: String=''
   constructor (
     private sharedService: SharedService,
-    private cartService: CartService,
+    private toast: ToastServiceService,
     private router: Router,
     private dialogService: DialogService
   ) {}
@@ -34,14 +35,18 @@ export class HeaderComponent implements OnInit {
       this.isLogin = data
       this.name=this.sharedService.getUserFromCookie().name
     })
-    
-   
+
+    this.sharedService.afterClick.subscribe(()=>{
+      this.name=this.sharedService.getUserFromCookie().name
+    })
+
+
     if(this.sharedService.getUserFromCookie()){
       this.sharedService.getUniqueItemInCart().subscribe(uniqueItemInCart => {
         this.itemCount = uniqueItemInCart
       })
-    }else{
-      this.itemCount = 0;
+    } else {
+      this.itemCount = 0
     }
 
     this.getAllProduct()
@@ -63,35 +68,31 @@ export class HeaderComponent implements OnInit {
   }
 
   doSearch (value: String): void {
-   
+
     debounceTime(1000)
     this.router.navigateByUrl(`/product/search/${value}`)
-   
+
   }
   openCart (): void {
-    if(this.sharedService.getUserFromCookie()){
+    if (this.sharedService.getUserFromCookie()) {
       this.dialogService
-      .openDialog(
-        {
-          width: '90vw', //sets width of dialog
-          height: '100%', //sets width of dialog
-          maxWidth: '100vw', //overrides default width of dialog
-          maxHeight: '100vh', //overrides default height of dialog
-          // disableClose:true,
-          data: { name: 'trung' }
-        },
-        PCartComponent
-      )
-      .subscribe(type => {
-        if (type === 'goInvoice') {
-          this.router.navigate(['/invoice'])
-        }
-      })
-    }else{
-      alert("Please login")
+        .openDialog(
+          {
+            width: '90vw', //sets width of dialog
+            height: '100%', //sets width of dialog
+            maxWidth: '100vw', //overrides default width of dialog
+            maxHeight: '100vh', //overrides default height of dialog
+            // disableClose:true,
+            data: { name: 'trung' }
+          },
+          PCartComponent
+        )
+        .subscribe(type => {})
+    } else {
+      alert('Please login')
     }
   }
-  CartIndentify: CartIndentify = {
+  CartIndentify: Cart = {
     id: 0,
     lastUpdated: '',
     createAt: '',

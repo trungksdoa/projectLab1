@@ -1,6 +1,6 @@
 // import { UserService } from './../../../admin-ui/src/app/api/user.service'
 import { cartItem } from 'src/app/model/cart'
-import { UserService } from 'src/app/api/cart/user.service'
+import { UserService } from 'src/app/api/service/user.service'
 // import { cartItem } from 'src/app/mo'
 import { EventEmitter, Injectable } from '@angular/core'
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs'

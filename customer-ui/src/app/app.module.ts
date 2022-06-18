@@ -2,9 +2,9 @@
 import { AuthGuardService } from './Auth/auth-guard.service'
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { NgToastModule } from 'ng-angular-popup'
 
-
-
+//Module
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -35,7 +35,7 @@ import { SharedService } from './shared.service'
 import { LoginUiComponent } from './home/login-ui/login-ui.component'
 import { SpinnerComponent } from './spinner/spinner.component';
 import { httpInterceptProviders } from './http';
-import { MatDialogRef } from '@angular/material/dialog';
+
 
 import { NgxPayPalModule } from 'ngx-paypal';
 import { NgChartsModule } from 'ng2-charts';
@@ -46,7 +46,7 @@ import { ProductBestSellerComponent } from './product-best-seller/product-best-s
 import { PCartComponent } from './feature/p-cart/p-cart.component';
 import { PDetailComponent } from './feature/p-detail/p-detail.component';
 import { PPaymentComponent } from './feature/p-payment/p-payment.component';
-import { CartService } from './feature/p-cart/cart.service';
+import { NgCartService } from './feature/p-cart/service/NgCartService';
 import { CityService } from './feature/p-payment/citys.service';
 import { OrderService } from './feature/p-payment/order.service';
 import { UserService } from './feature/profile/user.service';
@@ -59,7 +59,12 @@ import { PaymentPaypal } from './feature/p-payment/Payment-paypal/test-paypal.co
 import { ConfirmDeactivateGuardService } from './Auth/confirm-deactivate-guard.service';
 import { LoginGuardService } from './Auth/login-guard.service';
 import { ProfileAccountComponent } from './feature/profile/profile-account/profile-account.component';
-import { ProfileUpdatePasswordComponent } from './feature/profile/profile-update-password/profile-update-password.component';
+
+import { ToastServiceService } from './toast-service.service';
+import { NgCartCaculatorService } from './feature/p-cart/service/NgCartCaculatorService';
+import { NgCartApiService } from './feature/p-cart/service/NgCartAPIService';
+
+
 
 @NgModule({
   declarations: [
@@ -84,7 +89,7 @@ import { ProfileUpdatePasswordComponent } from './feature/profile/profile-update
     RegisterComponent,
     SearchComponent,
     ProfileAccountComponent,
-    ProfileUpdatePasswordComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -101,12 +106,13 @@ import { ProfileUpdatePasswordComponent } from './feature/profile/profile-update
     NgxPaginationModule,
     SlickCarouselModule,
     NgSelectModule,
+    NgToastModule,
   ],
   providers: [
     httpInterceptProviders,
     CategoryService,
     ProductService,
-    CartService,
+    NgCartService,
     SharedService,
     OrderService,
     UserService,
@@ -114,7 +120,10 @@ import { ProfileUpdatePasswordComponent } from './feature/profile/profile-update
     CityService,
     ConfirmDeactivateGuardService,
     LoginGuardService,
-    CookieService
+    CookieService,
+    ToastServiceService,
+    NgCartCaculatorService,
+    NgCartApiService
   ],
   bootstrap: [AppComponent]
 })

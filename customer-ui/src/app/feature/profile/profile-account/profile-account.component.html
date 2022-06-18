@@ -24,31 +24,37 @@
             <div class="card mb-4">
                 <div class="card-header">Account Details</div>
                 <div class="card-body">
-                    <form>
+                    <form  #addForm="ngForm" (ngSubmit)="formSubmit(addForm.value)" novalidate>
                         <!-- Form Group (username)-->
+                     
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Tên đăng nhập</label>
-                            <input class="form-control"  id="inputUsername" type="text" value="{{user.username}}">
+                            <input class="form-control" ngModel="{{user.username}}"  id="inputUsername" type="text"  name="username" id="username">
                         </div>
                         <!-- Form name-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputName">Tên</label>
-                            <input class="form-control"  id="inputName" type="text"  value="{{user.name}}">
+                            <input class="form-control" ngModel="{{user.name}}"  id="inputName" type="text"   name="name" id="name">
                         </div>
                          <!-- Form address-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputAddress">Địa Chỉ</label>
-                            <input class="form-control" id="inputAddress" type="text"  value="{{user.address}}">
+                            <input class="form-control" ngModel="{{user.address}}" id="inputAddress" type="text"  name="address" id="address">
                         </div>
                          <!-- Form phone-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputPhone">Số điện thoại</label>
-                            <input class="form-control"  id="inputPhone" type="text"  value="{{user.phone}}">
+                            <input class="form-control" ngModel="{{user.phone}}"  id="inputPhone" type="text"   name="phone" id="phone">
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputPassword">Mật Khẩu</label>
+                            <input class="form-control" ngModel="{{user.password}}"  id="inputPassword"  [type]="show_button ? 'text' : 'password'"   name="password" id="password">
+                            <span class="field-icon"><i [class]="show_eye ? 'fa fa-eye' : 'fa fa-eye-slash'" (click)="showPassword()"></i></span>
                         </div>
                         
         
                         <!-- Save changes button-->
-                        <button class="btn btn-primary" type="button">Save changes</button>
+                        <button class="btn btn-primary" type="submit" >Save changes</button>
                     </form>
                 </div>
             </div>

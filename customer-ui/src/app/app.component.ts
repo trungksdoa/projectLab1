@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { Product } from './api/product/product'
 import { ProductService } from './api/product/product.service'
 import { HttpErrorResponse } from '@angular/common/http'
-import { CartIndentify, CartService } from './feature/p-cart/cart.service'
+import { Cart, NgCartService } from './feature/p-cart/service'
 
 @Component({
   selector: 'app-root',
@@ -18,9 +18,9 @@ export class AppComponent implements OnInit {
   private updateSubscription: Subscription
   constructor (
     public dialog: MatDialog,
-    private cartService: CartService,
+    private cartService: NgCartService,
     private shared: SharedService,
-    private productService: ProductService
+    private productService: ProductService,
   ) {
     // shared.getUserFromCookie() ? this.getMiniCart() : ''
   }

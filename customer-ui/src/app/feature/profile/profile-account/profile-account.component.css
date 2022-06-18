@@ -57,3 +57,10 @@ body{margin-top:20px;
         margin-left: 1rem;
         margin-right: 1rem;
     }
+    .field-icon {
+        float: right;
+        left: -15px;
+        margin-top: -25px;
+        position: relative;
+        z-index: 2;
+      }

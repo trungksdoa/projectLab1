@@ -3,10 +3,10 @@ import { MatDialogRef } from '@angular/material/dialog'
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal'
 import { OrderService } from 'src/app/feature/p-payment/order.service'
 import { PPaymentComponent } from 'src/app/feature/p-payment/p-payment.component'
-import { cartItem } from '../../p-cart/cart'
-import { Order } from '../../../model/Order'
-import { Users } from '../../../model/user'
-import { SharedService } from '../../../shared.service'
+import { Order } from 'src/app/model/Order'
+import { Users } from 'src/app/model/user'
+import { SharedService } from 'src/app/shared.service'
+import { cartItem } from 'src/app/feature/p-cart/service'
 @Component({
   selector: 'app-test-paypal',
   templateUrl: './test-paypal.component.html',

@@ -1,20 +1,17 @@
-import { cartItem } from 'src/app/feature/p-cart/cart'
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { SharedService } from 'src/app/shared.service'
 import { Subscription } from 'rxjs'
 import { OrderService } from 'src/app/feature/p-payment/order.service'
-import { NgForm } from '@angular/forms'
-import { Order, orderItems } from 'src/app/model/Order'
+import { Order } from 'src/app/model/Order'
 import { Users } from 'src/app/model/user'
 import { CityService } from 'src/app/feature/p-payment/citys.service'
-import { NgSelectComponent } from '@ng-select/ng-select'
 import { Router } from '@angular/router'
 import {
-  MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
 } from '@angular/material/dialog'
 import { ThemePalette } from '@angular/material/core'
+import { cartItem } from '../p-cart/service'
 declare var bootstrap: any
 
 interface IPaymentFormValue extends Order {
@@ -222,9 +219,13 @@ export class PPaymentComponent implements OnInit {
       this.orderService
         .addCartItem(this.getOrderItem(this.orderForm, this.orderForm.xungho))
         .subscribe(data => {
-          this.dialogRef.close('closeCart')
+          this.dialogRef.close('closePayment')
         })
     }
+  }
+
+  existPayment(){
+    this.dialogRef.close('closePayment')
   }
 
   paymentOnline (link: string) {
