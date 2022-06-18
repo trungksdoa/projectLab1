@@ -161,7 +161,7 @@ export class AddProductComponent implements OnInit {
                 this.sharedService.submitFormProduct(response)
                 this.dialogRef.close()
                 this.clearForm()
-              }, 500)
+              }, 100)
 
             },
             (error: HttpErrorResponse) => {

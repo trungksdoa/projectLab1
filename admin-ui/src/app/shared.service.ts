@@ -23,6 +23,7 @@ export class SharedService {
   submitFormProduct(data:any){
     this.invokeSendDataAfterSubmit.emit(data)
   }
+
   getFormatCurrency (value: number) {
     const formatter = new Intl.NumberFormat('vi-VN', {
       style: 'currency',
