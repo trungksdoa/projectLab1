@@ -15,7 +15,9 @@ import { HttpErrorResponse } from '@angular/common/http'
 })
 export class RegisterComponent implements OnInit, IDeactivateOptions {
   isSubmit = false
-  showPassword: boolean;
+
+  show_button: Boolean = false;
+  show_eye: Boolean = false
   constructor (
     private UserService: UserService,
     private sharedService: SharedService,
@@ -31,7 +33,10 @@ export class RegisterComponent implements OnInit, IDeactivateOptions {
 
     })
   }
-
+  showPassword() {
+    this.show_button = !this.show_button;
+    this.show_eye = !this.show_eye;
+  }
   canExit (): boolean | Promise<boolean> | Observable<boolean> {
     if (this.isSubmit) {
       return true
@@ -64,9 +69,8 @@ export class RegisterComponent implements OnInit, IDeactivateOptions {
     const requestUser = this.createUser(form.value)
     if (form.value) {
       this.UserService.Save(requestUser).subscribe(data => {
-       
           this.isSubmit = true
-          this.sharedService.setLocal('user', data)
+          this.sharedService.setCookie('user', data)
           this.router.navigate([''])
           this.sharedService.isLoggin(true)
           form.reset()

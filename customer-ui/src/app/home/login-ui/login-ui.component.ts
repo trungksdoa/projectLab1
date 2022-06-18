@@ -20,6 +20,8 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
   isSubmit = false
   hide = true
   durationInSeconds = 5
+  show_button: Boolean = false;
+  show_eye: Boolean = false
   constructor (
     private UserService: UserService,
     private sharedService: SharedService,
@@ -31,7 +33,10 @@ export class LoginUiComponent implements OnInit, IDeactivateOptions {
   ) {}
 
   ngOnInit (): void {}
-
+  showPassword() {
+    this.show_button = !this.show_button;
+    this.show_eye = !this.show_eye;
+  }
   canExit (): boolean | Promise<boolean> | Observable<boolean> {
     if (this.isSubmit) {
       return true

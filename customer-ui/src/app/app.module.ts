@@ -58,11 +58,14 @@ import { ProfileComponent } from './feature/profile/profile.component';
 import { PaymentPaypalComponent } from './feature/p-payment/payment-paypal/payment-paypal.component';
 import { ConfirmDeactivateGuardService } from './Auth/confirm-deactivate-guard.service';
 import { LoginGuardService } from './Auth/login-guard.service';
+import { ProfileAccountComponent } from './feature/profile/profile-account/profile-account.component';
+
 import { ToastServiceService } from './toast-service.service';
 import { NgCartCaculatorService } from './feature/p-cart/service/NgCartCaculatorService';
 import { NgCartApiService } from './feature/p-cart/service/NgCartAPIService';
 import { SizeDetectorComponent } from './size-detector/size-detector.component';
 import { ResizeChangeService } from './size-detector/resize-change.service';
+
 
 
 
@@ -87,6 +90,7 @@ import { ResizeChangeService } from './size-detector/resize-change.service';
     ProductBestSellerComponent,
     RegisterComponent,
     SearchComponent,
+    ProfileAccountComponent,
     SizeDetectorComponent,
     PaymentPaypalComponent,
   ],

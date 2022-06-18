@@ -54,7 +54,11 @@ export class ProfileComponent implements OnInit {
     alert(shoe)
   }
 
-  pages: string = 'setting'
+
+
+
+  pages: string = 'Thông tin chung'
+
 
   onClick (item: any) {
     this.pages = item

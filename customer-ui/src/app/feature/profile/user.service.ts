@@ -19,6 +19,9 @@ export class UserService {
   public Save (user: Users): Observable<Users> {
     return this.http.post<Users>(`${this.apiServerUrl}/user/save`, user)
   }
+  public update (user: Users): Observable<Users> {
+    return this.http.put<Users>(`${this.apiServerUrl}/user/update/${user.id}`, user)
+  }
   public triggerCheckIsAdmin (name: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.apiServerUrl}/user/isAdmin?name=${name}`)
   }

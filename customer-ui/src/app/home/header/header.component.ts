@@ -47,13 +47,14 @@ export class HeaderComponent implements OnInit {
     })
 
     if (this.sharedService.getUserFromCookie()) {
+      this.sharedService.afterClick.subscribe(() => {
+        this.name = this.sharedService.getUserFromCookie().name
+      })
       this.sharedService.getUniqueItemInCart().subscribe(uniqueItemInCart => {
         this.itemCount = uniqueItemInCart
       })
-    } else {
-      this.itemCount = 0
     }
-
+    this.itemCount = 0
     this.getAllProduct()
   }
 
@@ -92,7 +93,7 @@ export class HeaderComponent implements OnInit {
         )
         .subscribe(type => {})
     } else {
-      alert('Please fucking login')
+      alert('Please login')
     }
   }
   CartIndentify: Cart = {

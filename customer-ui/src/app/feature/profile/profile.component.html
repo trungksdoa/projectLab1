@@ -6,7 +6,7 @@
           <mat-selection-list>
             <!-- <div mat-subheader>Folders</div> -->
             <mat-list-item [ngClass]="{active: pages === item.type}" *ngFor="let item of menus"
-              (click)="onClick(item.type)">
+              (click)="onClick(item.name)">
               <mat-icon mat-list-icon>{{item.icon}}</mat-icon>
               <div mat-line>{{item.name}}</div>
             </mat-list-item>
@@ -15,7 +15,7 @@
       </mat-card>
     </div>
     <div class="col-md-9" >
-      <mat-card *ngIf="pages === 'home'">
+      <mat-card *ngIf="pages === 'Thông tin chung'">
         <!-- <h4 class="text-muted">Báo cảo chi tiêu của bạn trong tháng</h4>
         <p class="text-muted h6">Bảng thống kê</p>
         <app-profile-chart></app-profile-chart> -->
@@ -55,12 +55,17 @@
             </tr>
         </table>
       </mat-card>
-      <mat-card *ngIf="pages === 'shopping_cart'">
+      <mat-card *ngIf="pages === 'Tổng Đơn Hàng'">
         <app-profile-order></app-profile-order>
       </mat-card>
-      <mat-card *ngIf="pages === 'setting'">
-          <h3>Ok</h3>
+
+      <mat-card *ngIf="pages === 'Tài Khoản Của Tôi'">
+        <app-profile-account></app-profile-account>
+        
       </mat-card>
+     
+  
     </div>
   </div>
-</div>
+  </div>
+
