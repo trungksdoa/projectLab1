@@ -20,6 +20,7 @@ export class ProductManagerComponent implements OnInit {
   temp_products: Product[] = []
   failed: boolean
   categorys: Category[]
+  newDate : any = new Date().getTime()
 
   initializeValue = {
     id: 0,
@@ -79,9 +80,6 @@ export class ProductManagerComponent implements OnInit {
     )
   }
 
-  setImage(name:string){
-    return `http://localhost:8081/image/${name}?${new Date().getTime()}`
-  }
   onDeleteProduct (cateid: number): void {
     this.productService.deleteProduct(cateid).subscribe(
       (response: void) => {

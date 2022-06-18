@@ -35,9 +35,9 @@ export class ProfileOrderComponent implements OnInit {
 
     console.log(order)
     this._dialogService.openDialog(        {
-      height: '100%',
+      // height: '100%',
       width: '100%',
-      disableClose: true,
+      // disableClose: true,
       data: order
     },ProfileOrderDetailComponent).subscribe();
   }

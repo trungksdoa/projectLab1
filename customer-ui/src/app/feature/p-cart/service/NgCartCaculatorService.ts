@@ -58,6 +58,7 @@ export class NgCartCaculatorService {
   updateCartToDB (userId: number, id: number, field: any) {
     this.callAPI.updateItemsByAnyFields(userId, id, field).subscribe(
       (data: any) => {
+        this.sharedService.setUniqueItemNumber(parseInt(data.uniqueItemInCart))
         this.toast.showSuccess(data.message)
       },
       error => {

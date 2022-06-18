@@ -1,19 +1,10 @@
 #header {
   background-color: #131921;
   color: white;
- 
+
 }
 
 button {
   border: 0;
-  background-color: yellow;
-}
-
-mat-form-field {
-  position: absolute;
- 
-}
-
-.example-spacer {
-  flex: 1 1 auto;
+  /* background-color: yellow; */
 }

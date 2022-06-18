@@ -1,48 +1,67 @@
+<nav class="py-2 bg-light border-bottom">
+  <div class="container d-flex flex-wrap">
+    <ul class="nav me-auto">
+      <li class="nav-item"><a class="nav-link link-dark px-2" [routerLink]="['/home']" routerLinkActive="active"
+          aria-current="page">Trang chủ</a></li>
+    </ul>
+    <ul class="nav">
+      <li class="nav-item"><a href="#" class="nav-link link-dark px-2" *ngIf="!isLogin" [routerLink]="['/login']">Đăng
+          nhập</a></li>
+      <li class="nav-item"><a href="#" class="nav-link link-dark px-2" *ngIf="!isLogin" [routerLink]="['/login']">Đăng
+          ký</a></li>
 
+      <li class="nav-item" *ngIf="isLogin">
+        <div class="flex-shrink-0 dropdown">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="">
+            <li><a class="dropdown-item" [routerLink]="['profile']">Thông tin</a></li>
+            <li><a class="dropdown-item" (click)="logOut()" [routerLink]="['/']">Đăng xuất khỏi trái đất</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<header class="py-3 mb-3 border-bottom">
+  <div class="container d-grid gap-3 align-items-center" style="grid-template-columns: 0.2fr 2fr;">
+    <div class="dropdown">
+      <a [routerLink]="['/home']" routerLinkActive="active"
+        class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <mat-icon>polymer</mat-icon>
+      </a>
+    </div>
 
-    <mat-toolbar class="navbar" id="header">
-      <button mat-raised-button style="background-color: #232f3e" [routerLink]="['/home']">
-        <mat-icon class="example-spacer" style="color: white">home</mat-icon>
-      </button>
-        <span class="example-spacer"></span>
-        
-      <form class="form-inline w-50 " style="max-width: w-50;">
-        <span class="example-spacer"></span>
-        <input matInput class="form-control w-75" #myInput type="search" placeholder="Tìm Kiếm"
-          (keyup.enter)="doSearch(myInput.value)" [formControl]="myControl" [matAutocomplete]="auto"
-         />
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
-            <span>{{ option.name }} </span>
-            <small style="position: absolute; right: 30px; color: gray">in {{ option.catagory.name }}</small>
-          </mat-option>
-        </mat-autocomplete>
-        <button mat-button (click)="doSearch(myInput.value)" style="background-color: #232f3e">
-          <mat-icon>search</mat-icon>
-        </button>
+    <div class="d-flex align-items-center">
+      <form class="w-100 me-3">
+        <div class="input-group">
+          <input type="search" class="form-control" #myInput placeholder="Tìm Kiếm" aria-label="Search"
+            (keyup.enter)="doSearch(myInput.value)" [formControl]="myControl" [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+              <span>{{ option.name }} </span>
+              <small style="position: absolute; right: 30px; color: gray">in {{ option.catagory.name }}</small>
+            </mat-option>
+          </mat-autocomplete>
+          <div class="input-group-text" id="basic-addon1">
+            <button mat-raised-button style="background:transparent;box-shadow:none" (click)="doSearch(myInput.value)">
+              <mat-icon>search</mat-icon>
+            </button>
+          </div>
+        </div>
       </form>
-      
-       <span class="example-spacer"></span>
-          <button mat-raised-button color="primary" *ngIf="!isLogin" [routerLink]="['/login']" >Đăng Nhập</button>
-          
-          
-          <span class="example-spacer"></span>
-          <div class="cart" (click)="openCart()">
-            <button mat-raised-button color="warn" matBadge="{{itemCount}}" matBadgePosition="after"
+      <div class=" flex-shrink-0">
+        <ul class="nav me-auto">
+          <li class="nav-item">
+            <button mat-raised-button (click)="openCart()" color="warn" matBadge="{{itemCount}}" matBadgePosition="after"
               matBadgeColor="warn">
               <mat-icon>add_shopping_cart</mat-icon>
             </button>
-          </div>
-          
-          <span class="example-spacer"></span>
-          <div class="sign-in" *ngIf="isLogin">
-            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" style=" text-transform: capitalize" >Xin Chào {{name}} <mat-icon>account_circle</mat-icon></button>
-            <mat-menu #menu="matMenu">
-              <a mat-menu-item [routerLink]="['profile']">Thông tin</a>
-              <a mat-menu-item (click)="logOut()" [routerLink]="['/']"> Đăng Xuất</a>
-            </mat-menu>
-          </div>
-
-    </mat-toolbar>
-
-
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

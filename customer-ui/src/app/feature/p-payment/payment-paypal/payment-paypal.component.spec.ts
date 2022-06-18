@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PaymentPaypal } from './test-paypal.component';
+import { PaymentPaypalComponent } from './payment-paypal.component';
 
-describe('TestPaypalComponent', () => {
-  let component: PaymentPaypal;
-  let fixture: ComponentFixture<PaymentPaypal>;
+describe('PaymentPaypalComponent', () => {
+  let component: PaymentPaypalComponent;
+  let fixture: ComponentFixture<PaymentPaypalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PaymentPaypal ]
+      declarations: [ PaymentPaypalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PaymentPaypal);
+    fixture = TestBed.createComponent(PaymentPaypalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
