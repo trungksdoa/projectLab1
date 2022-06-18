@@ -177,6 +177,8 @@ export class NgCartService {
         this.cartProcess.saveCartToLocalStorage(
           this.cartProcess.generatorCart(respone, respone.cartItem)
         )
+
+        // console.log(object);
         this.sharedService.setUniqueItemNumber(
           this.cartProcess.generatorCart(respone, respone.cartItem)
             .totalUniqueItems
