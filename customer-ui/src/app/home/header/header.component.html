@@ -1,48 +1,59 @@
+<mat-toolbar class="navbar" id="header">
+  <button mat-raised-button style="background-color: #232f3e" [routerLink]="['/home']">
+    <mat-icon class="example-spacer" style="color: white">home</mat-icon>
+  </button>
+  <span class="example-spacer"></span>
 
+  <form class="form-inline w-75 ">
+    <span class="example-spacer"></span>
+    <input matInput class="form-control w-75" #myInput type="search" placeholder="Tìm Kiếm"
+      (keyup.enter)="doSearch(myInput.value)" [formControl]="myControl" [matAutocomplete]="auto" />
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+        <span>{{ option.name }} </span>
+        <small style="position: absolute; right: 30px; color: gray">in {{ option.catagory.name }}</small>
+      </mat-option>
+    </mat-autocomplete>
+    <button mat-button (click)="doSearch(myInput.value)" style="background-color: #232f3e">
+      <mat-icon>search</mat-icon>
+    </button>
+  </form>
 
-    <mat-toolbar class="navbar" id="header">
-      <button mat-raised-button style="background-color: #232f3e" [routerLink]="['/home']">
-        <mat-icon class="example-spacer" style="color: white">home</mat-icon>
+  <span class="example-spacer"></span>
+  <button mat-raised-button color="primary" *ngIf="!isLogin" [routerLink]="['/login']">Đăng Nhập</button>
+  <span class="example-spacer"></span>
+  <div class="cart" (click)="openCart()" *ngIf="size === 4">
+    <button mat-raised-button color="warn" matBadge="{{itemCount}}" matBadgePosition="after" matBadgeColor="warn">
+      <mat-icon>add_shopping_cart</mat-icon>
+    </button>
+  </div>
+  <div class="sign-in" *ngIf="isLogin &&  size !== 4">
+    <button mat-raised-button color="primary" [matMenuTriggerFor]="menu"
+      style=" text-transform: capitalize">Menu</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item color="primary" [matMenuTriggerFor]="profile" style=" text-transform: capitalize">Xin Chào
+        {{name}} <mat-icon>account_circle</mat-icon></button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="openCart()">
+        Giỏ hàng <mat-icon matBadge="{{itemCount}}" matBadgePosition="after" matBadgeColor="warn">add_shopping_cart
+        </mat-icon>
       </button>
-        <span class="example-spacer"></span>
-        
-      <form class="form-inline w-75 ">
-        <span class="example-spacer"></span>
-        <input matInput class="form-control w-75" #myInput type="search" placeholder="Tìm Kiếm"
-          (keyup.enter)="doSearch(myInput.value)" [formControl]="myControl" [matAutocomplete]="auto"
-         />
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
-            <span>{{ option.name }} </span>
-            <small style="position: absolute; right: 30px; color: gray">in {{ option.catagory.name }}</small>
-          </mat-option>
-        </mat-autocomplete>
-        <button mat-button (click)="doSearch(myInput.value)" style="background-color: #232f3e">
-          <mat-icon>search</mat-icon>
-        </button>
-      </form>
-      
-       <span class="example-spacer"></span>
-          <button mat-raised-button color="primary" *ngIf="!isLogin" [routerLink]="['/login']" >Đăng Nhập</button>
-          
-          
-          <span class="example-spacer"></span>
-          <div class="cart" (click)="openCart()">
-            <button mat-raised-button color="warn" matBadge="{{itemCount}}" matBadgePosition="after"
-              matBadgeColor="warn">
-              <mat-icon>add_shopping_cart</mat-icon>
-            </button>
-          </div>
-          
-          <span class="example-spacer"></span>
-          <div class="sign-in" *ngIf="isLogin">
-            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" style=" text-transform: capitalize" >Xin Chào {{name}} <mat-icon>account_circle</mat-icon></button>
-            <mat-menu #menu="matMenu">
-              <a mat-menu-item [routerLink]="['profile']">Thông tin</a>
-              <a mat-menu-item (click)="logOut()" [routerLink]="['/']"> Đăng Xuất</a>
-            </mat-menu>
-          </div>
-
-    </mat-toolbar>
+      <!-- <a mat-menu-item (click)="logOut()" [routerLink]="['/']"> Đăng Xuất</a> -->
+    </mat-menu>
+    <mat-menu #profile="matMenu">
+      <a mat-menu-item [routerLink]="['profile']">Thông tin</a>
+      <a mat-menu-item (click)="logOut()" [routerLink]="['/']"> Đăng Xuất</a>
+    </mat-menu>
+  </div>
+  <span class="example-spacer" *ngIf="size === 4"></span>
+  <div class="sign-in" *ngIf="isLogin &&  size === 4">
+    <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" style=" text-transform: capitalize">Xin Chào
+      {{name}} <mat-icon>account_circle</mat-icon></button>
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item [routerLink]="['profile']">Thông tin</a>
+      <a mat-menu-item (click)="logOut()" [routerLink]="['/']"> Đăng Xuất</a>
+    </mat-menu>
+  </div>
 
 
+</mat-toolbar>

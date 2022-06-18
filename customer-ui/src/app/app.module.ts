@@ -33,13 +33,13 @@ import { CookieService } from 'ngx-cookie-service';
 import { SharedService } from './shared.service'
 
 import { LoginUiComponent } from './home/login-ui/login-ui.component'
-import { SpinnerComponent } from './spinner/spinner.component';
+import { SpinnerComponent } from './feature/spinner/spinner.component';
 import { httpInterceptProviders } from './http';
 
 
 import { NgxPayPalModule } from 'ngx-paypal';
 import { NgChartsModule } from 'ng2-charts';
-import { InvoiceComponent } from './invoice/invoice.component';
+import { InvoiceComponent } from './feature/invoice/invoice.component';
 import { ProductBestSellerComponent } from './product-best-seller/product-best-seller.component';
 
 // import { RegisterComponent } from './register/register.component';
@@ -55,12 +55,15 @@ import { SearchComponent } from './feature/search/search.component';
 import { ProfileOrderDetailComponent } from './feature/profile/profile-order-detail/profile-order-detail.component';
 import { ProfileOrderComponent } from './feature/profile/profile-order/profile-order.component';
 import { ProfileComponent } from './feature/profile/profile.component';
-import { PaymentPaypal } from './feature/p-payment/Payment-paypal/test-paypal.component';
+import { PaymentPaypalComponent } from './feature/p-payment/payment-paypal/payment-paypal.component';
 import { ConfirmDeactivateGuardService } from './Auth/confirm-deactivate-guard.service';
 import { LoginGuardService } from './Auth/login-guard.service';
 import { ToastServiceService } from './toast-service.service';
 import { NgCartCaculatorService } from './feature/p-cart/service/NgCartCaculatorService';
 import { NgCartApiService } from './feature/p-cart/service/NgCartAPIService';
+import { SizeDetectorComponent } from './size-detector/size-detector.component';
+import { ResizeChangeService } from './size-detector/resize-change.service';
+
 
 
 @NgModule({
@@ -77,7 +80,6 @@ import { NgCartApiService } from './feature/p-cart/service/NgCartAPIService';
     PPaymentComponent,
     LoginUiComponent,
     SpinnerComponent,
-    PaymentPaypal,
     ProfileComponent,
     ProfileOrderComponent,
     InvoiceComponent,
@@ -85,6 +87,8 @@ import { NgCartApiService } from './feature/p-cart/service/NgCartAPIService';
     ProductBestSellerComponent,
     RegisterComponent,
     SearchComponent,
+    SizeDetectorComponent,
+    PaymentPaypalComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,7 +122,8 @@ import { NgCartApiService } from './feature/p-cart/service/NgCartAPIService';
     CookieService,
     ToastServiceService,
     NgCartCaculatorService,
-    NgCartApiService
+    NgCartApiService,
+    ResizeChangeService
   ],
   bootstrap: [AppComponent]
 })

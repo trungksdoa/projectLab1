@@ -7,7 +7,6 @@
         <th scope="col">Tên sản phẩm</th>
         <th scope="col">Số lượng</th>
         <th scope="col">Tổng</th>
-        <th colspan="2">Hành động</th>
       </tr>
     </thead>
     <tbody *ngFor="let item of orderItems">
@@ -15,7 +14,6 @@
         <td><button mat-button style="padding:5px">{{item.productItem.name}}</button></td>
         <td><button mat-button style="padding:5px">{{item.quantity}}</button></td>
         <td><button mat-button style="padding:5px">{{sharedService.getFormatCurrency(item.productPrice)}}</button></td>
-        <td><button mat-raised-button style="padding:5px" color="primary" (click)="reOrder(item)">Mua lại</button></td>
       </tr>
     </tbody>
   </table>

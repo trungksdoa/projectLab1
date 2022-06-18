@@ -25,9 +25,9 @@ export class ProfileOrderDetailComponent implements OnInit {
     // console.log(this.data)
   }
 
-  reOrder (item: any) {
-    // this._cartService.addCartItem(item)
-  }
+  // reOrder (item: any) {
+  //   this._cartService.addToCart(item.productItem)
+  // }
 
   onNoClick () {
     this.dialogRef.close()

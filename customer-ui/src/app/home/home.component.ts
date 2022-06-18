@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../api/product/product';
 import { ProductService } from '../api/product/product.service';
 import { HttpErrorResponse } from '@angular/common/http'
+import { ResizeChangeService } from '../size-detector/resize-change.service';
+import { SCREEN_SIZE } from '../size-detector/size-detector.component';
 
 
 @Component({
@@ -11,7 +13,9 @@ import { HttpErrorResponse } from '@angular/common/http'
 })
 export class HomeComponent implements OnInit {
   public products: Product[]
-  constructor(private productService: ProductService,) {
+
+  constructor(private productService: ProductService) {
+
   }
   ngOnInit(): void {
     this.getAllProduct()
@@ -28,6 +32,8 @@ export class HomeComponent implements OnInit {
       }
     )
   }
+
+
 
 
 }

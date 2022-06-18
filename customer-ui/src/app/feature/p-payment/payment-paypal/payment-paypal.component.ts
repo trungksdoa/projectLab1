@@ -1,19 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core'
-import { MatDialogRef } from '@angular/material/dialog'
-import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal'
-import { OrderService } from 'src/app/feature/p-payment/order.service'
-import { PPaymentComponent } from 'src/app/feature/p-payment/p-payment.component'
-import { Order } from 'src/app/model/Order'
-import { Users } from 'src/app/model/user'
-import { SharedService } from 'src/app/shared.service'
-import { cartItem } from 'src/app/feature/p-cart/service'
+import { Component, Input, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
+import { Order } from 'src/app/model/Order';
+import { Users } from 'src/app/model/user';
+import { SharedService } from 'src/app/shared.service';
+import { cartItem } from '../../p-cart/service';
+import { OrderService } from '../order.service';
+import { PPaymentComponent } from '../p-payment.component';
+
 @Component({
-  selector: 'app-test-paypal',
-  templateUrl: './test-paypal.component.html',
-  styleUrls: ['./test-paypal.component.css']
+  selector: 'app-payment-paypal',
+  templateUrl: './payment-paypal.component.html',
+  styleUrls: ['./payment-paypal.component.css']
 })
-export class PaymentPaypal implements OnInit {
+export class PaymentPaypalComponent implements OnInit {
   @Input() items: Array<cartItem>
+
   public payPalConfig?: IPayPalConfig
   showSuccess: boolean
   constructor (

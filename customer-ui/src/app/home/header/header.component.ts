@@ -9,6 +9,8 @@ import { Product } from 'src/app/api/product/product'
 import { PCartComponent } from 'src/app/feature/p-cart/p-cart.component'
 import { ToastServiceService } from 'src/app/toast-service.service'
 import { Cart } from 'src/app/model/cart'
+import { ResizeChangeService } from 'src/app/size-detector/resize-change.service'
+import { SCREEN_SIZE } from 'src/app/size-detector/size-detector.component'
 
 @Component({
   selector: 'app-header',
@@ -22,22 +24,29 @@ export class HeaderComponent implements OnInit {
   searchMode: boolean
   isLogin: Boolean = false
   itemCount: number = 0
-  name: String=''
+  name: String = ''
+  size: SCREEN_SIZE
   constructor (
     private sharedService: SharedService,
     private toast: ToastServiceService,
     private router: Router,
-    private dialogService: DialogService
-  ) {}
+    private dialogService: DialogService,
+    private resizeSvc: ResizeChangeService
+  ) {
+    // đăng ký luồng thay đổi size
+    this.resizeSvc.onResize$.subscribe(x => {
+      console.log(x)
+      this.size = x
+    })
+  }
 
   ngOnInit (): void {
     this.sharedService.isLoggedIn().subscribe(data => {
       this.isLogin = data
-      this.name=this.sharedService.getUserFromCookie().name
+      this.name = this.sharedService.getUserFromCookie().name
     })
 
-
-    if(this.sharedService.getUserFromCookie()){
+    if (this.sharedService.getUserFromCookie()) {
       this.sharedService.getUniqueItemInCart().subscribe(uniqueItemInCart => {
         this.itemCount = uniqueItemInCart
       })
@@ -64,10 +73,8 @@ export class HeaderComponent implements OnInit {
   }
 
   doSearch (value: String): void {
-
     debounceTime(1000)
     this.router.navigateByUrl(`/product/search/${value}`)
-
   }
   openCart (): void {
     if (this.sharedService.getUserFromCookie()) {

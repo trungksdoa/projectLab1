@@ -15,7 +15,8 @@
               <div class="col">
                 <h1 mat-dialog-title>Giỏ Hàng</h1>
               </div>
-              <div class="col align-self-center text-right text-muted"> Số lượng sản phẩm: {{cart.totalUniqueItems}}</div>
+              <div class="col align-self-center text-right text-muted"> Số lượng sản phẩm: {{cart.totalUniqueItems}}
+              </div>
             </div>
           </div>
           <!-- <div *ngIf="cart?.cartItem; else #getList">Content to render when condition is true.</div> -->
@@ -46,7 +47,9 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-3">{{getCalculatedValue(item)}}
+
+                <div class="col-md-3">
+                  {{getCalculatedValue(item)}}
                   <span class="close">
                     <mat-checkbox (click)="selectedItem(item)" style="cursor: pointer" disabled=""
                       [checked]="item.active">
@@ -83,7 +86,7 @@
             <div class="col">Tổng giá trị đơn hàng</div>
             <div class="col text-right">{{sharedService.getFormatCurrency(cart.TotalPrice)}}</div>
           </div>
-          <button (click)="goCheckout()" mat-raised-button >Thanh toán</button>
+          <button (click)="goCheckout()" mat-raised-button>Thanh toán</button>
         </div>
       </div>
 

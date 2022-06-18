@@ -8,6 +8,8 @@ import { Users } from 'src/app/model/user'
 import { Router } from '@angular/router'
 import { SpinnerService } from 'src/app/spinner.service'
 import { Cart, cartItem, NgCartApiService, NgCartService } from './service'
+import { ResizeChangeService } from 'src/app/size-detector/resize-change.service'
+import { SCREEN_SIZE } from 'src/app/size-detector/size-detector.component'
 @Component({
   selector: 'app-p-cart',
   templateUrl: './p-cart.component.html',
@@ -23,16 +25,21 @@ export class PCartComponent implements OnInit {
   displayedColumns: string[] = ['productItem.name', 'quantity', 'productPrice']
   checked: boolean = false
   sharedService: SharedService
-
+  size: SCREEN_SIZE
   constructor (
     private cartservice: NgCartService,
     private _sharedService: SharedService,
     private dialogService: DialogService,
     private dialogRef: MatDialogRef<PCartComponent>,
+    private resizeSvc: ResizeChangeService,
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.sharedService = _sharedService
+    this.resizeSvc.onResize$.subscribe(x => {
+      console.log(x)
+      this.size = x
+    })
   }
 
   ngOnInit (): void {
