@@ -1,4 +1,4 @@
-<aside>
+<aside *ngIf="isLogin">
   <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
       <a class="sidebar-brand" [routerLink]="['/']">
@@ -17,6 +17,17 @@
         <li class="sidebar-item">
           <a class="sidebar-link" [routerLink]="['/order/manager']">
             <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Danh sách đơn đặt hàng</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="sidebar-nav">
+        <li class="sidebar-header fs-6">
+          Quản lý người dùng
+        </li>
+
+        <li class="sidebar-item">
+          <a class="sidebar-link" [routerLink]="['/user/manager']">
+            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Danh sách người dùng</span>
           </a>
         </li>
       </ul>
@@ -46,24 +57,7 @@
             <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Danh sách slide quảng cáo</span>
           </a>
         </li>
-        <li class="sidebar-item">
-          <a class="sidebar-link" [routerLink]="['/banner']">
-            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Danh sách người yêu cầu</span>
-          </a>
-        </li>
       </ul>
-
-      <div class="sidebar-cta">
-        <div class="sidebar-cta-content">
-          <strong class="d-inline-block mb-2">Upgrade to Pro</strong>
-          <div class="mb-3 text-sm">
-            Are you looking for more components? Check out our premium version.
-          </div>
-          <div class="d-grid">
-            <a href="upgrade-to-pro.html" class="btn btn-primary">Upgrade to Pro</a>
-          </div>
-        </div>
-      </div>
     </div>
   </nav>
 </aside>

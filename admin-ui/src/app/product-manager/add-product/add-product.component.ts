@@ -6,7 +6,7 @@ import { Category } from 'src/app/api/category/category'
 import { CategoryService } from 'src/app/api/category/category.service'
 import { Product } from 'src/app/api/product/product'
 import { ProductService } from 'src/app/api/product/product.service'
-import { SharedService } from 'src/app/shared.service'
+import { SharedService } from 'src/app/service'
 
 @Component({
   selector: 'app-add-product',
