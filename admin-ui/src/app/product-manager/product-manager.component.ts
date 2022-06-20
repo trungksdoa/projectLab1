@@ -1,4 +1,4 @@
-import { SharedService } from 'src/app/shared.service'
+import { SharedService ,DialogService} from 'src/app/service'
 import { HttpErrorResponse } from '@angular/common/http'
 import { Component, Input, OnInit, ViewChild } from '@angular/core'
 import { Validators, FormBuilder, NgForm } from '@angular/forms'
@@ -6,7 +6,6 @@ import { Category } from 'src/app/api/category/category'
 import { CategoryService } from 'src/app/api/category/category.service'
 import { Product } from 'src/app/api/product/product'
 import { ProductService } from 'src/app/api/product/product.service'
-import { DialogService } from 'src/app/dialog.service'
 import { AddProductComponent } from './add-product/add-product.component'
 
 @Component({
@@ -20,7 +19,7 @@ export class ProductManagerComponent implements OnInit {
   temp_products: Product[] = []
   failed: boolean
   categorys: Category[]
-  newDate : any = new Date().getTime()
+  newDate: any = new Date().getTime()
 
   initializeValue = {
     id: 0,
@@ -48,6 +47,13 @@ export class ProductManagerComponent implements OnInit {
       let index = this.products.findIndex(item => item.id === data.id)
       if (index == -1) {
         this.products.push(data)
+      } else {
+        this.products
+          .filter(item => item.id === data.id)
+          .map(preData => {
+            preData = data
+            return preData
+          })
       }
     })
 

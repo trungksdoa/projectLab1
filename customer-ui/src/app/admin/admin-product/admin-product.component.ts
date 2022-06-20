@@ -17,7 +17,7 @@ export class AdminProductComponent implements OnInit {
   public categorys: Category[];
   public editCate: Category;
   public deleteCate: Category;
-  constructor(private categoryService: CategoryService) {
+  constructor(private categoryService: CategoryService, private ngForm:NgForm) {
 
   }
 

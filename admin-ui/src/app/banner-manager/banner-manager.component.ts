@@ -1,18 +1,25 @@
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http'
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
+import {
+  Component,
+  ElementRef,
+  OnChanges,
+  OnInit,
+  ViewChild
+} from '@angular/core'
 import { async } from '@angular/core/testing'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Observable } from 'rxjs'
 import { BannerService } from '../api/service/banner_service'
-import { DialogService } from '../dialog.service'
+import { DialogService } from 'src/app/service'
 import { UpdateBannerFormComponent } from '../update-banner-form/update-banner-form.component'
+import { Banner } from '../model/banner'
 
 @Component({
   selector: 'app-banner-manager',
   templateUrl: './banner-manager.component.html',
   styleUrls: ['./banner-manager.component.css']
 })
-export class BannerManagerComponent implements OnInit {
+export class BannerManagerComponent implements OnInit, OnChanges {
   @ViewChild('inputImage', { static: false }) inputImage: any
 
   selectedFiles?: FileList
@@ -20,7 +27,7 @@ export class BannerManagerComponent implements OnInit {
   message: string[] = []
   imageDataUrl: any =
     'https://previews.123rf.com/images/bonumopus/bonumopus1603/bonumopus160300089/53156323-empty-transparent-background-with-gradient-opacity-.jpg'
-  fileInfos?: Observable<any>
+  fileList: Banner[]
 
   dataurlList: any[] = []
 
@@ -29,12 +36,20 @@ export class BannerManagerComponent implements OnInit {
     private dialogService: DialogService
   ) {}
 
+  ngOnChanges () {}
   ngOnInit (): void {
     this.getFiles()
   }
 
   getFiles () {
-    this.fileInfos = this.uploadService.getFiles()
+    this.uploadService.getFiles().subscribe(data => {
+      console.log(data)
+      data.map(file => {
+        file.link = this.setImage(file.imageName)
+        return file
+      })
+      this.fileList = data
+    })
   }
   selectFiles (event: any): void {
     this.message = []
@@ -64,7 +79,7 @@ export class BannerManagerComponent implements OnInit {
             setTimeout(() => {
               this.message = []
             }, 1500)
-            this.fileInfos = this.uploadService.getFiles()
+            this.getFiles()
           }
         },
         error: (err: any) => {
@@ -72,7 +87,7 @@ export class BannerManagerComponent implements OnInit {
           this.progressInfos[idx].value = 0
           const msg = 'Could not upload the file: ' + file.name
           this.message.push(msg)
-          this.fileInfos = this.uploadService.getFiles()
+          this.getFiles()
         }
       })
     }

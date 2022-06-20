@@ -13,8 +13,12 @@ export class UserService {
 
   constructor (private http: HttpClient) {}
 
-  public loginRequest (user: Users): Observable<Users> {
-    return this.http.post<Users>(`${this.apiServerUrl}/user/login`, user)
+  public getAll (): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/user/`)
+  }
+
+  public loginRequest (user: Users): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/user/login`, user)
   }
   public triggerCheckIsAdmin (name: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.apiServerUrl}/user/isAdmin?name=${name}`)

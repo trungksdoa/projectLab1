@@ -26,7 +26,7 @@ import { NavComponent } from './home/nav/nav.component'
 import { BannerSliderComponent } from './home/banner-slider/banner-slider.component'
 import { ProductComponent } from './home/product/product.component'
 import { FooterComponent } from './home/footer/footer.component'
-// import { AdminProductComponent } from './admin/admin-product/admin-product.component'
+import { AdminProductComponent } from './admin/admin-product/admin-product.component'
 // import { AdminItemsComponent } from './admin/admin-items/admin-items.component'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { CookieService } from 'ngx-cookie-service';
@@ -93,14 +93,15 @@ import { ResizeChangeService } from './size-detector/resize-change.service';
     ProfileAccountComponent,
     SizeDetectorComponent,
     PaymentPaypalComponent,
+    AdminProductComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule ,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialExampleModule,
     NgbModule,
-    FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
     NgSelectModule,

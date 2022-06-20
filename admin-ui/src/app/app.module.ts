@@ -21,7 +21,7 @@ import { OrderService } from './api/service/order.service';
 import { UserService } from './api/service/user.service';
 import { CategoryService } from './api/category/category.service';
 import { ProductService } from './api/product/product.service';
-import { SharedService } from './shared.service';
+import { DialogService, SharedService } from 'src/app/service';
 import { OrderManagerComponent } from './order-manager/order-manager.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { ProductManagerComponent } from './product-manager/product-manager.component';
@@ -30,9 +30,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BannerManagerComponent } from './banner-manager/banner-manager.component';
 import { BannerService } from './api/service/banner_service';
 import { AddProductComponent } from 'src/app/product-manager/add-product/add-product.component';
-import { DialogService } from './dialog.service';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { UpdateBannerFormComponent } from './update-banner-form/update-banner-form.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { UserManagerComponent } from './user-manager/user-manager.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,9 @@ import { UpdateBannerFormComponent } from './update-banner-form/update-banner-fo
     DashboardComponent,
     BannerManagerComponent,
     AddProductComponent,
-    UpdateBannerFormComponent
+    UpdateBannerFormComponent,
+    LoginFormComponent,
+    UserManagerComponent
   ],
   imports: [
     BrowserModule,

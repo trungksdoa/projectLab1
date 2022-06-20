@@ -4,6 +4,8 @@ import { UserService } from 'src/app/api/service/user.service'
 // import { cartItem } from 'src/app/mo'
 import { EventEmitter, Injectable } from '@angular/core'
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs'
+import { CookieService } from 'ngx-cookie-service'
+import { Users } from 'src/app/model/user'
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ export class SharedService {
   invokeGetitemToPaymentFunction = new EventEmitter()
   invokeSendDataAfterSubmit = new EventEmitter()
   subsVar: Subscription
+
 
   private _isLoggedIn = new BehaviorSubject<boolean>(false)
   private _isAdmin = new BehaviorSubject<boolean>(false)
@@ -32,18 +35,39 @@ export class SharedService {
     })
     return formatter.format(value)
   }
+  /*
+   *
+   *
+   * cookies
+   *
+   *
+   */
 
-  setLocal (name: string, value: any) {
-    localStorage.setItem(name, JSON.stringify(value))
+  setCookie (name: string, value: any) {
+    if (name === 'admin_user') {
+      var now = new Date()
+      var time = now.getTime()
+      var expireTime = time + 1000 * 36000
+      now.setTime(expireTime)
+      this.cookieService.set(name, JSON.stringify(value),expireTime)
+    }else{
+      this.cookieService.set(name, JSON.stringify(value))
+    }
+
   }
-  getLocal (name: string) {
-    return localStorage.getItem(name)
-      ? JSON.parse(localStorage.getItem(name))
+  getCookie (name: string) {
+    return this.cookieService.get(name)
+      ? JSON.parse(this.cookieService.get(name))
       : ''
   }
+  deleteCookie (name: string) {
+    this.cookieService.delete(name)
+  }
 
-  deleteLocal (name: string) {
-    localStorage.removeItem(name)
+  getUserFromCookie (): Users {
+    return this.cookieService.get('admin_user')
+      ? JSON.parse(this.cookieService.get('admin_user'))
+      : null
   }
 
   isLoggin (status: boolean) {
@@ -51,7 +75,7 @@ export class SharedService {
   }
 
   isLoggedIn () {
-    if (this.getLocal('user') !== '') {
+    if (this.getUserFromCookie()) {
       this._isLoggedIn.next(true)
     } else {
       this._isLoggedIn.next(false)
@@ -59,21 +83,8 @@ export class SharedService {
     return this._isLoggedIn.asObservable()
   }
 
-  isAdmin (): Observable<boolean> {
-    var subject = new Subject<boolean>();
-    this.isLoggedIn().subscribe(isloggin=>{
-      if(isloggin){
-        this.userservice
-        .triggerCheckIsAdmin(JSON.parse(this.getLocal('user')).name)
-        .subscribe(isAdmin => {
-          subject.next(isAdmin);
-        })
-      }
-    })
-    return subject.asObservable();
-  }
 
-  constructor (private userservice: UserService) {
+  constructor (private cookieService: CookieService) {
     // this.isAdmin().subscribe((r)=>console.log(r))
   }
 }

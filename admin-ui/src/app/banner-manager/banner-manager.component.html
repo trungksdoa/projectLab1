@@ -22,8 +22,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let file of fileInfos | async">
-                    <td><img width="100" height="100" [src]="setImage(file.imageName)"/></td>
+                  <tr *ngFor="let file of fileList">
+                    <td><img width="100" height="100" [src]="file.link"/></td>
                     <td>{{ file.imageName }}</td>
                     <td><button mat-raised-button (click)="updateFile(file.imageName)">Update image</button></td>
                     <td><button mat-raised-button (click)="deleteFile(file.imageName)">Delete</button></td>

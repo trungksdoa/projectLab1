@@ -10,6 +10,7 @@ import { InvoiceComponent } from './feature/invoice/invoice.component'
 import { AuthGuardService } from './Auth/auth-guard.service'
 import { ConfirmDeactivateGuardService } from './Auth/confirm-deactivate-guard.service'
 import { LoginGuardService } from './Auth/login-guard.service'
+import { AdminProductComponent } from './admin/admin-product/admin-product.component'
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -27,6 +28,11 @@ const routes: Routes = [
   {
     path: 'detail/:id', // child route path
     component: PDetailComponent
+    // child route component that the router renders
+  },
+  {
+    path: 'catagory', // child route path
+    component: AdminProductComponent
     // child route component that the router renders
   },
   {

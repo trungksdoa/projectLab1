@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { OrderService } from '../api/service/order.service';
 import { orderManagement } from '../model/Order';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
-import { SharedService } from '../shared.service';
+import { SharedService } from 'src/app/service';
 
 @Component({
   selector: 'app-order-manager',
