@@ -5,6 +5,7 @@ import { OrderManagerComponent } from './order-manager/order-manager.component';
 import { ProductManagerComponent } from './product-manager/product-manager.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent},
@@ -20,7 +21,8 @@ const routes: Routes = [
   {
     path: 'product',
     component: ProductManagerComponent
-  }
+  },
+ 
 ];
 
 @NgModule({

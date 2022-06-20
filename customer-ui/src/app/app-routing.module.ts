@@ -11,6 +11,7 @@ import { AuthGuardService } from './Auth/auth-guard.service'
 import { ConfirmDeactivateGuardService } from './Auth/confirm-deactivate-guard.service'
 import { LoginGuardService } from './Auth/login-guard.service'
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -41,7 +42,8 @@ const routes: Routes = [
     canDeactivate: [ConfirmDeactivateGuardService]
   },
   { path: 'product/category/:id', component: ProductComponent },
-  { path: 'product/search/:keyword', component: ProductComponent }
+  { path: 'product/search/:keyword', component: ProductComponent },
+  
 ]
 
 @NgModule({

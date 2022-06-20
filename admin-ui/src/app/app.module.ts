@@ -33,6 +33,8 @@ import { AddProductComponent } from 'src/app/product-manager/add-product/add-pro
 import { DialogService } from './dialog.service';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { UpdateBannerFormComponent } from './update-banner-form/update-banner-form.component';
+import { CategoryManagerComponent } from './category-manager/category-manager.component';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { UpdateBannerFormComponent } from './update-banner-form/update-banner-fo
     DashboardComponent,
     BannerManagerComponent,
     AddProductComponent,
-    UpdateBannerFormComponent
+    UpdateBannerFormComponent,
+    CategoryManagerComponent,
+   
   ],
   imports: [
     BrowserModule,
