@@ -1,11 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Category } from '../api/category/category';
 import { CategoryService } from '../api/category/category.service';
-import { DialogService } from '../dialog.service';
-import { SharedService } from '../shared.service';
-
 
 @Component({
   selector: 'app-category-manager',
@@ -14,10 +11,11 @@ import { SharedService } from '../shared.service';
 })
 export class CategoryManagerComponent implements OnInit {
 
+  
   public categorys: Category[];
   public editCate: Category;
   public deleteCate: Category;
-  constructor(private categoryService: CategoryService, private ngForm:NgForm) {
+  constructor(private categoryService: CategoryService) {
 
   }
 
@@ -110,4 +108,5 @@ export class CategoryManagerComponent implements OnInit {
     container.appendChild(button);
     button.click();
   }
+
 }

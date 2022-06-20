@@ -32,13 +32,11 @@ import { BannerService } from './api/service/banner_service';
 import { AddProductComponent } from 'src/app/product-manager/add-product/add-product.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { UpdateBannerFormComponent } from './update-banner-form/update-banner-form.component';
-<<<<<<< HEAD
-import { CategoryManagerComponent } from './category-manager/category-manager.component';
 
-=======
+
 import { LoginFormComponent } from './login-form/login-form.component';
 import { UserManagerComponent } from './user-manager/user-manager.component';
->>>>>>> 141d23d61e5a9449835ebe82b9a63759f30b75da
+import { CategoryManagerComponent } from './category-manager/category-manager.component';
 
 @NgModule({
   declarations: [
@@ -51,13 +49,9 @@ import { UserManagerComponent } from './user-manager/user-manager.component';
     BannerManagerComponent,
     AddProductComponent,
     UpdateBannerFormComponent,
-<<<<<<< HEAD
-    CategoryManagerComponent,
-   
-=======
     LoginFormComponent,
-    UserManagerComponent
->>>>>>> 141d23d61e5a9449835ebe82b9a63759f30b75da
+    UserManagerComponent,
+    CategoryManagerComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +76,6 @@ import { UserManagerComponent } from './user-manager/user-manager.component';
     BannerService,
     DialogService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent,CategoryManagerComponent]
 })
 export class AppModule { }

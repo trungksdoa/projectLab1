@@ -7,6 +7,8 @@ import { DashboardComponent } from './dashboard/dashboard.component'
 import { LoginFormComponent } from './login-form/login-form.component'
 import { AuthService } from './auth.service'
 import { UserManagerComponent } from './user-manager/user-manager.component'
+import { CategoryManagerComponent } from './category-manager/category-manager.component'
+
 
 
 const routes: Routes = [
@@ -39,17 +41,15 @@ const routes: Routes = [
   },
   {
     path: 'product',
-<<<<<<< HEAD
     component: ProductManagerComponent
   },
+  {
+    path: 'category',
+    component: CategoryManagerComponent
+  },
+  
  
 ];
-=======
-    component: ProductManagerComponent,
-    canActivate: [AuthService]
-  }
-]
->>>>>>> 141d23d61e5a9449835ebe82b9a63759f30b75da
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

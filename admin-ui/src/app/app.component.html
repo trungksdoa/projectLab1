@@ -1,3 +1,4 @@
+
 <div class="wrapper">
   <app-sidebar></app-sidebar>
 
@@ -14,32 +15,15 @@
               <i class="align-middle" data-feather="settings"></i>
             </a> -->
 
-<<<<<<< HEAD
-            <!-- <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-              <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span
-                class="text-dark">Trung</span>
-            </a> -->
-            
-            <div class="dropdown-menu dropdown-menu-end">
-              <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i>
-                Profile</a>
-              <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i>
-                Settings & Privacy</a>
-              <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help
-                Center</a>
-=======
             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" *ngIf="username !=='Chào các cụ'" href="#"
               data-bs-toggle="dropdown">
-              <span class="text-dark">{{username}}</span>
+              <span class="text-dark" style="text-transform: capitalize;">{{username}}</span>
             </a>
             <a class="nav-link  d-none d-sm-inline-block" *ngIf="username ==='Chào các cụ'">
               <span class="text-dark">{{username}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-end" *ngIf="username !=='Chào các cụ'">
->>>>>>> 141d23d61e5a9449835ebe82b9a63759f30b75da
-              <div class="dropdown-divider"></div>
+          
               <a class="dropdown-item" (click)="logout()">Log out</a>
             </div>
           </li>

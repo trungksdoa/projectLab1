@@ -26,7 +26,7 @@ import { NavComponent } from './home/nav/nav.component'
 import { BannerSliderComponent } from './home/banner-slider/banner-slider.component'
 import { ProductComponent } from './home/product/product.component'
 import { FooterComponent } from './home/footer/footer.component'
-import { AdminProductComponent } from './admin/admin-product/admin-product.component'
+
 // import { AdminItemsComponent } from './admin/admin-items/admin-items.component'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { CookieService } from 'ngx-cookie-service';
@@ -55,7 +55,7 @@ import { SearchComponent } from './feature/search/search.component';
 import { ProfileOrderDetailComponent } from './feature/profile/profile-order-detail/profile-order-detail.component';
 import { ProfileOrderComponent } from './feature/profile/profile-order/profile-order.component';
 import { ProfileComponent } from './feature/profile/profile.component';
-import { PaymentPaypalComponent } from './feature/p-payment/payment-paypal/payment-paypal.component';
+import { PaymentPaypalComponent } from './feature/p-payment/Payment-paypal/payment-paypal.component';
 import { ConfirmDeactivateGuardService } from './Auth/confirm-deactivate-guard.service';
 import { LoginGuardService } from './Auth/login-guard.service';
 import { ProfileAccountComponent } from './feature/profile/profile-account/profile-account.component';
@@ -93,7 +93,7 @@ import { ResizeChangeService } from './size-detector/resize-change.service';
     ProfileAccountComponent,
     SizeDetectorComponent,
     PaymentPaypalComponent,
-    AdminProductComponent
+
   ],
   imports: [
     BrowserModule,

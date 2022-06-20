@@ -10,7 +10,7 @@ import { InvoiceComponent } from './feature/invoice/invoice.component'
 import { AuthGuardService } from './Auth/auth-guard.service'
 import { ConfirmDeactivateGuardService } from './Auth/confirm-deactivate-guard.service'
 import { LoginGuardService } from './Auth/login-guard.service'
-import { AdminProductComponent } from './admin/admin-product/admin-product.component'
+
 
 
 const routes: Routes = [
@@ -31,11 +31,7 @@ const routes: Routes = [
     component: PDetailComponent
     // child route component that the router renders
   },
-  {
-    path: 'catagory', // child route path
-    component: AdminProductComponent
-    // child route component that the router renders
-  },
+  
   {
     path: 'login',
     component: LoginUiComponent,
