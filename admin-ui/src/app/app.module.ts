@@ -1,39 +1,34 @@
-import { MatMenuModule } from '@angular/material/menu';
-
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialExampleModule } from './module/material.module';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgSelectModule } from '@ng-select/ng-select';
+import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BrowserModule } from "@angular/platform-browser";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgSelectModule } from "@ng-select/ng-select";
+import { Ng2SearchPipeModule } from "ng2-search-filter";
+import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
+import { CategoryService } from "./api/category/category.service";
+import { ProductService } from "./api/product/product.service";
+import { BannerService } from "./api/service/banner_service";
+import { CartService } from "./api/service/cart.service";
+import { CityService } from "./api/service/citys.service";
+import { OrderService } from "./api/service/order.service";
+import { UserService } from "./api/service/user.service";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { BannerManagerComponent } from "./feature/banner-manager/banner-manager.component";
+import { DashboardComponent } from "./feature/dashboard/dashboard.component";
+import { OrderDetailComponent } from "./feature/order-manager/order-detail/order-detail.component";
+import { OrderManagerComponent } from "./feature/order-manager/order-manager.component";
+import { UpdateBannerFormComponent } from "./feature/update-banner-form/update-banner-form.component";
+import { UserManagerComponent } from "./feature/user-manager/user-manager.component";
+import { LoginFormComponent } from "./login-form/login-form.component";
+import { MaterialExampleModule } from "./module/material.module";
+import { AddProductComponent } from "./product-manager/add-product/add-product.component";
+import { ProductManagerComponent } from "./product-manager/product-manager.component";
+import { SharedService, DialogService } from "./service";
+import { SidebarComponent } from "./sidebar/sidebar.component";
 
-// import { AdminOrderComponent } from 'src/app/admin/admin-order/admin-order.component';
-// import { AdminItemsComponent } from 'src/app/admin/admin-items/admin-items.component';
-// import { AdminProductComponent } from 'src/app/admin/admin-product/admin-product.component';
-import { CartService } from './api/service/cart.service';
-import { CityService } from './api/service/citys.service';
-import { OrderService } from './api/service/order.service';
-import { UserService } from './api/service/user.service';
-import { CategoryService } from './api/category/category.service';
-import { ProductService } from './api/product/product.service';
-import { DialogService, SharedService } from 'src/app/service';
-import { OrderManagerComponent } from './order-manager/order-manager.component';
-import { OrderDetailComponent } from './order-detail/order-detail.component';
-import { ProductManagerComponent } from './product-manager/product-manager.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { BannerManagerComponent } from './banner-manager/banner-manager.component';
-import { BannerService } from './api/service/banner_service';
-import { AddProductComponent } from 'src/app/product-manager/add-product/add-product.component';
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-import { UpdateBannerFormComponent } from './update-banner-form/update-banner-form.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { UserManagerComponent } from './user-manager/user-manager.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +54,8 @@ import { UserManagerComponent } from './user-manager/user-manager.component';
     HttpClientModule,
     ReactiveFormsModule,
     NgSelectModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    Ng2SearchPipeModule
   ],
   providers: [
     CategoryService,

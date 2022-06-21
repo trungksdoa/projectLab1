@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { BannerService } from '../api/service/banner_service'
+import { BannerService } from '../../api/service/banner_service'
 
 @Component({
   selector: 'app-update-banner-form',

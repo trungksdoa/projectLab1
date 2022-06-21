@@ -1,8 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { orderItems, orderManagement } from '../model/Order';
-import { SharedService } from 'src/app/service';
+import { Component, OnInit, Inject } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { orderItems, orderManagement } from "src/app/model/Order";
+import { SharedService } from "src/app/service";
 
 @Component({
   selector: 'app-order-detail',

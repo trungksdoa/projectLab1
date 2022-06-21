@@ -7,15 +7,15 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarColor02">
     <form class="form-inline my-2 my-lg-0">
-      <!-- <input type="search" (ngModelChange)="searchCategory(key.value)" #key="ngModel" ngModel name="key"
-        id="searchName" class="form-control mr-sm-2" placeholder="Search product..." required> -->
+      <input type="search" (input)="searchAny($event)" class="form-control mr-sm-2" placeholder="Tìm kiếm" required>
     </form>
   </div>
 </nav>
 <div class="container" id="main-container" style="text-align: center ;">
-  <h3>----------------</h3>
   <div class="row">
-    <table class="table table-striped">
+    <h3>Danh sách</h3>
+    <table class="table table-bordered table-responsive-sm table-responsive-md
+    table-responsive-lg">
       <thead>
         <tr>
           <th> Tên khách hàng </th>
@@ -28,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of orders">
+        <tr *ngFor="let order of filterArray">
           <td> <button mat-button style="padding:5px">{{ order.fullname}} </button></td>
           <td> <button mat-button style="padding:5px"> {{ order.phoneNumber}}</button> </td>
           <td id="text-wrapper">
@@ -85,6 +85,11 @@
 
             <button mat-button color="warn">Xóa</button>
           </td> -->
+        </tr>
+        <tr *ngIf="filterArray.length <= 0">
+          <td colspan="7">
+            <h3>Không tìm thấy dữ liệu</h3>
+          </td>
         </tr>
       </tbody>
     </table>

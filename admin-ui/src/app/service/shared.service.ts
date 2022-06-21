@@ -15,7 +15,6 @@ export class SharedService {
   invokeSendDataAfterSubmit = new EventEmitter()
   subsVar: Subscription
 
-
   private _isLoggedIn = new BehaviorSubject<boolean>(false)
   private _isAdmin = new BehaviorSubject<boolean>(false)
 
@@ -23,7 +22,7 @@ export class SharedService {
     this.invokeGetitemToPaymentFunction.emit(cartItem)
   }
 
-  submitFormProduct(data:any){
+  submitFormProduct (data: any) {
     this.invokeSendDataAfterSubmit.emit(data)
   }
 
@@ -49,11 +48,10 @@ export class SharedService {
       var time = now.getTime()
       var expireTime = time + 1000 * 36000
       now.setTime(expireTime)
-      this.cookieService.set(name, JSON.stringify(value),expireTime)
-    }else{
+      this.cookieService.set(name, JSON.stringify(value), expireTime)
+    } else {
       this.cookieService.set(name, JSON.stringify(value))
     }
-
   }
   getCookie (name: string) {
     return this.cookieService.get(name)
@@ -83,7 +81,39 @@ export class SharedService {
     return this._isLoggedIn.asObservable()
   }
 
-
+  searchAny (items: any[], term: any) {
+    const /** @type {?} */ toCompare = term.toLowerCase()
+    /**
+     * @param {?} usersList
+     * @param {?} term
+     * @return {?}
+     */
+    function checkInside (item: Users, term: any) {
+      for (let /** @type {?} */ property in item) {
+        if (item[property] === null || item[property] == undefined) {
+          continue
+        }
+        if (typeof item[property] === 'object') {
+          if (checkInside(item[property], term)) {
+            return true
+          }
+        }
+        if (
+          item[property]
+            .toString()
+            .toLowerCase()
+            .includes(toCompare)
+        ) {
+          return true
+        }
+      }
+      return false
+    }
+    const copyArray = [...items].reverse()
+    return copyArray.filter(function (item) {
+      return checkInside(item, term)
+    })
+  }
   constructor (private cookieService: CookieService) {
     // this.isAdmin().subscribe((r)=>console.log(r))
   }

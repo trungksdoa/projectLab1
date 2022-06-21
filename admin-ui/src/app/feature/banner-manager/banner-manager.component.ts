@@ -1,18 +1,10 @@
-import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http'
-import {
-  Component,
-  ElementRef,
-  OnChanges,
-  OnInit,
-  ViewChild
-} from '@angular/core'
-import { async } from '@angular/core/testing'
-import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { Observable } from 'rxjs'
-import { BannerService } from '../api/service/banner_service'
-import { DialogService } from 'src/app/service'
-import { UpdateBannerFormComponent } from '../update-banner-form/update-banner-form.component'
-import { Banner } from '../model/banner'
+import { HttpEventType, HttpResponse } from "@angular/common/http"
+import { Component, OnInit, OnChanges, ViewChild } from "@angular/core"
+import { BannerService } from "src/app/api/service/banner_service"
+import { Banner } from "src/app/model/banner"
+import { DialogService } from "src/app/service"
+import { UpdateBannerFormComponent } from "../update-banner-form/update-banner-form.component"
+
 
 @Component({
   selector: 'app-banner-manager',

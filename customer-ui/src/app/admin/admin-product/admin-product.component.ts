@@ -7,6 +7,7 @@ import {MatTable} from '@angular/material/table';
 import { Category } from 'src/app/api/category/category';
 import { CategoryService } from 'src/app/api/category/category.service';
 
+import * as $ from 'jquery';
 @Component({
   selector: 'app-admin-product',
   templateUrl: './admin-product.component.html',
@@ -17,7 +18,7 @@ export class AdminProductComponent implements OnInit {
   public categorys: Category[];
   public editCate: Category;
   public deleteCate: Category;
-  constructor(private categoryService: CategoryService, private ngForm:NgForm) {
+  constructor(private categoryService: CategoryService) {
 
   }
 
@@ -91,24 +92,25 @@ export class AdminProductComponent implements OnInit {
   }
 
   public onOpenModal(cate: Category, mode: string): void {
-    const container = document.getElementById('main-container');
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.style.display = 'none';
-    button.setAttribute('data-toggle', 'modal');
-    if (mode === 'add') {
-      button.setAttribute('data-target', '#addEmployeeModal');
-    }
-    if (mode === 'edit') {
-      this.editCate = cate;
-      button.setAttribute('data-target', '#updateEmployeeModal');
-    }
-    if (mode === 'delete') {
-      this.deleteCate = cate;
-      button.setAttribute('data-target', '#deleteEmployeeModal');
-    }
-    container.appendChild(button);
-    button.click();
+    $("#addEmployeeModal").modal()
+    // const container = document.getElementById('main-container');
+    // const button = document.createElement('button');
+    // button.type = 'button';
+    // button.style.display = 'none';
+    // button.setAttribute('data-toggle', 'modal');
+    // if (mode === 'add') {
+    //   button.setAttribute('data-target', '#addEmployeeModal');
+    // }
+    // if (mode === 'edit') {
+    //   this.editCate = cate;
+    //   button.setAttribute('data-target', '#updateEmployeeModal');
+    // }
+    // if (mode === 'delete') {
+    //   this.deleteCate = cate;
+    //   button.setAttribute('data-target', '#deleteEmployeeModal');
+    // }
+    // container.appendChild(button);
+    // button.click();
   }
 
 }

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatDialog } from '@angular/material/dialog';
-import { OrderService } from '../api/service/order.service';
-import { orderManagement } from '../model/Order';
-import { OrderDetailComponent } from '../order-detail/order-detail.component';
-import { SharedService } from 'src/app/service';
+import { Component, OnInit } from "@angular/core";
+import { MatBottomSheet } from "@angular/material/bottom-sheet";
+import { MatDialog } from "@angular/material/dialog";
+import { OrderService } from "src/app/api/service/order.service";
+import { orderManagement } from "src/app/model/Order";
+import { SharedService } from "src/app/service";
+import { OrderDetailComponent } from "./order-detail/order-detail.component";
+
 
 @Component({
   selector: 'app-order-manager',
@@ -12,8 +13,9 @@ import { SharedService } from 'src/app/service';
   styleUrls: ['./order-manager.component.css']
 })
 export class OrderManagerComponent implements OnInit {
-
   orders: orderManagement[] = []
+  searchValue:any;
+  filterArray: any[] = []
   status_ = {
     success: 4,
     cancel: 3,
@@ -27,16 +29,20 @@ export class OrderManagerComponent implements OnInit {
     private _bottomSheet: MatBottomSheet,
     public dialog: MatDialog
   ) {
+    this.sharedService = _sharedService
     this.service.getorders().subscribe(items => {
       items.forEach(item => {
         item.createAt = new Date(item.createAt).toUTCString()
         item.lastUpdated = new Date(item.lastUpdated).toUTCString()
       })
       this.orders = items
+      this.filterArray = items
     })
   }
 
-  ngOnInit (): void {}
+  ngOnInit (): void {
+
+  }
 
   openOrderProduct (order: orderManagement) {
     this._bottomSheet.open(OrderDetailComponent, {
@@ -60,17 +66,22 @@ export class OrderManagerComponent implements OnInit {
     })
   }
 
-  openDialog(order: orderManagement): void {
+  openDialog (order: orderManagement): void {
     const dialogRef = this.dialog.open(OrderDetailComponent, {
       width: '100%',
       // height:"100%",
       data: order,
-      disableClose:true
-    });
+      disableClose: true
+    })
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed ' , result);
+      console.log('The dialog was closed ', result)
       // this.animal = result;
-    });
+    })
+  }
+
+  searchAny (event: any) {
+    const value = event.target.value
+    this.filterArray = this.sharedService.searchAny(this.orders, value)
   }
 }

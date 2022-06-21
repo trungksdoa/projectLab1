@@ -1,12 +1,13 @@
-import { BannerManagerComponent } from './banner-manager/banner-manager.component'
-import { NgModule } from '@angular/core'
-import { RouterModule, Routes } from '@angular/router'
-import { OrderManagerComponent } from './order-manager/order-manager.component'
-import { ProductManagerComponent } from './product-manager/product-manager.component'
-import { DashboardComponent } from './dashboard/dashboard.component'
-import { LoginFormComponent } from './login-form/login-form.component'
-import { AuthService } from './auth.service'
-import { UserManagerComponent } from './user-manager/user-manager.component'
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { AuthService } from "./auth.service";
+import { BannerManagerComponent } from "./feature/banner-manager/banner-manager.component";
+import { DashboardComponent } from "./feature/dashboard/dashboard.component";
+import { OrderManagerComponent } from "./feature/order-manager/order-manager.component";
+import { UserManagerComponent } from "./feature/user-manager/user-manager.component";
+import { LoginFormComponent } from "./login-form/login-form.component";
+import { ProductManagerComponent } from "./product-manager/product-manager.component";
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

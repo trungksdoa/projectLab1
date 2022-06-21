@@ -36,9 +36,7 @@
             "scripts": [
               "./node_modules/bootstrap/dist/js/bootstrap.bundle.js",
               "./node_modules/jquery/dist/jquery.js",
-              "./node_modules/slick-carousel/slick/slick.min.js",
-              "src/assets/js/admin/app.js",
-              "src/assets/js/admin/app.js"
+              "./node_modules/slick-carousel/slick/slick.min.js"
             ]
           },
           "configurations": {
