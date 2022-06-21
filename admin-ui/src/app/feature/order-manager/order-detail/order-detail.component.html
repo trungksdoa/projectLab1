@@ -150,6 +150,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
+        <th scope="col">Hình ảnh</th>
         <th scope="col">Tên sản phẩm</th>
         <th scope="col">Số lượng</th>
         <th scope="col">Tổng</th>
@@ -157,6 +158,7 @@
     </thead>
     <tbody *ngFor="let item of orderItems">
       <tr style="cursor: pointer">
+        <td><img src="http://localhost:8081/image/{{item.productItem.imageurl}}"alt="" border=3 height=100 width=100></td>
         <td>{{item.productItem.name}}</td>
         <td>{{item.quantity}}</td>
         <td>{{getCalculatedValue(item.productPrice)}}</td>
@@ -165,6 +167,6 @@
   </table>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Thóat</button>
+  <button mat-button (click)="onNoClick()">Thoát</button>
   <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
 </div>

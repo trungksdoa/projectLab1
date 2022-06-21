@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AuthService } from "./auth.service";
+import { CategoryManagerComponent } from "./category-manager/category-manager.component";
 import { BannerManagerComponent } from "./feature/banner-manager/banner-manager.component";
 import { DashboardComponent } from "./feature/dashboard/dashboard.component";
 import { OrderManagerComponent } from "./feature/order-manager/order-manager.component";
@@ -39,10 +40,15 @@ const routes: Routes = [
   },
   {
     path: 'product',
-    component: ProductManagerComponent,
-    canActivate: [AuthService]
-  }
-]
+    component: ProductManagerComponent
+  },
+  {
+    path: 'category',
+    component: CategoryManagerComponent
+  },
+
+
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

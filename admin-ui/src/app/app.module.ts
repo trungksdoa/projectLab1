@@ -28,6 +28,7 @@ import { AddProductComponent } from "./product-manager/add-product/add-product.c
 import { ProductManagerComponent } from "./product-manager/product-manager.component";
 import { SharedService, DialogService } from "./service";
 import { SidebarComponent } from "./sidebar/sidebar.component";
+import { CategoryManagerComponent } from './category-manager/category-manager.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { SidebarComponent } from "./sidebar/sidebar.component";
     AddProductComponent,
     UpdateBannerFormComponent,
     LoginFormComponent,
-    UserManagerComponent
+    UserManagerComponent,
+    CategoryManagerComponent
   ],
   imports: [
     BrowserModule,
@@ -68,6 +70,6 @@ import { SidebarComponent } from "./sidebar/sidebar.component";
     BannerService,
     DialogService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent,CategoryManagerComponent]
 })
 export class AppModule { }

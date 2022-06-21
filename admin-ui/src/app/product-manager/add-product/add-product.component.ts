@@ -56,7 +56,6 @@ export class AddProductComponent implements OnInit {
   ngOnInit (): void {
     this.formType = this.data.type
     this.productContent = this.data.data
-
     this.imageDataUrl =
       this.productContent.imageurl.length === 0
         ? 'https://previews.123rf.com/images/bonumopus/bonumopus1603/bonumopus160300089/53156323-empty-transparent-background-with-gradient-opacity-.jpg'

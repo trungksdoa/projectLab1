@@ -1,20 +1,18 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
-
-import {MatTable} from '@angular/material/table';
-import { Category } from 'src/app/api/category/category';
-import { CategoryService } from 'src/app/api/category/category.service';
+import { Category } from '../api/category/category';
+import { CategoryService } from '../api/category/category.service';
 
 import * as $ from 'jquery';
 @Component({
-  selector: 'app-admin-product',
-  templateUrl: './admin-product.component.html',
-  styleUrls: ['./admin-product.component.css']
+  selector: 'app-category-manager',
+  templateUrl: './category-manager.component.html',
+  styleUrls: ['./category-manager.component.css']
 })
-export class AdminProductComponent implements OnInit {
+export class CategoryManagerComponent implements OnInit {
 
+  
   public categorys: Category[];
   public editCate: Category;
   public deleteCate: Category;

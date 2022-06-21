@@ -1,3 +1,4 @@
+
 <div class="wrapper">
   <app-sidebar></app-sidebar>
 
@@ -16,13 +17,13 @@
 
             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" *ngIf="username !=='Chào các cụ'" href="#"
               data-bs-toggle="dropdown">
-              <span class="text-dark">{{username}}</span>
+              <span class="text-dark" style="text-transform: capitalize;">{{username}}</span>
             </a>
             <a class="nav-link  d-none d-sm-inline-block" *ngIf="username ==='Chào các cụ'">
               <span class="text-dark">{{username}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-end" *ngIf="username !=='Chào các cụ'">
-              <div class="dropdown-divider"></div>
+          
               <a class="dropdown-item" (click)="logout()">Log out</a>
             </div>
           </li>
@@ -40,32 +41,6 @@
       </div>
     </main>
 
-    <footer class="footer">
-      <div class="container-fluid">
-        <div class="row text-muted">
-          <div class="col-6 text-start">
-            <p class="mb-0">
-              <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> &copy;
-            </p>
-          </div>
-          <div class="col-6 text-end">
-            <ul class="list-inline">
-              <li class="list-inline-item">
-                <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
-              </li>
-              <li class="list-inline-item">
-                <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
-              </li>
-              <li class="list-inline-item">
-                <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
-              </li>
-              <li class="list-inline-item">
-                <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
+    
   </div>
 </div>
