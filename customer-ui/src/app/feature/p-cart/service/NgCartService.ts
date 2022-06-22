@@ -15,6 +15,7 @@ import { Product } from 'src/app/api/product/product'
 import { Users } from 'src/app/model/user'
 import { SpinnerService } from 'src/app/spinner.service'
 import { ToastServiceService } from 'src/app/toast-service.service'
+import { Router } from '@angular/router'
 
 @Injectable({ providedIn: 'root' })
 export class NgCartService {
@@ -23,7 +24,8 @@ export class NgCartService {
     private cartProcess: NgCartCaculatorService,
     private sharedService: SharedService,
     private spinnerServer: SpinnerService,
-    private toast: ToastServiceService
+    private toast: ToastServiceService,
+    private router: Router
   ) {}
 
   updateCartQuantity ({ payload, id }: { id: number; payload: any }) {
@@ -55,32 +57,33 @@ export class NgCartService {
     cart.userId = this.sharedService.getUserFromCookie()
 
     setTimeout(() => {
-      this.cartProcess.updateCartToDB(cart.userId.id, id, field);
-    }, 1000);
+      this.cartProcess.updateCartToDB(cart.userId.id, id, field)
+      this.spinnerServer.requestEnded()
+    }, 1010)
     return cartGenerator
   }
 
-  updateCartByClickAddToCart (action: { id: number; payload: any }): void {
-    this.spinnerServer.requestStarted()
-
+  updateCartByClickAddToCart ({id,payload}: { id: number; payload: any }): void {
     const cart: Cart = this.sharedService.getLocal('localCart')
-
+    this.spinnerServer.requestStarted()
     const items = cart.cartItem.map((item: cartItem) => {
-      if (item.id !== action.id) return item
+      if (item.id !== id) return item
 
       return {
         ...item,
-        ...action.payload
+        ...payload
       }
     })
+    // console.log(items);
     const cartDB: Cart = this.cartProcess.generatorCart(cart, items)
     cart.userId = this.sharedService.getUserFromCookie()
 
     setTimeout(() => {
+      console.log(cartDB)
       this.cartProcess.saveCartToDB(cartDB)
       this.spinnerServer.requestEnded()
       this.sharedService.callFunctionByClick('refreshCart')
-    }, 1000)
+    }, 1010)
   }
 
   addToCart (item: Product, quantity = 1) {
@@ -99,9 +102,10 @@ export class NgCartService {
         throw new Error('You must pass a `price` for new items')
 
       // ...this.itemInitvalue,
-      this.spinnerServer.requestStarted()
+      // this.spinnerServer.requestStarted()
 
       if (!currentItem) {
+        this.spinnerServer.requestStarted()
         const currItem: Cart = {
           ...cart,
           cartItem: [
@@ -133,34 +137,39 @@ export class NgCartService {
         quantity: currentItem.quantity + quantity,
         productItem: item
       }
-
+      console.log('Payload ' + JSON.stringify(payload))
       this.updateCartByClickAddToCart({
-        id: item.id,
+        id: currentItem.id,
         payload: payload
       })
     } else {
-      alert('Please fucking login')
+      this.toast.showWarn('Vui lóng đăng nhập để sử dụng')
+      this.router.navigate(['/login'])
     }
   }
 
   removeAllItem (itemId: number[]) {
-    this.spinnerServer.requestStarted()
+    // this.spinnerServer.requestStarted()
     const cart: Cart = this.sharedService.getLocal('localCart')
-    setTimeout(() => {
-      if (this.sharedService.getUserFromCookie()) {
-        this.callAPI.deleteCartItem(cart.id + '', itemId).subscribe(() => {
-          //
-        })
+    this.callAPI.deleteCartItem(cart.id + '', itemId).subscribe(
+      ({ uniqueItemInCart, message }: any) => {
+        cart.totalUniqueItems = uniqueItemInCart
+        this.toast.showSuccess(message)
+      },
+      error => {
+        this.toast.showError(error.error.message)
       }
-      this.cartProcess.saveCartToLocalStorage(
-        this.cartProcess.generatorCart(
-          cart,
-          cart.cartItem.filter(item => !itemId.includes(item.productItem.id))
-        )
+    )
+    this.cartProcess.saveCartToLocalStorage(
+      this.cartProcess.generatorCart(
+        cart,
+        cart.cartItem.filter(item => !itemId.includes(item.id))
       )
-      this.spinnerServer.requestEnded()
-      this.sharedService.callFunctionByClick('refreshCart')
-    }, 300)
+    )
+    return this.cartProcess.generatorCart(
+      cart,
+      cart.cartItem.filter(item => !itemId.includes(item.id))
+    )
   }
 
   getCartFromLocalStorage = (): Cart => this.sharedService.getLocal('localCart')
@@ -168,21 +177,25 @@ export class NgCartService {
   getCartFromDB (userId: Users) {
     this.callAPI
       .getCartItemByUserId(userId.id + '')
-      .subscribe((respone: any) => {
-        for (let index = 0; index < respone.cartItem.length; index++) {
-          const element = respone.cartItem[index]
-          element.id = element.productItem.id
-        }
-        this.sharedService.callFunctionByClick('refreshCart')
-        this.cartProcess.saveCartToLocalStorage(
-          this.cartProcess.generatorCart(respone, respone.cartItem)
-        )
+      .subscribe(({ cartData, isError, message, uniqueItemInCart }: any) => {
+        if (isError) {
+          this.cartProcess.saveCartToLocalStorage(
+            this.cartProcess.generatorCart(cartInit, cartInit.cartItem)
+          )
+          this.sharedService.setUniqueItemNumber(0)
+        } else {
+          console.log(cartData)
+          this.sharedService.callFunctionByClick('refreshCart')
+          this.cartProcess.saveCartToLocalStorage(
+            this.cartProcess.generatorCart(cartData, cartData.cartItem)
+          )
 
-        // console.log(object);
-        this.sharedService.setUniqueItemNumber(
-          this.cartProcess.generatorCart(respone, respone.cartItem)
-            .totalUniqueItems
-        )
+          // console.log(object);
+          this.sharedService.setUniqueItemNumber(
+            this.cartProcess.generatorCart(cartData, cartData.cartItem)
+              .totalUniqueItems
+          )
+        }
       })
   }
 }

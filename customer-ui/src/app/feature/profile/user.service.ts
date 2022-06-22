@@ -16,8 +16,8 @@ export class UserService {
   public loginRequest (user: Users): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/user/login`, user)
   }
-  public Save (user: Users): Observable<Users> {
-    return this.http.post<Users>(`${this.apiServerUrl}/user/save`, user)
+  public Save (user: Users): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/user/save`, user)
   }
   public update (user: Users): Observable<Users> {
     return this.http.put<Users>(`${this.apiServerUrl}/user/update/${user.id}`, user)

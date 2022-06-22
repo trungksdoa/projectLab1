@@ -37,16 +37,11 @@ export class NgCartCaculatorService {
         cartData: Cart
         message: string
       }) => {
-        for (let index = 0; index < cartData.cartItem.length; index++) {
-          const element = cartData.cartItem[index]
-          element.id = element.productItem.id
-        }
-
         this.saveCartToLocalStorage(
           this.generatorCart(cartData, cartData.cartItem)
         )
         this.sharedService.callFunctionByClick('refreshCart')
-        this.sharedService.setUniqueItemNumber(parseInt(uniqueItemInCart))
+        // this.sharedService.setUniqueItemNumber(parseInt(uniqueItemInCart))
         this.toast.showSuccess(message)
       },
       responeError => {

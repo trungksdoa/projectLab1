@@ -13,13 +13,13 @@ export class ToastServiceService {
     this.toast.success({
       detail: 'Thông báo',
       summary: message,
-      duration: 2000
+      duration: 1000
     })
   }
 
   showError (message: string) {
     this.toast.error({
-      detail: 'Thông báo',
+      detail: 'Có lỗi',
       summary: message,
       duration: 2000
     })
@@ -31,9 +31,9 @@ export class ToastServiceService {
 
   showWarn (message: string) {
     this.toast.warning({
-      detail: 'Thông báo',
+      detail: 'Cảnh báo',
       summary: message,
-      duration: 5000
+      duration: 3000
     })
   }
 }

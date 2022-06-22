@@ -10,6 +10,7 @@ import { SpinnerService } from 'src/app/spinner.service'
 import { Cart, cartItem, NgCartApiService, NgCartService } from './service'
 import { ResizeChangeService } from 'src/app/size-detector/resize-change.service'
 import { SCREEN_SIZE } from 'src/app/size-detector/size-detector.component'
+import { ToastServiceService } from 'src/app/toast-service.service'
 @Component({
   selector: 'app-p-cart',
   templateUrl: './p-cart.component.html',
@@ -32,6 +33,7 @@ export class PCartComponent implements OnInit {
     private dialogService: DialogService,
     private dialogRef: MatDialogRef<PCartComponent>,
     private resizeSvc: ResizeChangeService,
+    private toastService: ToastServiceService,
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -50,8 +52,6 @@ export class PCartComponent implements OnInit {
     })
 
     this.cartservice.getCartFromDB(this._sharedService.getUserFromCookie())
-
-    this.cart = this.cartservice.getCartFromLocalStorage()
   }
 
   getCart (): void {
@@ -64,20 +64,6 @@ export class PCartComponent implements OnInit {
   backToHome () {
     this.router.navigate([''])
     this.dialogRef.close()
-  }
-
-  selectedItem (cartitem: cartItem) {
-    const data = this.cart.cartItem.find(x => x.id == cartitem.id)
-    data.active = !data.active
-    if (data.active) {
-      this.itemSelected.push(data.id)
-      this.itemObjectSelected.push(data)
-    } else {
-      this.itemSelected = this.itemSelected.filter(x => x != data.id)
-      this.itemObjectSelected = this.itemObjectSelected.filter(
-        x => x.id != data.id
-      )
-    }
   }
 
   goCheckout () {
@@ -101,7 +87,7 @@ export class PCartComponent implements OnInit {
       this.itemSelected = []
       this.itemObjectSelected = []
     } else {
-      console.log('Ok')
+      this.toastService.showError('Chưa có sản phẩm nào được chọn')
     }
   }
 
@@ -124,19 +110,54 @@ export class PCartComponent implements OnInit {
   }
 
   changeQuantity (currentQuantity: number, itemId: number, active: boolean) {
-    this.callAPIChangeData(currentQuantity, itemId, active)
+    if (currentQuantity < 1) {
+      const listID = []
+      listID.push(itemId)
+      this.deleteItemById(listID)
+    } else if (currentQuantity > 50) {
+      this.toastService.showWarn('Giới hạn mua không lớn hơn 50')
+    } else {
+      this.callAPIChangeData(currentQuantity, itemId, active)
+    }
   }
 
   updateQuantity ($event: any, itemId: number, active: boolean) {
-    this.callAPIChangeData(parseInt($event.target.value), itemId, active)
+    if (parseInt($event.target.value) < 1) {
+      const listID = []
+      listID.push(itemId)
+      this.deleteItemById(listID)
+    } else if (parseInt($event.target.value) > 50) {
+      this.toastService.showWarn('Giới hạn mua không lớn hơn 50')
+    } else {
+      this.callAPIChangeData(parseInt($event.target.value), itemId, active)
+    }
   }
 
-  deleteItemInCart () {
-    this.cartservice.removeAllItem(this.itemSelected)
+  selectedItem (cartitem: cartItem) {
+    const data = this.cart.cartItem.find(x => x.id == cartitem.id)
+    data.active = !data.active
+    if (data.active) {
+      this.itemSelected.push(data.id)
+      this.itemObjectSelected.push(data)
+    } else {
+      this.itemSelected = this.itemSelected.filter(x => x != data.id)
+      this.itemObjectSelected = this.itemObjectSelected.filter(
+        x => x.id != data.id
+      )
+    }
 
-    this.itemObjectSelected = this.itemObjectSelected.filter(
-      item => !this.itemSelected.includes(item.productItem.id)
-    )
+    console.log(this.itemObjectSelected)
+  }
+
+  deleteItemById (listId: any) {
+    this.cart = this.cartservice.removeAllItem(listId)
+  }
+  deleteItemInCart () {
+    if (this.itemObjectSelected.length > 0) {
+      this.cart = this.cartservice.removeAllItem(this.itemSelected)
+    } else {
+      this.toastService.showError('Chưa có sản phẩm nào được chọn')
+    }
   }
 
   onNoClick (): void {

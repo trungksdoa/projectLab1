@@ -13,10 +13,13 @@ export class ProfileOrderDetailComponent implements OnInit {
   orderItems: orderItems[]
   sharedService: SharedService
   constructor (
+    private _sharedService: SharedService,
     public dialogRef: MatDialogRef<ProfileOrderDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: orderManagement,
     private _cartService: NgCartService,
-  ) {}
+  ) {
+    this.sharedService = _sharedService
+  }
 
   ngOnInit (): void {
     if (this.data) {

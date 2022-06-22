@@ -12,7 +12,7 @@ import { SharedService } from '../shared.service'
 @Injectable()
 export class AuthGuardService implements CanActivate {
   constructor (public sharedService: SharedService, public router: Router) {}
-  isloggin  = false;
+  isloggin = false
   canActivate (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -21,14 +21,18 @@ export class AuthGuardService implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    const check: { isLoggin: boolean } = {
+      isLoggin: false
+    }
     this.sharedService.isLoggedIn().subscribe(isLoggedIn => {
-      this.isloggin = isLoggedIn;
+      check.isLoggin = isLoggedIn
     })
-    if (this.isloggin) {
+    if (check.isLoggin) {
       return true
     } else {
-      console.log('Could not authenticate')
-      this.router.navigate(['/login'], { queryParams: { redirectURL: state.url } })
+      this.router.navigate(['/login'], {
+        queryParams: { redirectURL: state.url }
+      })
       return false
     }
   }

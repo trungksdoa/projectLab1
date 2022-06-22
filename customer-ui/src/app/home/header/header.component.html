@@ -12,14 +12,15 @@
 
       <li class="nav-item" *ngIf="isLogin">
         <div class="flex-shrink-0 dropdown">
-          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="mdo" width="32" height="32" class="rounded-circle">
+          <a class="d-block link-dark text-decoration-none" [matMenuTriggerFor]="menu">
+            <img src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="mdo" width="32" height="32"
+              class="rounded-circle">
           </a>
-          <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-            <li><a class="dropdown-item" [routerLink]="['profile']">Thông tin</a></li>
-            <li><a class="dropdown-item" (click)="logOut()" [routerLink]="['/']">Đăng xuất</a></li>
-          </ul>
+          <mat-menu #menu="matMenu">
+            <a mat-menu-item [routerLink]="['/profile']">Thông tin</a>
+            <a mat-menu-item (click)="logOut()" [routerLink]="['/']">Đăng
+              xuất</a>
+          </mat-menu>
         </div>
       </li>
     </ul>
@@ -55,8 +56,8 @@
       <div class=" flex-shrink-0">
         <ul class="nav me-auto">
           <li class="nav-item">
-            <button mat-raised-button (click)="openCart()" color="warn" matBadge="{{itemCount}}" matBadgePosition="after"
-              matBadgeColor="warn">
+            <button mat-raised-button (click)="openCart()" color="warn" matBadge="{{itemCount}}"
+              matBadgePosition="after" matBadgeColor="warn">
               <mat-icon>add_shopping_cart</mat-icon>
             </button>
           </li>

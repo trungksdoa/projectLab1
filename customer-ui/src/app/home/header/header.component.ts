@@ -35,25 +35,30 @@ export class HeaderComponent implements OnInit {
   ) {
     // đăng ký luồng thay đổi size
     this.resizeSvc.onResize$.subscribe(x => {
-      console.log(x)
       this.size = x
     })
   }
 
   ngOnInit (): void {
     this.sharedService.isLoggedIn().subscribe(data => {
+      console.log(this.sharedService.getUserFromCookie());
       this.isLogin = data
-      this.name = this.sharedService.getUserFromCookie().name
-    })
-
-    if (this.sharedService.getUserFromCookie()) {
       this.sharedService.afterClick.subscribe(() => {
         this.name = this.sharedService.getUserFromCookie().name
       })
       this.sharedService.getUniqueItemInCart().subscribe(uniqueItemInCart => {
         this.itemCount = uniqueItemInCart
       })
-    }
+    })
+
+    // if (this.sharedService.getUserFromCookie()) {
+    //   this.sharedService.afterClick.subscribe(() => {
+    //     this.name = this.sharedService.getUserFromCookie().name
+    //   })
+    //   this.sharedService.getUniqueItemInCart().subscribe(uniqueItemInCart => {
+    //     this.itemCount = uniqueItemInCart
+    //   })
+    // }
     this.itemCount = 0
     this.getAllProduct()
   }
@@ -105,6 +110,9 @@ export class HeaderComponent implements OnInit {
     TotalPrice: 0,
     isEmpty: false,
     totalUniqueItems: 0
+  }
+  goProfile(){
+    this.router.navigate(['profile'])
   }
   logOut () {
     this.sharedService.deleteCookie('user')

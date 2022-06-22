@@ -21,7 +21,7 @@ export class NgCartApiService {
   }
 
   public addCartItem (cartItem: Cart): Observable<any> {
-    return this.http.put<any>(`${this.apiServerUrl}/cart`, cartItem)
+    return this.http.post<any>(`${this.apiServerUrl}/cart`, cartItem)
   }
 
   public deleteCartItem (cartId: String, ItemId: number[]): Observable<any> {

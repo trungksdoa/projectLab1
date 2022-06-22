@@ -1,3 +1,20 @@
+.centerDiv{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  max-width: 300px;
+}
+.input-group-text {
+  max-height: 40.25px;
+}
+.input-group{
+  position: relative;
+  top: 15px;
+}
+.pCart {
+  max-height: 93.13725490196079vh;
+}
+
 .title {
   margin-bottom: 5vh;
 }
@@ -13,7 +30,7 @@
 }
 
 .cart {
-  border:none;
+  border: none;
   background-color: #fff;
   padding: 4vh 5vh;
   border-bottom-left-radius: 1rem;
@@ -32,12 +49,14 @@
   background-color: #ddd;
   padding: 4vh;
   color: rgb(65, 65, 65);
+  height: 93.13725490196079vh;
 }
 
 @media(max-width:767px) {
   .summary {
     border-top-right-radius: unset;
     border-bottom-left-radius: 1rem;
+    height:auto;
   }
 }
 
@@ -161,6 +180,6 @@ a:hover {
 }
 
 
-.cursorPointer{
+.cursorPointer {
   cursor: pointer;
 }

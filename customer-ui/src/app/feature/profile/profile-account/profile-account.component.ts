@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Users } from 'src/app/model/user';
 import { SharedService } from 'src/app/shared.service';
+import { ToastServiceService } from 'src/app/toast-service.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -14,9 +15,9 @@ import { UserService } from '../user.service';
   styleUrls: ['./profile-account.component.css']
 })
 export class ProfileAccountComponent implements OnInit {
-  user: Users 
+  user: Users
   isSubmit = false
-  
+
   show_button: Boolean = false;
   show_eye: Boolean = false
 
@@ -24,14 +25,14 @@ export class ProfileAccountComponent implements OnInit {
   constructor(
      private _sharedService: SharedService,private UserService: UserService,
     private router: Router,
-    private _snackBar: MatSnackBar,) {  }
+   private toast:ToastServiceService,) {  }
 
   ngOnInit(): void {
     this._sharedService.isLoggedIn().subscribe(data => {
       this.isLogin = data
       this.user=this._sharedService.getUserFromCookie()
     })
-    
+
   }
   showPassword() {
     this.show_button = !this.show_button;
@@ -52,7 +53,7 @@ export class ProfileAccountComponent implements OnInit {
     form.reset()
   }
   formSubmit (user:Users) {
-   
+
       user.id = this.user.id
       this.UserService.update(user).subscribe(data => {
        console.log(data)
@@ -62,16 +63,13 @@ export class ProfileAccountComponent implements OnInit {
           this._sharedService.callFunctionByClick();
           // this.router.navigate([''])
           // this.sharedService.isLoggin(true)
+          this.toast.showSuccess('Cập nhật thành công!');
       },(error: HttpErrorResponse) => {
-        this._snackBar.open('Cap nhat thanh cong!', 'Tiếp tục', {
-          duration: 1000
-        });
+        this.toast.showError('Có lỗi xảy ra');
       }
       )
-      this._snackBar.open('Đăng ký thành công!', 'Tiếp tục', {
-        duration: 3000
-      });
-    
+
+
   }
 
 }

@@ -50,12 +50,6 @@ export class ProfileComponent implements OnInit {
       })
   }
 
-  call (shoe: string) {
-    alert(shoe)
-  }
-
-
-
 
   pages: string = 'Thông tin chung'
 

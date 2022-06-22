@@ -8,6 +8,8 @@ import { NgForm } from '@angular/forms'
 import { IDeactivateOptions } from 'src/app/Auth/confirm-deactivate-guard.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { HttpErrorResponse } from '@angular/common/http'
+import { NgCartService } from '../p-cart/service'
+import { ToastServiceService } from 'src/app/toast-service.service'
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -16,13 +18,14 @@ import { HttpErrorResponse } from '@angular/common/http'
 export class RegisterComponent implements OnInit, IDeactivateOptions {
   isSubmit = false
 
-  show_button: Boolean = false;
+  show_button: Boolean = false
   show_eye: Boolean = false
   constructor (
     private UserService: UserService,
     private sharedService: SharedService,
     private router: Router,
-    private _snackBar: MatSnackBar,
+    private cartService: NgCartService,
+    private toast: ToastServiceService,
   ) {}
 
   ngOnInit (): void {
@@ -30,12 +33,11 @@ export class RegisterComponent implements OnInit, IDeactivateOptions {
       if (isLoggin) {
         this.router.navigate(['/login'])
       }
-
     })
   }
-  showPassword() {
-    this.show_button = !this.show_button;
-    this.show_eye = !this.show_eye;
+  showPassword () {
+    this.show_button = !this.show_button
+    this.show_eye = !this.show_eye
   }
   canExit (): boolean | Promise<boolean> | Observable<boolean> {
     if (this.isSubmit) {
@@ -68,21 +70,19 @@ export class RegisterComponent implements OnInit, IDeactivateOptions {
   formSubmit (form: NgForm) {
     const requestUser = this.createUser(form.value)
     if (form.value) {
-      this.UserService.Save(requestUser).subscribe(data => {
+      this.UserService.Save(requestUser).subscribe(
+        ({user,message}: { user: Users; message: string }) => {
+          console.log(user);
           this.isSubmit = true
-          this.sharedService.setCookie('user', data)
-          this.router.navigate([''])
-          this.sharedService.isLoggin(true)
+          this.router.navigate(["/login"])
+          this.toast.showSuccess(message)
           form.reset()
-      },(error: HttpErrorResponse) => {
-        this._snackBar.open('Đăng ký Thất bại!', 'Tiếp tục', {
-          duration: 1000
-        });
-      }
+        },
+        error => {
+          this.toast.showError(error.error.message)
+        }
       )
-      this._snackBar.open('Đăng ký thành công!', 'Tiếp tục', {
-        duration: 3000
-      });
+
     }
   }
 }
