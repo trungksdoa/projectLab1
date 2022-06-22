@@ -48,6 +48,7 @@ import { CategoryManagerComponent } from './category-manager/category-manager.co
   ],
   imports: [
     BrowserModule,
+    
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
@@ -57,7 +58,7 @@ import { CategoryManagerComponent } from './category-manager/category-manager.co
     ReactiveFormsModule,
     NgSelectModule,
     NgxSkeletonLoaderModule,
-    Ng2SearchPipeModule
+   
   ],
   providers: [
     CategoryService,
